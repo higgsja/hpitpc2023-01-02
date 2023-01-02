@@ -1,0 +1,35 @@
+.coachingGainsChartVL {
+    /*background-color: lightgrey;*/
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 8px;
+    margin-top: 0px;
+}
+
+.coachingGainsChart {
+    padding-bottom: 0px;
+    padding-left: 0px;
+    padding-right: 0px;
+    padding-top: 0px; 
+    margin: 0px;
+}
+
+.coachingPositionsGridVL {
+    padding-bottom: 0px;
+    padding-left: 3px;
+    padding-right: 3px;
+    padding-top: 3px; 
+    margin: 0px;
+}
+
+.gainsControlsHL1{
+}
+
+.gainsControlsHL2{
+}
+
+.coachingGainsTotal{
+    margin: 0px;
+    padding-top: 8px;
+}
