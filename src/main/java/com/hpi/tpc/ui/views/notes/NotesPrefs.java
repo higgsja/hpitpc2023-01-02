@@ -2,6 +2,7 @@ package com.hpi.tpc.ui.views.notes;
 
 import com.hpi.tpc.ui.views.main.MainLayout;
 import static com.hpi.tpc.AppConst.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
@@ -28,31 +29,13 @@ import org.springframework.stereotype.*;
 @NoArgsConstructor
 @PermitAll
 public class NotesPrefs
-    extends VerticalLayout {
+    extends PagePrefsBase
+    implements BeforeEnterObserver
+{
 
-    @Autowired private JdbcTemplate jdbcTemplate;
-
-    @PostConstruct
-    private void init() {
-        Span aSpan;
-        String sql;
-        String keyId;
-        String keyValue;
-        SqlRowSet rowSet;
-
-        keyId = "ConfigNotesHelp";
-        keyValue = "";
-
-        sql = "select KeyValue from TPCHelp where KeyId = 'ConfigNotesHelp';";
-        rowSet = this.jdbcTemplate.queryForRowSet(sql);
-
-        while (rowSet.next()) {
-            //will only be one
-            keyValue = rowSet.getString("KeyValue");
-        }
-        aSpan = new Span();
-        aSpan.getElement().setProperty("innerHTML", keyValue);
-
-        this.add(aSpan);
+    @Override
+    public void beforeEnter(BeforeEnterEvent bee)
+    {
+        this.init("ConfigNotesHelp");
     }
 }
