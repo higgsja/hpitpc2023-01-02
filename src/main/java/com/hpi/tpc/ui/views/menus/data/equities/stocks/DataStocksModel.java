@@ -36,7 +36,7 @@ public class DataStocksModel
     private void construct()
     {
         this.availAttributes = new ArrayList<>();
-        //this.selectedAttributes = new HashSet<>();
+
         this.selectedAttributes = new LinkedHashSet<>();
     }
 
@@ -70,8 +70,6 @@ public class DataStocksModel
         String columnsCSV;
         StringTokenizer tokenizer;
         Attribute tempAttribute;
-        Boolean bFound;
-        String tokenAdd;
 
         columnsCSV = null;
         this.selectedAttributes.clear();

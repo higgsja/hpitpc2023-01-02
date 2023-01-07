@@ -1,6 +1,7 @@
 package com.hpi.tpc.ui.views.setup.equities;
 
 import static com.hpi.tpc.AppConst.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.vaadin.flow.component.button.*;
 import com.vaadin.flow.component.html.Label;
@@ -28,7 +29,7 @@ import org.springframework.stereotype.Component;
 @PermitAll
 //@CssImport("./styles/setupEquities.css")
 public class SetupEquitiesView
-    extends VerticalLayout
+    extends ViewBase
     implements BeforeEnterObserver
 {
 

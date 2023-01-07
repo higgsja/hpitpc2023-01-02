@@ -2,7 +2,6 @@ package com.hpi.tpc.ui.views.baseClass;
 
 import com.vaadin.flow.component.dependency.*;
 import com.vaadin.flow.spring.annotation.*;
-import javax.annotation.*;
 import lombok.*;
 import org.springframework.stereotype.*;
 
@@ -12,39 +11,12 @@ import org.springframework.stereotype.*;
 @CssImport("./styles/baseMVCView1Wide.css")
 @Getter
 public abstract class MVCView1WideBase
-    extends MVCViewBase
+    extends ViewBase
 {
     public MVCView1WideBase()
     {
         this.setClassName("baseMVCView1Wide");
-        
-//        this.setMinWidth("320px");
-//        this.setWidth("550px");
-//        this.setHeight("100%");
     }
-
-    @PostConstruct
-    protected void construct()
-    {
-        int i = 0;
-    }
-
-    @PreDestroy
-    protected void destruct()
-    {
-//        this.removeListeners();
-    }
-
-//    public void removeListeners()
-//    {
-//        for (Registration r : this.listeners)
-//        {
-//            if (r != null)
-//            {
-//                r.remove();
-//            }
-//        }
-//    }
 
 //    protected Label titleFormat(String title)
 //    {

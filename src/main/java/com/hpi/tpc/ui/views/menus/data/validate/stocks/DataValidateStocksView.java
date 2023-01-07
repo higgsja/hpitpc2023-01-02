@@ -1,13 +1,13 @@
 package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.data.entities.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
+import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.button.*;
 import com.vaadin.flow.component.checkbox.*;
 import com.vaadin.flow.component.combobox.*;
 import com.vaadin.flow.component.grid.*;
-import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
@@ -17,27 +17,26 @@ import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 
 /**
- * makes direct request for data from model
+ * Provides view
  * does not change data;
  * user actions are sent to the controller
  * dumb, just builds the view
  */
 @UIScope
 @VaadinSessionScope
-@Route(value = DATA_VALIDATE_STOCKS_VIEW, layout = MainLayout.class)
-@PageTitle(TITLE_TAB_DATA_VALIDATE + ": " + TITLE_DATA_STOCKS)
+@Route(value = ROUTE_DATA_VALIDATE_STOCKS, layout = MainLayout.class)
+@PageTitle(TITLE_PAGE_DATA + ":" + TITLE_PAGE_DATA_VALIDATE + ":" + TITLE_PAGE_DATA_EQUITIES_STOCKS)
 @org.springframework.stereotype.Component
 @PermitAll
-//@CssImport("./styles/validateStocks.css")
-//@CssImport(value = "./styles/dataValidateStocks-grid.css",
-//           id = "validate-stocks-grid", themeFor = "vaadin-grid")
-public class DataValidateStocksViewer
-    extends VerticalLayout
-    implements BeforeEnterObserver, BeforeLeaveObserver {
-    @Autowired private DataValidateStocksModel stocksModel;
+@NoArgsConstructor
+public class DataValidateStocksView
+    extends ViewBase
+{
+
+    //todo: should not have this here?
+    @Autowired private DataValidateStocksModel dataValidateStocksModel;
 
     @Getter private VerticalLayout titleVL;
-    private Label title;
 
     private HorizontalLayout controlsHL;
     private HorizontalLayout comboBoxesHL;
@@ -54,30 +53,23 @@ public class DataValidateStocksViewer
     @Getter private Grid<ValidateStockTransactionModel> grid;
     @Getter private FooterRow footer;
 
-    public DataValidateStocksViewer() {
-        this.setClassName("stocksValidateContent");
-        //this.setSizeFull();
-    }
-
     @PostConstruct
-    private void construct() {
+    public void construct()
+    {
+        this.addClassName("dataValidateStocksView");
+
+        this.add(this.titleFormat("Validate Stock Transactions"));
+        
+        this.setMinWidth("320px");
+        this.setSizeFull();
+//        this.setWidth("550px");
+//        this.setHeight("100%");
+
+//        this.setupViewer();
     }
 
-    public void doTitle() {
-        this.title = new Label(
-            "Validate Stock Transactions");
-        this.title.getElement().getStyle().set("font-size", "14px");
-        this.title.getElement().getStyle().set("font-family", "Arial");
-        this.title.getElement().getStyle().set("color", "#169FF3");
-        this.title.getElement().getStyle().set("line-height", "1em");
-
-        this.titleVL = new VerticalLayout(this.title);
-        this.titleVL.setClassName("stocksValidateTitle");
-
-        this.add(this.titleVL);
-    }
-
-    public void doControls() {
+    public void doControls()
+    {
         this.comboAccounts = new ComboBox<>();
         this.comboTickers = new ComboBox<>();
 
@@ -106,11 +98,11 @@ public class DataValidateStocksViewer
         this.add(this.controlsHL);
     }
 
-    public void doGrid() {
+    public void doGrid()
+    {
         this.grid = new Grid<>();
 
-        this.grid.addClassName("validate-stocks-grid");
-        this.grid.setId("validate-stocks-grid");
+        this.grid.addClassName("validateStocksGrid");
         this.grid.setThemeName("dense");
 
         this.grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
@@ -173,14 +165,16 @@ public class DataValidateStocksViewer
             .setAutoWidth(true)
             .setSortProperty("transType");
 
-        this.grid.addComponentColumn(vstm -> {
+        this.grid.addComponentColumn(vstm ->
+        {
             Checkbox checkBox = new Checkbox();
             checkBox.setValue(vstm.getBSkip());
-            checkBox.addValueChangeListener(event -> {
+            checkBox.addValueChangeListener(event ->
+            {
                 //make the change
                 vstm.setBSkip(event.getValue());
                 //inform listeners
-                stocksModel.getGridDataProvider().refreshItem(vstm);
+                dataValidateStocksModel.getGridDataProvider().refreshItem(vstm);
             });
 
             return checkBox;
@@ -189,14 +183,16 @@ public class DataValidateStocksViewer
             .setAutoWidth(true)
             .setTextAlign(ColumnTextAlign.CENTER);
 
-        this.grid.addComponentColumn(vstm -> {
+        this.grid.addComponentColumn(vstm ->
+        {
             Checkbox checkBox = new Checkbox();
             checkBox.setValue(vstm.getBValidated());
-            checkBox.addValueChangeListener(event -> {
+            checkBox.addValueChangeListener(event ->
+            {
                 //make the change
                 vstm.setBValidated(event.getValue());
                 //inform listeners
-                stocksModel.getGridDataProvider().refreshItem(vstm);
+                dataValidateStocksModel.getGridDataProvider().refreshItem(vstm);
             });
 
             return checkBox;
@@ -206,7 +202,8 @@ public class DataValidateStocksViewer
             .setTextAlign(ColumnTextAlign.CENTER);
 
         //disallow client changes
-        this.grid.addComponentColumn(votm -> {
+        this.grid.addComponentColumn(votm ->
+        {
             Checkbox checkBox = new Checkbox();
             checkBox.setValue(votm.getBComplete());
 
@@ -226,52 +223,34 @@ public class DataValidateStocksViewer
 
         this.add(gridVL);
     }
-
-    @PreDestroy
-    private void destruct() {
-    }
-
-    @Override
-    public void beforeEnter(BeforeEnterEvent event) {
-        int i = 0;
-    }
-
-    public void setupViewer() {
-        this.removeAll();
-        this.doTitle();
-
+    
+    public void setupViewer()
+    {
         this.doControls();
 
         this.doGrid();
 
-        this.comboAccounts.setItems(this.stocksModel.getAccountModels());
-
-        this.comboTickers.setItems(this.stocksModel.getTickerModels());
+//        this.comboAccounts.setItems(this.dataValidateStocksModel.getAccountModels());
+//
+//        this.comboTickers.setItems(this.dataValidateStocksModel.getTickerModels());
 
         //set check boxes
-        this.stocksModel.setSelectedSkip(this.stocksModel.getSelectedSkip());
-        this.stocksModel.setSelectedValidated(this.stocksModel
+        this.dataValidateStocksModel.setSelectedSkip(this.dataValidateStocksModel.getSelectedSkip());
+                this.checkboxSkip.setValue(this.dataValidateStocksModel.getSelectedSkip());
+        this.dataValidateStocksModel.setSelectedValidated(this.dataValidateStocksModel
             .getSelectedValidated());
-        this.checkboxSkip.setValue(this.stocksModel.getSelectedSkip());
-        this.checkboxValidated.setValue(this.stocksModel.getSelectedValidated());
+        this.checkboxValidated.setValue(this.dataValidateStocksModel.getSelectedValidated());
 
         //set buttons
         this.buttonSave.setEnabled(false);
         this.buttonCancel.setEnabled(false);
 
         //filter as appropriate
-        this.stocksModel.filters(
-            this.stocksModel.getSelectedSkip(),
-            this.stocksModel.getSelectedValidated());
-
-        //refresh the grid
-        this.grid.getDataProvider().refreshAll();
-    }
-
-    @Override
-    public void beforeLeave(BeforeLeaveEvent event) {
-        this.stocksModel.writePrefs(
-            this.checkboxSkip.getValue() ? "Yes" : "No",
-            this.checkboxValidated.getValue() ? "Yes" : "No");
+//        this.dataValidateStocksModel.filters(
+//            this.dataValidateStocksModel.getSelectedSkip(),
+//            this.dataValidateStocksModel.getSelectedValidated());
+//
+//        //refresh the grid
+//        this.grid.getDataProvider().refreshAll();
     }
 }

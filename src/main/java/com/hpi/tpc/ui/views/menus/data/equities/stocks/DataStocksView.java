@@ -1,29 +1,27 @@
 package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 
 import static com.helger.commons.string.StringHelper.*;
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
+import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.grid.*;
-import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.data.provider.*;
 import com.vaadin.flow.data.value.*;
 import com.vaadin.flow.router.*;
-import com.vaadin.flow.shared.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.Component;
 
 /**
- * makes direct request for data from model
+ * Provides view
  * does not change data;
  * user actions are sent to the controller
  * dumb, just builds the view
@@ -31,34 +29,28 @@ import org.springframework.stereotype.Component;
 @UIScope
 @VaadinSessionScope
 @Component
-@Route(value = DATA_EQUITIES_STOCKS_VIEW, layout = MainLayout.class)
-@PageTitle(TITLE_PAGE_DATA + ": " + TITLE_DATA_EQUITIES_STOCKS)
+@Route(value = ROUTE_DATA_EQUITIES_STOCKS, layout = MainLayout.class)
+@PageTitle(TITLE_PAGE_DATA + ":" + TITLE_PAGE_DATA_EQUITIES_STOCKS)
 @NoArgsConstructor
 @PermitAll
-//@CssImport(value = "./styles/dataStocks-grid.css",
-//           id = "equity-grid", themeFor = "vaadin-grid")
-//@CssImport("./styles/dataStocksInfoView.css")
 public class DataStocksView
-    extends VerticalLayout
-    implements BeforeEnterObserver, BeforeLeaveObserver
+    extends ViewBase
+    implements BeforeEnterObserver
 {
 
     @Autowired private MainLayout mainLayout;
     @Autowired private TPCDAOImpl tpcService;
-    @Autowired private DataStocksModel dataStocksMVCModel;
+    @Autowired private DataStocksModel dataStocksModel;
     @Autowired private PrefsController prefsController;
-    @Autowired private JdbcTemplate jdbcTemplate;
     @Autowired private FinVizEquityInfoModelService equityInfoService;
 
     private Grid<FinVizEquityInfoModel> equityInfoGrid;
 
-    private HeaderRow gridHeaderRow;
+    private HeaderRow gridHeaderRow1;
     private HeaderRow gridHeaderRow2;
     private TextField filterTicker;
     private TextField filterSector;
     private TextField filterIndustry;
-
-    private ArrayList<Registration> listeners;
 
     FilterFinVizInfo gridFilter;
 
@@ -68,26 +60,11 @@ public class DataStocksView
         this.setSizeFull();
         this.addClassName("dataStocksView");
 
-        this.dataStocksMVCModel.getPrefs();
+        this.dataStocksModel.getPrefs();
 
-        this.listeners = new ArrayList<>();
+        this.add(this.titleFormat("Stocks"));
 
         this.gridSetup();
-//        this.dataProviderSetup();
-
-//        this.add(this.equityInfoGrid);
-    }
-
-    @PreDestroy
-    private void destruct()
-    {
-        for (Registration r : listeners)
-        {
-            if (r != null)
-            {
-                r.remove();
-            }
-        }
     }
 
     public final void gridSetup()
@@ -95,7 +72,7 @@ public class DataStocksView
         this.equityInfoGrid = new Grid<>();
         List<String> columns = new ArrayList<>();
 
-        StringTokenizer tokenizer = new StringTokenizer(this.dataStocksMVCModel.getStringColumns(), ",");
+        StringTokenizer tokenizer = new StringTokenizer(this.dataStocksModel.getStringColumns(), ",");
         while (tokenizer.hasMoreElements())
         {
             columns.add(tokenizer.nextToken());
@@ -399,7 +376,6 @@ public class DataStocksView
         this.setHeaderRow2();
         this.setColumnFilters();
 
-        this.removeAll();
         this.dataProviderSetup();
         this.add(this.equityInfoGrid);
     }
@@ -506,7 +482,7 @@ public class DataStocksView
     private void setColumnFilters()
     {
         //header row        
-        this.gridHeaderRow = this.equityInfoGrid.appendHeaderRow();
+        this.gridHeaderRow1 = this.equityInfoGrid.appendHeaderRow();
 
         //ticker column filter
         this.filterTicker = new TextField();
@@ -516,13 +492,13 @@ public class DataStocksView
         this.filterTicker.setClearButtonVisible(true);
         this.filterTicker.setValueChangeMode(ValueChangeMode.TIMEOUT);
         //add filter to header row
-        this.gridHeaderRow.getCell(this.equityInfoGrid.getColumnByKey("ticker")).setComponent(this.filterTicker);
+        this.gridHeaderRow1.getCell(this.equityInfoGrid.getColumnByKey("ticker")).setComponent(this.filterTicker);
         //add listener
-        this.listeners.add(this.filterTicker.addValueChangeListener(event ->
+        this.filterTicker.addValueChangeListener(event ->
         {
             this.gridFilter.setFilterTicker(event.getValue());
             this.equityInfoGrid.getDataProvider().refreshAll();
-        }));
+        });
 
         //sector column filter
         this.filterSector = new TextField();
@@ -532,13 +508,13 @@ public class DataStocksView
         this.filterSector.setClearButtonVisible(true);
         this.filterSector.setValueChangeMode(ValueChangeMode.TIMEOUT);
         //add filter to header row
-        this.gridHeaderRow.getCell(this.equityInfoGrid.getColumnByKey("sector")).setComponent(this.filterSector);
+        this.gridHeaderRow1.getCell(this.equityInfoGrid.getColumnByKey("sector")).setComponent(this.filterSector);
         //add listener
-        this.listeners.add(this.filterSector.addValueChangeListener(event ->
+        this.filterSector.addValueChangeListener(event ->
         {
             this.gridFilter.setFilterSector(event.getValue());
             this.equityInfoGrid.getDataProvider().refreshAll();
-        }));
+        });
 
         //industry column filter
         this.filterIndustry = new TextField();
@@ -548,14 +524,14 @@ public class DataStocksView
         this.filterIndustry.setClearButtonVisible(true);
         this.filterIndustry.setValueChangeMode(ValueChangeMode.TIMEOUT);
         //add filter to header row
-        this.gridHeaderRow.getCell(this.equityInfoGrid.getColumnByKey("industry"))
+        this.gridHeaderRow1.getCell(this.equityInfoGrid.getColumnByKey("industry"))
             .setComponent(this.filterIndustry);
         //add listener
-        this.listeners.add(this.filterIndustry.addValueChangeListener(event ->
+        this.filterIndustry.addValueChangeListener(event ->
         {
             this.gridFilter.setFilterIndustry(event.getValue());
             this.equityInfoGrid.getDataProvider().refreshAll();
-        }));
+        });
     }
 
     @Override
@@ -568,12 +544,5 @@ public class DataStocksView
         {
             this.mainLayout.setDrawerOpened(false);
         }
-    }
-
-    @Override
-    public void beforeLeave(BeforeLeaveEvent event)
-    {
-        //doing this on the prefs page
-//        this.dataStocksMVCModel.writePrefs();
     }
 }

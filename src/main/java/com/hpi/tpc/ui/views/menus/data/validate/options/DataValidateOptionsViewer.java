@@ -1,8 +1,8 @@
 package com.hpi.tpc.ui.views.menus.data.validate.options;
 
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.main.*;
+import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.button.*;
 import com.vaadin.flow.component.checkbox.*;
 import com.vaadin.flow.component.combobox.*;
@@ -24,14 +24,10 @@ import org.springframework.beans.factory.annotation.*;
  */
 @UIScope
 @VaadinSessionScope
-@Route(value = DATA_VALIDATE_OPTIONS_VIEW, layout = MainLayout.class)
-@PageTitle(TITLE_TAB_DATA_VALIDATE + ": " + TITLE_DATA_EQUITIES_OPTIONS)
+@Route(value = ROUTE_DATA_VALIDATE_OPTIONS, layout = MainLayout.class)
+@PageTitle(TITLE_PAGE_DATA + ":" + TITLE_PAGE_DATA_VALIDATE + ":" + TITLE_PAGE_DATA_VALIDATE_OPTIONS)
 @org.springframework.stereotype.Component
 @PermitAll
-
-//@CssImport("./styles/validateOptions.css")
-//@CssImport(value = "./styles/dataValidateOptions-grid.css",
-//           id = "validate-options-grid", themeFor = "vaadin-grid")
 public class DataValidateOptionsViewer
     extends VerticalLayout
     implements BeforeEnterObserver, BeforeLeaveObserver {

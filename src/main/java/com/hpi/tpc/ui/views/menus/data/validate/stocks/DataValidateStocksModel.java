@@ -17,10 +17,8 @@ import org.springframework.stereotype.*;
  */
 @Component
 public class DataValidateStocksModel {
-    @Autowired
-    private TPCDAOImpl serviceTPC;
-    @Autowired
-    @Getter private PrefsController prefsController;
+    @Autowired private TPCDAOImpl serviceTPC;
+    @Autowired @Getter private PrefsController prefsController;
 
     @Getter private List<EditAccountModel> accountModels;
     @Getter private List<TickerModel> tickerModels;
@@ -32,24 +30,33 @@ public class DataValidateStocksModel {
     @Getter @Setter private TickerModel selectedTickerModel;
     @Getter @Setter private Boolean selectedSkip = false;
     @Getter @Setter private Boolean selectedValidated = false;
+    
+    /**
+     * track when setting a filter. Do not want to enable save if only 
+     * a filter change on the data provider
+     */
+    @Getter private Boolean bInFilterChange = false;
 
     public DataValidateStocksModel() {
         this.dbList = new ArrayList<>();
     }
-
-    public void doAccountModels() {
+    
+    public void updateAccountModels() {
         this.accountModels = this.serviceTPC.getAccountModels();
+        //set nothing selected
+        this.selectedAccountModel = null;
     }
 
-    public void doTickerModels() {
-        this.tickerModels = this.serviceTPC
-            .getTickerModels(this.selectedAccountModel);
+    public void updateTickerModels() {
+        this.tickerModels = this.serviceTPC.getTickerModels(this.selectedAccountModel);
+        //set nothing selected
+        this.selectedTickerModel = null;
     }
 
     /**
      * retrieves data for the grid
      */
-    public void doGridData() {
+    public void updateGridData() {
         List<ValidateStockTransactionModel> aList;
         ValidateStockTransactionModel tmpVstm;
 
@@ -93,14 +100,15 @@ public class DataValidateStocksModel {
     }
 
     /**
-     *
+     * Set data filters on data set
      * @param skipBoolean:      true to view only Skip records
      * @param validatedBoolean: true to view only Validated records
      */
-    public void filters(Boolean skipBoolean, Boolean validatedBoolean) {
+    public void filterChange(Boolean skipBoolean, Boolean validatedBoolean) {
         if (this.gridDataProvider == null) {
             return;
         }
+        this.bInFilterChange = true;
 
         this.gridDataProvider.clearFilters();
         this.selectedSkip = skipBoolean != null ?
@@ -118,10 +126,11 @@ public class DataValidateStocksModel {
                 Objects.equals(transaction.getBValidated(),
                     this.selectedValidated));
         }
+        this.bInFilterChange = false;
     }
 
-    public void getPrefs() {
-        this.prefsController.readPrefsByPrefix("StockValidate");
+    public void getPrefs(String prefs) {
+        this.prefsController.readPrefsByPrefix(prefs);
         this.selectedSkip = this.prefsController
             .getPref("StockValidateSkip").equals("Yes");
         this.selectedValidated = this.prefsController
@@ -183,9 +192,6 @@ public class DataValidateStocksModel {
             }
             i++;
         }
-
-        //reset the data in the grid
-        this.doGridData();
     }
 
     private void writeTransaction(Boolean skip, Boolean validated,

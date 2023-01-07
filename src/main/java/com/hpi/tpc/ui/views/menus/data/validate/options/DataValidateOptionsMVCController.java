@@ -1,9 +1,9 @@
 package com.hpi.tpc.ui.views.menus.data.validate.options;
 
 import com.hpi.tpc.services.TPCDAOImpl;
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.main.*;
+import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
@@ -21,8 +21,8 @@ import org.springframework.beans.factory.annotation.*;
  */
 @UIScope
 @VaadinSessionScope
-@Route(value = DATA_VALIDATE_OPTIONS_CONTROLLER, layout = MainLayout.class)
-@PageTitle(TITLE_PAGE_DATA + ": " + TITLE_DATA_EQUITIES_OPTIONS)
+@Route(value = ROUTE_DATA_VALIDATE_OPTIONS_CONTROLLER, layout = MainLayout.class)
+//@PageTitle(TITLE_PAGE_DATA + ":" + TITLE_PAGE_DATA_EQUITIES_OPTIONS)
 @org.springframework.stereotype.Component
 @PermitAll
 //@CssImport("./styles/validateOptions.css")

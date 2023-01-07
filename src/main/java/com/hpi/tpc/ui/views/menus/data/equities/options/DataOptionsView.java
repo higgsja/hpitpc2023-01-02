@@ -1,10 +1,10 @@
 package com.hpi.tpc.ui.views.menus.data.equities.options;
 
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.main.*;
+import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
@@ -23,8 +23,8 @@ import org.springframework.stereotype.Component;
 @UIScope
 @VaadinSessionScope
 @Component
-@Route(value = DATA_EQUITIES_OPTIONS_VIEW, layout = MainLayout.class)
-@PageTitle(TITLE_PAGE_DATA + ": " + TITLE_DATA_EQUITIES_OPTIONS)
+@Route(value = ROUTE_DATA_EQUITIES_OPTIONS, layout = MainLayout.class)
+@PageTitle(TITLE_PAGE_DATA + ":" + TITLE_PAGE_DATA_EQUITIES_OPTIONS)
 @PermitAll
 public class DataOptionsView
     extends VerticalLayout
