@@ -13,7 +13,8 @@
         <!--<vaadin.version>21.0.7</vaadin.version>-->
         <!--have to do here to override spring parent specification of 9.0.5.3-->
         <tomcat.version>9.0.53</tomcat.version>
-        <maven.version>3.8.2</maven.version>
+        <maven.version>3.8.6</maven.version>
+        <!--<maven.version>3.8.2</maven.version>-->
         <maven.enforcer.version>3.0.0</maven.enforcer.version>
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>

@@ -1,11 +1,11 @@
 package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.main.*;
+import com.hpi.tpc.ui.views.menus.*;
+import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.grid.*;
-import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.shared.*;
 import com.vaadin.flow.spring.annotation.*;
@@ -14,226 +14,227 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
 
-/**
- * translates user requests to actions, selects the appropriate view
- * minimal as possible; just translate requests in to Model actions and
- * selecting View
+/*
+ * Controller: Interface between Model and View to process business logic and incoming
+ * requests:
+ * manipulate data using the Model
+ * interact with the Views to render output
+ * respond to user input and performance actions on data model objects.
+ * receives input, optionally validates it and passes it to the model
+ * Target for navigation from appDrawer
  */
 @UIScope
 @VaadinSessionScope
-@Route(value = DATA_VALIDATE_STOCKS_CONTROLLER, layout = MainLayout.class)
-@PageTitle(TITLE_TAB_DATA_VALIDATE + ": " + TITLE_DATA_STOCKS)
 @org.springframework.stereotype.Component
+@Route(value = ROUTE_DATA_VALIDATE_STOCKS_CONTROLLER, layout = MainLayout.class)
 @PermitAll
-//@CssImport("./styles/validateStocks.css")
-//@CssImport(value = "./styles/dataValidateStocks-grid.css",
-//           id = "validate-stocks-grid", themeFor = "vaadin-grid")
 public class DataValidateStocksController
-    extends VerticalLayout
-    implements BeforeEnterObserver, BeforeLeaveObserver {
+    extends ViewControllerBase
+    implements BeforeEnterObserver
+{
+
     @Autowired private DataValidateStocksModel dataValidateStocksModel;
-    @Autowired private DataValidateStocksViewer dataValidateStocksViewer;
+    @Autowired private DataValidateStocksView dataValidateStocksView;
     @Autowired private TPCDAOImpl serviceTPC;
 
-    private final ArrayList<Registration> listeners;
+    private Registration dataProviderListener = null;
 
-    private Registration dataProviderListener;
-//    private Registration checkboxSkipListener;
-//    private Registration checkboxValidateListener;
-//
-//    private Registration comboboxAccountsListener;
-//    private Registration comboboxTickersListener;
-//
-//    private Registration buttonCancelListener;
-//    private Registration buttonSaveListener;
-
-    public DataValidateStocksController() {
-        this.listeners = new ArrayList<>();
-        this.dataProviderListener = null;
-
-//        this.comboboxAccountsListener = null;
-//        this.comboboxTickersListener = null;
-//
-//        this.checkboxSkipListener = null;
-//        this.checkboxValidateListener = null;
+    public DataValidateStocksController()
+    {
+        this.addClassName("dataValidateStocksController");
     }
 
     @PostConstruct
-    private void construct() {
+    private void construct()
+    {
+        this.dataValidateStocksModel.getPrefs("StockValidate");
 
-    }
+        this.dataValidateStocksView.setupViewer();
 
-    @PreDestroy
-    private void destruct() {
-        //do not know why but this is hit on re-entry
-        this.removeListeners();
+        this.setListeners();
     }
 
     @Override
-    public void beforeEnter(BeforeEnterEvent event) {
+    public void beforeEnter(BeforeEnterEvent event)
+    {
         this.serviceTPC.AppTracking("WTPC:Data:Validate:Stocks");
 
-        this.dataValidateStocksModel.getPrefs();
-
-        //ensure page is clear
-//        this.removeAll();
-        //ensure listeners removed
-        this.removeListeners();
-
-        //data
-        this.dataValidateStocksModel.doAccountModels();
-
-        //todo: use prefs to return to the last settings
-        //  for now, first account, first ticker
-        this.dataValidateStocksModel.setSelectedAccountModel(this.dataValidateStocksModel
-            .getAccountModels().get(0));
-
-        this.dataValidateStocksModel.doTickerModels();
-
-        //todo: use prefs to return to the last settings
-        //  for now, first account, first ticker
-        this.dataValidateStocksModel.setSelectedTickerModel(this.dataValidateStocksModel
-            .getTickerModels().get(0));
-
-        this.dataValidateStocksViewer.setupViewer();
-
-        //todo: user preferences 
-        this.dataValidateStocksViewer.getComboAccounts()
-            .setValue(this.dataValidateStocksModel.getSelectedAccountModel());
-
-        //todo: user preferences
-        this.dataValidateStocksViewer.getComboTickers()
-            .setValue(this.dataValidateStocksModel.getSelectedTickerModel());
-
-        this.dataValidateStocksModel.doGridData();
-
-        this.setListeners();
+        this.updateViewOnEnter();
 
         //transfer to viewer
-        event.forwardTo(DataValidateStocksViewer.class);
+        event.forwardTo(DataValidateStocksView.class);
     }
 
-    private void removeListeners() {
-        //general
-        for (Registration r : this.listeners) {
-            if (r != null) {
-                r.remove();
-            }
-
-            this.listeners.clear();
-        }
-
-        //special
-        if (this.dataProviderListener != null) {
-            this.dataProviderListener.remove();
-        }
+    private void updateViewOnEnter()
+    {
+        /**
+         * update data on every enter as data may have changed
+         */
+        this.updateViewOnEnterAccounts();
+        this.updateViewOnEnterTickers();
     }
 
-    private void doGridData() {
+    private void updateViewOnEnterAccounts()
+    {
+        /**
+         * update accounts data from database into the view
+         */
+        //update data
+        this.dataValidateStocksModel.updateAccountModels();
+        //update view
+        this.dataValidateStocksView.getComboAccounts().setItems(this.dataValidateStocksModel.getAccountModels());
+        this.dataValidateStocksView.getComboAccounts().setValue(this.dataValidateStocksModel
+            .getAccountModels().get(0));
+        //update the data model
+        this.dataValidateStocksModel.setSelectedAccountModel(this.dataValidateStocksView
+            .getComboAccounts().getValue());
+    }
+
+    private void updateViewOnEnterTickers()
+    {
+        /**
+         * update tickers from database into the view
+         */
+        //update data
+        this.dataValidateStocksModel.updateTickerModels();
+        //update view
+        this.dataValidateStocksView.getComboTickers().setItems(this.dataValidateStocksModel.getTickerModels());
+        this.dataValidateStocksView.getComboTickers().setValue(this.dataValidateStocksModel
+            .getTickerModels().get(0));
+        //update the data model
+        this.dataValidateStocksModel.setSelectedTickerModel(this.dataValidateStocksView
+            .getComboTickers().getValue());
+    }
+
+    private void updateGridOnChange()
+    {
+        /**
+         * any change to accounts or tickers pull new data set
+         */
         Iterator<ValidateStockTransactionModel> iterator;
         ValidateStockTransactionModel tmpModel;
         Double unitsTotal;
 
         unitsTotal = 0.0;
 
-        if (this.dataProviderListener != null) {
+        if (this.dataValidateStocksModel.getSelectedAccountModel() == null
+            || this.dataValidateStocksModel.getSelectedTickerModel() == null)
+        {
+            //no update until both lists are complete with a selection
+            //this is an issue on entering as each is populated independently and fires the onChange
+            return;
+        }
+
+        if (this.dataProviderListener != null)
+        {
             this.dataProviderListener.remove();
         }
 
-        this.dataValidateStocksModel.doGridData();
-        this.dataValidateStocksViewer.getGrid().setDataProvider(
+        this.dataValidateStocksModel.updateGridData();
+
+        this.dataValidateStocksView.getGrid().setDataProvider(
             this.dataValidateStocksModel.getGridDataProvider());
-        this.setDataProviderListener();
+        this.setGridDataProviderListener();
 
         //set the totals
         iterator = this.dataValidateStocksModel.getGridDataProvider().getItems().iterator();
 
         //exclude skips from the total
         //todo: need to change to account for filtering
-        while (iterator.hasNext()) {
+        while (iterator.hasNext())
+        {
             tmpModel = iterator.next();
-            if (!tmpModel.getBSkip()) {
+            if (!tmpModel.getBSkip())
+            {
                 unitsTotal += tmpModel.getUnits();
             }
         }
 
-        Grid.Column aColumn = this.dataValidateStocksViewer.getGrid().getColumnByKey(
-            "units");
+        Grid.Column aColumn = this.dataValidateStocksView.getGrid().getColumnByKey("units");
 
-        this.dataValidateStocksViewer.getFooter().getCell(aColumn).setText(
-            unitsTotal.toString());
+        this.dataValidateStocksView.getFooter().getCell(aColumn).setText(unitsTotal.toString());
+
     }
 
-    private void setListeners() {
-        this.listeners.add(this.dataValidateStocksViewer.getComboAccounts().addValueChangeListener(
-            vcEvent -> {
+    private void setListeners()
+    {
+        this.dataValidateStocksView.getComboAccounts().addValueChangeListener(
+            vcEvent ->
+        {
             this.dataValidateStocksModel.setSelectedAccountModel((vcEvent.getValue()));
 
-            this.doGridData();
-        }));
+            this.updateGridOnChange();
+        });
 
-        this.listeners.add(this.dataValidateStocksViewer.getComboTickers().addValueChangeListener(
-            vcEvent -> {
+        this.dataValidateStocksView.getComboTickers().addValueChangeListener(
+            vcEvent ->
+        {
             this.dataValidateStocksModel.setSelectedTickerModel(vcEvent.getValue());
 
-            this.doGridData();
-        }));
+            this.updateGridOnChange();
+        });
 
-        this.listeners.add(this.dataValidateStocksViewer.getCheckboxSkip().addValueChangeListener(
-            vcEvent -> {
-            this.dataValidateStocksModel.filters(vcEvent.getValue(), null);
-        }));
+        this.dataValidateStocksView.getCheckboxSkip().addValueChangeListener(
+            vcEvent ->
+        {
+            this.dataValidateStocksModel.filterChange(vcEvent.getValue(), null);
+        });
 
-        this.listeners.add(this.dataValidateStocksViewer.getCheckboxValidated().addValueChangeListener(
-            vcEvent -> {
-            this.dataValidateStocksModel.filters(null, vcEvent.getValue());
-        }));
+        this.dataValidateStocksView.getCheckboxValidated().addValueChangeListener(
+            vcEvent ->
+        {
+            this.dataValidateStocksModel.filterChange(null, vcEvent.getValue());
+        });
 
-        this.listeners.add(this.dataValidateStocksViewer.getButtonSave().addClickListener(
-            vcEvent -> this.doSave()));
+        this.dataValidateStocksView.getButtonSave().addClickListener(
+            vcEvent -> this.doSave());
 
-        this.listeners.add(this.dataValidateStocksViewer.getButtonCancel().
+        this.dataValidateStocksView.getButtonCancel().
             addClickListener(
-                vcEvent -> this.doCancel()));
-
-        //set listener on the dataProvider
-        //not required, do when create and set
-//        this.dataProviderListener = this.dataValidateStocksModel
-//            .getGridDataProvider().addDataProviderListener(
-//                dataEvent -> {
-//                this.dataValidateStocksViewer.getButtonSave().setEnabled(true);
-////                this.stocksViewer.getButtonCancel().setEnabled(true);
-//            });
+                vcEvent -> this.doCancel());
     }
 
-    private void setDataProviderListener() {
-        if (this.dataProviderListener != null) {
+    private void setGridDataProviderListener()
+    {
+        if (this.dataProviderListener != null)
+        {
             this.dataProviderListener.remove();
         }
 
         this.dataProviderListener = this.dataValidateStocksModel
-            .getGridDataProvider().addDataProviderListener(
-                dataEvent -> {
-                this.dataValidateStocksViewer.getButtonSave().setEnabled(true);
-//                this.stocksViewer.getButtonCancel().setEnabled(true);
+            .getGridDataProvider().addDataProviderListener(dataEvent ->
+            {
+                //do not want enabled on simple filter change in data provider
+                if (!this.dataValidateStocksModel.getBInFilterChange())
+                {
+                    this.dataValidateStocksView.getButtonSave().setEnabled(true);
+                }
             });
     }
 
-    @Override
-    public void beforeLeave(BeforeLeaveEvent event) {
-        //we forward to the viewer so this gets hit on the way there ...
-        //  caution on what can be done here: likley nothing
-    }
-
-    private void doCancel() {
+    private void doCancel()
+    {
         int i = 0;
     }
 
-    private void doSave() {
+    private void doSave()
+    {
+        //write to database
         this.dataValidateStocksModel.doSave();
-        this.dataValidateStocksViewer.getButtonSave().setEnabled(false);
-        this.dataValidateStocksViewer.getButtonCancel().setEnabled(false);
+        //fix buttons
+        this.dataValidateStocksView.getButtonSave().setEnabled(false);
+        this.dataValidateStocksView.getButtonCancel().setEnabled(false);
 
-        this.doGridData();
+        /**
+         * after save, pull from database and reset grid to be sure have the right data
+         */
+        this.updateGridOnChange();
+    }
+
+    @Override
+    public void createMenuTabs()
+    {
+        //none; not changing top tabs
+        //todo: change top menu prefs icon route
     }
 }

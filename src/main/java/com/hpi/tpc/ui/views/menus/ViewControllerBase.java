@@ -30,29 +30,10 @@ public abstract class ViewControllerBase
 
     public ViewControllerBase()
     {
+        this.setClassName("viewControllerBase");
         this.menuBar = new MenuBar();
         this.menuBar.setOpenOnHover(true);
     }
-
-    //private com.vaadin.flow.component.Component noteIcon()
-//    private Icon noteIcon()
-//    {
-//        Icon pencilIcon;
-//
-//        pencilIcon = new Icon(VaadinIcon.PENCIL);
-//        pencilIcon.setColor("#169FF3");
-//
-//        //add listener for new note
-//        pencilIcon.addClickListener(event ->
-//        {
-//            //give model a starter noteModel
-//            notesMVCModel.setSelectedNoteModel(new NoteModel(SecurityUtils.getUserId().toString(),
-//                null, null, null, null, null, null, null, null, null, "1", null));
-//            UI.getCurrent().navigate(NOTES_ADD_VIEW);
-//        });
-//
-//        return pencilIcon;
-//    }
 
     /**
      * establish top navBar menu
@@ -62,21 +43,12 @@ public abstract class ViewControllerBase
     public void doNavBar(String prefsPage)
     {
 
-//        this.mainLayout.clearNavBar();
-//        if (this.mainLayout.getPagePrefsHL() != null)
-//        {
-//            this.mainLayout.remove(this.mainLayout.getPagePrefsHL());
-//        }
-        
         //clear the old menu items
         this.mainLayout.removeTopMenu();
 
         //add the new menu items
         this.mainLayout.addTopMenu(this.menuBar, this.createPreferencesTab(prefsPage));
 
-        //add to navBar
-//        this.mainLayout.addToNavbar(true, new DrawerToggle(), this.noteIcon(),
-//            this.menuBar, this.createPreferencesTab(prefsPage));
     }
 
     /**

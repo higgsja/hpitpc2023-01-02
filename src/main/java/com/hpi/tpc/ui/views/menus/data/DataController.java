@@ -1,14 +1,13 @@
 package com.hpi.tpc.ui.views.menus.data;
 
 import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataStocksView;
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.hpi.tpc.ui.views.menus.ViewControllerBase;
+import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
-import java.util.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
@@ -47,7 +46,7 @@ public class DataController
 
         this.createMenuTabs();
     }
-    
+
     /*
      * create top menuBar tabs and listeners
      */
@@ -55,39 +54,46 @@ public class DataController
     public void createMenuTabs()
     {
         //Validate
-        MenuItem validateItem = this.menuBar.addItem(TITLE_TAB_DATA_VALIDATE);
+        MenuItem validateItem = this.menuBar.addItem(TAB_DATA_VALIDATE_TITLE);
         SubMenu validateSubMenu = validateItem.getSubMenu();
 
         //validate options
-        MenuItem validateOptions = validateSubMenu.addItem(TITLE_DATA_OPTIONS);
+        MenuItem validateOptions = validateSubMenu.addItem(TAB_DATA_VALIDATE_OPTIONS_TITLE);
         validateOptions.addClickListener((ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(DATA_VALIDATE_OPTIONS_CONTROLLER);
+            UI.getCurrent().navigate(ROUTE_DATA_VALIDATE_OPTIONS_CONTROLLER);
         });
 
         //validate stocks
-        MenuItem validateStocks = validateSubMenu.addItem(TITLE_DATA_STOCKS);
+        MenuItem validateStocks = validateSubMenu.addItem(TAB_DATA_VALIDATE_STOCKS_TITLE);
         validateStocks.addClickListener((ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(DATA_VALIDATE_STOCKS_CONTROLLER);
+            UI.getCurrent().navigate(ROUTE_DATA_VALIDATE_STOCKS_CONTROLLER);
         });
 
-        MenuItem equitiesItem = this.menuBar.addItem(TITLE_TAB_DATA_EQUITIES);
+        MenuItem equitiesItem = this.menuBar.addItem(TAB_DATA_EQUITIES_TITLE);
         SubMenu equitiesSubMenu = equitiesItem.getSubMenu();
 
         //show options
-        MenuItem showOptions = equitiesSubMenu.addItem(TITLE_DATA_EQUITIES_OPTIONS);
+        MenuItem showOptions = equitiesSubMenu.addItem(TAB_DATA_EQUITIES_OPTIONS_TITLE);
         showOptions.setEnabled(false);
         showOptions.addClickListener((ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(DATA_EQUITIES_OPTIONS_VIEW);
+            UI.getCurrent().navigate(ROUTE_DATA_EQUITIES_OPTIONS);
         });
 
         //show stocks
-        MenuItem showStocks = equitiesSubMenu.addItem(TITLE_DATA_EQUITIES_STOCKS);
+        MenuItem showStocks = equitiesSubMenu.addItem(TAB_DATA_EQUITIES_STOCKS_TITLE);
         showStocks.addClickListener((ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(DATA_EQUITIES_STOCKS_VIEW);
+            UI.getCurrent().navigate(ROUTE_DATA_EQUITIES_STOCKS);
+        });
+
+        MenuItem infoItem = this.menuBar.addItem(TAB_DATA_INFO);
+
+        infoItem.addClickListener((ClickEvent<MenuItem> event) ->
+        {
+            UI.getCurrent().navigate(ROUTE_DATA_INFO);
         });
     }
 
@@ -95,11 +101,12 @@ public class DataController
     public void beforeEnter(BeforeEnterEvent bee)
     {
         super.beforeEnter(bee);
-        
+
         //set navBar for this menu
         super.doNavBar(ROUTE_DATA_PREFERENCES);
 
         //send to default view
         bee.forwardTo(DataStocksView.class);
     }
+
 }

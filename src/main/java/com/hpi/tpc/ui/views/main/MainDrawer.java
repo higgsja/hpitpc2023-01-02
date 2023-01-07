@@ -2,6 +2,7 @@ package com.hpi.tpc.ui.views.main;
 
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.app.security.*;
+import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.*;
 import com.vaadin.flow.component.orderedlayout.*;
