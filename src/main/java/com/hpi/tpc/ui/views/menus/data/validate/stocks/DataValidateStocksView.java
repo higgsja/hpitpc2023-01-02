@@ -33,224 +33,92 @@ public class DataValidateStocksView
     extends ViewBase
 {
 
-    //todo: should not have this here?
-    @Autowired private DataValidateStocksModel dataValidateStocksModel;
+    private DataValidateStocksControlsHL controlsHL;
 
     @Getter private VerticalLayout titleVL;
-
-    private HorizontalLayout controlsHL;
-    private HorizontalLayout comboBoxesHL;
-    @Getter private ComboBox<EditAccountModel> comboAccounts;
-    @Getter private ComboBox<TickerModel> comboTickers;
-    private HorizontalLayout checkBoxesHL;
-    @Getter private Checkbox checkboxSkip;
-    @Getter private Checkbox checkboxValidated;
-    private HorizontalLayout buttonsHL;
-    @Getter private Button buttonSave;
-    @Getter private Button buttonCancel;
-
-    private VerticalLayout gridVL;
-    @Getter private Grid<ValidateStockTransactionModel> grid;
-    @Getter private FooterRow footer;
+    private DataValidateStocksGrid grid;
 
     @PostConstruct
     public void construct()
     {
         this.addClassName("dataValidateStocksView");
-
-        this.add(this.titleFormat("Validate Stock Transactions"));
-        
         this.setMinWidth("320px");
         this.setSizeFull();
-//        this.setWidth("550px");
-//        this.setHeight("100%");
 
-//        this.setupViewer();
-    }
+        this.add(this.titleFormat("Validate Stock Transactions"));
 
-    public void doControls()
-    {
-        this.comboAccounts = new ComboBox<>();
-        this.comboTickers = new ComboBox<>();
-
-        this.checkboxSkip = new Checkbox("Skip");
-        this.checkboxValidated = new Checkbox("Validated");
-
-        this.buttonSave = new Button("Save");
-        this.buttonCancel = new Button("Cancel");
-
-        this.comboBoxesHL = new HorizontalLayout(
-            this.comboAccounts, this.comboTickers);
-        this.comboBoxesHL.setClassName("stocksValidateControlsComboboxes");
-
-        this.checkBoxesHL = new HorizontalLayout(
-            this.checkboxSkip, this.checkboxValidated);
-        this.checkBoxesHL.setClassName("stocksValidateControlsCheckboxes");
-
-        this.buttonsHL = new HorizontalLayout(
-            this.buttonSave, this.buttonCancel);
-        this.buttonsHL.setClassName("stocksValidateControlsButtons");
-
-        this.controlsHL = new HorizontalLayout(
-            this.comboBoxesHL, this.checkBoxesHL, this.buttonsHL);
-        this.controlsHL.setClassName("stocksValidateControls");
-
+        this.controlsHL = new DataValidateStocksControlsHL();
         this.add(this.controlsHL);
+
+        this.grid = new DataValidateStocksGrid();
+        this.add(this.grid.getGridVL());
     }
 
-    public void doGrid()
+    public ComboBox<EditAccountModel> getComboAccounts()
     {
-        this.grid = new Grid<>();
+        return this.controlsHL.getComboAccounts();
+    }
 
-        this.grid.addClassName("validateStocksGrid");
-        this.grid.setThemeName("dense");
+    public ComboBox<TickerModel> getComboTickers()
+    {
+        return this.controlsHL.getComboTickers();
+    }
 
-        this.grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
-        this.grid.addThemeVariants(GridVariant.LUMO_COMPACT);
-        this.grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
-//        this.grid.setHeightFull();
-        this.grid.setSelectionMode(Grid.SelectionMode.SINGLE);
-        this.grid.setHeightByRows(true);
+    public Checkbox getCheckboxSkip()
+    {
+        return this.controlsHL.getCheckboxSkip();
+    }
 
-        this.footer = this.grid.appendFooterRow();
+    public void setCheckboxSkipValue(Boolean skip)
+    {
+        this.controlsHL.getCheckboxSkip().setValue(skip);
+    }
 
-        this.grid
-            .addColumn(ValidateStockTransactionModel::getEquityId)
-            .setHeader("EquityId")
-            .setTextAlign(ColumnTextAlign.CENTER)
-            .setAutoWidth(true)
-            .setFrozen(true)
-            .setSortProperty("equityId");
+    public Boolean getCheckboxSkipValue()
+    {
+        return this.controlsHL.getCheckboxSkip().getValue();
+    }
 
-        this.grid
-            .addColumn(ValidateStockTransactionModel::getDtTrade)
-            .setHeader("Trade Date")
-            .setTextAlign(ColumnTextAlign.CENTER)
-            .setAutoWidth(true)
-            .setSortProperty("tradeDate");
+    public Checkbox getCheckboxValidated()
+    {
+        return this.controlsHL.getCheckboxValidated();
+    }
 
-        this.grid
-            .addColumn(ValidateStockTransactionModel::getUnits)
-            .setHeader("Units")
-            .setTextAlign(ColumnTextAlign.END)
-            .setAutoWidth(true)
-            .setSortProperty("units")
-            .setKey("units");
+    public void setCheckboxValidatedValue(Boolean skip)
+    {
+        this.controlsHL.getCheckboxValidated().setValue(skip);
+    }
 
-        this.grid
-            .addColumn(ValidateStockTransactionModel::getTradePrice)
-            .setHeader("Trade Price")
-            .setTextAlign(ColumnTextAlign.END)
-            .setAutoWidth(true)
-            .setSortProperty("tradePrice");
+    public Boolean getCheckboxValidatedValue()
+    {
+        return this.controlsHL.getCheckboxValidated().getValue();
+    }
 
-        this.grid
-            .addColumn(ValidateStockTransactionModel::getLastPrice)
-            .setHeader("Last Price")
-            .setTextAlign(ColumnTextAlign.END)
-            .setAutoWidth(true)
-            .setSortProperty("lastPrice");
+    public Button getButtonSave()
+    {
+        return this.controlsHL.getButtonSave();
+    }
 
-        this.grid
-            .addColumn(ValidateStockTransactionModel::getFiTId)
-            .setHeader("FiTId")
-            .setTextAlign(ColumnTextAlign.END)
-            .setAutoWidth(true)
-            .setSortProperty("fiTId");
+    public void setButtonSaveEnabled(Boolean enabled)
+    {
+        this.controlsHL.getButtonSave().setEnabled(enabled);
+    }
 
-        this.grid
-            .addColumn(ValidateStockTransactionModel::getTransactionType)
-            .setHeader("TransType")
-            .setTextAlign(ColumnTextAlign.END)
-            .setAutoWidth(true)
-            .setSortProperty("transType");
+    public Button getButtonCancel()
+    {
+        return this.controlsHL.getButtonCancel();
+    }
 
-        this.grid.addComponentColumn(vstm ->
-        {
-            Checkbox checkBox = new Checkbox();
-            checkBox.setValue(vstm.getBSkip());
-            checkBox.addValueChangeListener(event ->
-            {
-                //make the change
-                vstm.setBSkip(event.getValue());
-                //inform listeners
-                dataValidateStocksModel.getGridDataProvider().refreshItem(vstm);
-            });
-
-            return checkBox;
-        })
-            .setHeader("Skip")
-            .setAutoWidth(true)
-            .setTextAlign(ColumnTextAlign.CENTER);
-
-        this.grid.addComponentColumn(vstm ->
-        {
-            Checkbox checkBox = new Checkbox();
-            checkBox.setValue(vstm.getBValidated());
-            checkBox.addValueChangeListener(event ->
-            {
-                //make the change
-                vstm.setBValidated(event.getValue());
-                //inform listeners
-                dataValidateStocksModel.getGridDataProvider().refreshItem(vstm);
-            });
-
-            return checkBox;
-        })
-            .setHeader("Valid")
-            .setAutoWidth(true)
-            .setTextAlign(ColumnTextAlign.CENTER);
-
-        //disallow client changes
-        this.grid.addComponentColumn(votm ->
-        {
-            Checkbox checkBox = new Checkbox();
-            checkBox.setValue(votm.getBComplete());
-
-            checkBox.setEnabled(false);
-
-            return checkBox;
-        })
-            .setHeader("Complete")
-            .setAutoWidth(true)
-            .setTextAlign(ColumnTextAlign.CENTER);
-
-        this.grid.setColumnReorderingAllowed(true);
-        this.grid.recalculateColumnWidths();
-
-        this.gridVL = new VerticalLayout(grid);
-        this.gridVL.setClassName("stocksValidateGrid");
-
-        this.add(gridVL);
+    public void setButtonCancelEnabled(Boolean enabled)
+    {
+        this.controlsHL.getButtonCancel().setEnabled(enabled);
     }
     
-    public void setupViewer()
-    {
-        this.doControls();
-
-        this.doGrid();
-
-//        this.comboAccounts.setItems(this.dataValidateStocksModel.getAccountModels());
-//
-//        this.comboTickers.setItems(this.dataValidateStocksModel.getTickerModels());
-
-        //set check boxes
-        this.dataValidateStocksModel.setSelectedSkip(this.dataValidateStocksModel.getSelectedSkip());
-                this.checkboxSkip.setValue(this.dataValidateStocksModel.getSelectedSkip());
-        this.dataValidateStocksModel.setSelectedValidated(this.dataValidateStocksModel
-            .getSelectedValidated());
-        this.checkboxValidated.setValue(this.dataValidateStocksModel.getSelectedValidated());
-
-        //set buttons
-        this.buttonSave.setEnabled(false);
-        this.buttonCancel.setEnabled(false);
-
-        //filter as appropriate
-//        this.dataValidateStocksModel.filters(
-//            this.dataValidateStocksModel.getSelectedSkip(),
-//            this.dataValidateStocksModel.getSelectedValidated());
-//
-//        //refresh the grid
-//        this.grid.getDataProvider().refreshAll();
+    public Grid<ValidateStockTransactionModel> getGrid(){
+        return this.grid.getGrid();
+    }
+    
+    public FooterRow getFooterRow(){
+        return this.grid.getFooterRow();
     }
 }

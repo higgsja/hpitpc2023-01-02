@@ -18,7 +18,6 @@ import org.springframework.stereotype.*;
 @CssImport("./styles/portfolioTracking.css")
 public class StatusHL
     extends ControlsHLBase
-    implements ControlsHLInterface
 {
 
     @Autowired public TrackingMVC_M trackingMVCModel;

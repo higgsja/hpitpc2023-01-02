@@ -17,7 +17,6 @@ import org.springframework.stereotype.*;
 @NoArgsConstructor
 public class TrackingControlsHL2
     extends ControlsHLBase
-    implements ControlsHLInterface
 {
 
     @Autowired public TrackingMVC_M trackingMVCModel;

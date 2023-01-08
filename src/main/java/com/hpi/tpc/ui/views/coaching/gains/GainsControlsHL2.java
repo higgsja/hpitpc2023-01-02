@@ -21,7 +21,6 @@ import org.springframework.stereotype.*;
 @NoArgsConstructor
 public class GainsControlsHL2
     extends ControlsHLBase
-    implements ControlsHLInterface
 {
 
     @Autowired private GainsModel gainsMVCModel;

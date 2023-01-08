@@ -21,7 +21,6 @@ import org.springframework.stereotype.*;
 @NoArgsConstructor
 public class TrackingControlsHL1
     extends ControlsHLBase
-    implements ControlsHLInterface
 {
 
     @Autowired private MainLayout mainLayout;
