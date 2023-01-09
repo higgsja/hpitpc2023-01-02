@@ -17,10 +17,8 @@ import org.springframework.stereotype.*;
  */
 @Component
 public class DataValidateOptionsModel {
-    @Autowired
-    private TPCDAOImpl serviceTPC;
-    @Autowired
-    @Getter private PrefsController prefsController;
+    @Autowired private TPCDAOImpl serviceTPC;
+    @Autowired @Getter private PrefsController prefsController;
 
     @Getter private List<EditAccountModel> accountModels;
     @Getter private List<TickerModel> tickerModels;
@@ -32,16 +30,23 @@ public class DataValidateOptionsModel {
     @Getter @Setter private TickerModel selectedTickerModel;
     @Getter @Setter private Boolean selectedSkip = false;
     @Getter @Setter private Boolean selectedValidated = false;
+    
+        /**
+     * track when setting a filter. Do not want to enable save if only 
+     * a filter change on the data provider
+     */
+    @Getter private Boolean bInFilterChange = false;
+
 
     public DataValidateOptionsModel() {
         this.dbList = new ArrayList<>();
     }
 
-    public void doAccountModels() {
+    public void updateAccountModels() {
         this.accountModels = this.serviceTPC.getAccountModels();
     }
 
-    public void doTickerModels() {
+    public void updateTickerModels() {
         this.tickerModels = this.serviceTPC
             .getTickerModels(this.selectedAccountModel);
     }
@@ -49,7 +54,7 @@ public class DataValidateOptionsModel {
     /**
      * retrieves data for the grid
      */
-    public void doGridData() {
+    public void updateGridData() {
         List<ValidateOptionTransactionModel> aList;
         ValidateOptionTransactionModel tmpVotm;
 
@@ -97,7 +102,7 @@ public class DataValidateOptionsModel {
      * @param skipBoolean:      true to view only Skip records
      * @param validatedBoolean: true to view only Validated records
      */
-    public void filters(Boolean skipBoolean, Boolean validatedBoolean) {
+    public void filterChange(Boolean skipBoolean, Boolean validatedBoolean) {
         if (this.gridDataProvider == null) {
             return;
         }
@@ -120,8 +125,8 @@ public class DataValidateOptionsModel {
         }
     }
 
-    public void getPrefs() {
-        this.prefsController.readPrefsByPrefix("OptionValidate");
+    public void getPrefs(String key) {
+        this.prefsController.readPrefsByPrefix(key);
         this.selectedSkip = this.prefsController
             .getPref("OptionValidateSkip").equals("Yes");
         this.selectedValidated = this.prefsController
