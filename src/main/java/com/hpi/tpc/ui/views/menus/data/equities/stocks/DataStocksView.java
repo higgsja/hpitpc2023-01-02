@@ -34,7 +34,7 @@ import org.springframework.stereotype.Component;
 @NoArgsConstructor
 @PermitAll
 public class DataStocksView
-    extends ViewBase
+    extends ViewBaseFL
     implements BeforeEnterObserver
 {
 

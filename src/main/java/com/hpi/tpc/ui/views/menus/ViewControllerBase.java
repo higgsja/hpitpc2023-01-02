@@ -24,7 +24,7 @@ public abstract class ViewControllerBase
 
     @Getter @Autowired private MainLayout mainLayout;
     @Getter @Autowired private PrefsController prefsController;
-    @Autowired private NotesMVC_M notesMVCModel;
+//    @Autowired private NotesMVC_M notesMVCModel;
 
     @Getter public final MenuBar menuBar;
 
