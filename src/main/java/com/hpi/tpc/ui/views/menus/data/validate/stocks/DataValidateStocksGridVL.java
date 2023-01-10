@@ -1,34 +1,45 @@
 package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 
 import com.hpi.tpc.data.entities.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.checkbox.*;
 import com.vaadin.flow.component.grid.*;
-import com.vaadin.flow.component.orderedlayout.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
+
 @Component
-public class DataValidateStocksGrid
+public class DataValidateStocksGridVL
+    extends ViewBaseVL
 {
 
     @Autowired private DataValidateStocksModel dataValidateStocksModel;
 
-    @Getter private final VerticalLayout gridVL;
-    @Getter private final Grid<ValidateStockTransactionModel> grid;
-    @Getter private final FooterRow footerRow;
+    @Getter @Setter private Grid<ValidateStockTransactionModel> grid;
+    @Getter @Setter private FooterRow footerRow;
 
-    public DataValidateStocksGrid()
+    public DataValidateStocksGridVL()
     {
-        this.grid = new Grid<>();
+        this.setClassName("dataValidateStocsGridVL");
+
+        this.grid = new Grid();
         this.footerRow = this.grid.appendFooterRow();
-        this.gridVL = new VerticalLayout(grid);
+        this.add(this.grid);
+        
+        this.getElement().getStyle().set("padding", "0");
+
         this.doLayout();
     }
 
     private void doLayout()
     {
-        this.grid.addClassName("validateStocksGrid");
+        this.grid.setColumnReorderingAllowed(true);
+        this.grid.recalculateColumnWidths();
+        
+        this.grid.setAllRowsVisible(false);
+
+        this.grid.addClassName("dataValidateStocksGrid");
         this.grid.setThemeName("dense");
 
         this.grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
@@ -36,7 +47,6 @@ public class DataValidateStocksGrid
         this.grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
 
         this.grid.setSelectionMode(Grid.SelectionMode.SINGLE);
-        this.grid.setHeightByRows(true);
 
         this.grid.addColumn(ValidateStockTransactionModel::getEquityId)
             .setHeader("EquityId")
@@ -131,11 +141,5 @@ public class DataValidateStocksGrid
             .setHeader("Complete")
             .setAutoWidth(true)
             .setTextAlign(ColumnTextAlign.CENTER);
-
-        this.grid.setColumnReorderingAllowed(true);
-        this.grid.recalculateColumnWidths();
-
-//        this.gridVL = new VerticalLayout(grid);
-        this.gridVL.setClassName("stocksValidateGrid");
     }
 }

@@ -11,7 +11,7 @@ import org.springframework.stereotype.*;
 @CssImport("./styles/baseMVCView1Wide.css")
 @Getter
 public abstract class MVCView1WideBase
-    extends ViewBase
+    extends ViewBaseFL
 {
     public MVCView1WideBase()
     {

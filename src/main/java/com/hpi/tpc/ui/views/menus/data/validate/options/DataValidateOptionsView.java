@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.*;
 @PermitAll
 @NoArgsConstructor
 public class DataValidateOptionsView
-    extends ViewBase
+    extends ViewBaseFL
 {
 
     @Autowired private DataValidateOptionsModel optionsModel;

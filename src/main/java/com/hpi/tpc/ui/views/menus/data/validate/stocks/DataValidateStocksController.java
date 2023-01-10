@@ -17,6 +17,7 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.stereotype.*;
 
 /*
  * Controller: Interface between Model and View to process business logic and incoming
@@ -29,17 +30,17 @@ import org.springframework.beans.factory.annotation.*;
  */
 @UIScope
 @VaadinSessionScope
-@org.springframework.stereotype.Component
 @Route(value = ROUTE_DATA_VALIDATE_STOCKS_CONTROLLER, layout = MainLayout.class)
 @NoArgsConstructor
 @PermitAll
+@Component
 public class DataValidateStocksController
-    extends ViewControllerBase
+    extends ViewControllerBase  //flexLayout
     implements BeforeEnterObserver
 {
 
     @Autowired private DataValidateStocksModel dataValidateStocksModel;
-    @Autowired private DataValidateStocksView dataValidateStocksView;
+    @Autowired private DataValidateStocksViewFL dataValidateStocksView;
     @Autowired private TPCDAOImpl serviceTPC;
 
     private Registration dataProviderListener = null;
@@ -47,7 +48,7 @@ public class DataValidateStocksController
     @PostConstruct
     private void construct()
     {
-        this.addClassName("dataValidateStocksController");
+//        this.addClassName("dataValidateStocksController");
 
         this.dataValidateStocksModel.getPrefs("StockValidate");
 
@@ -131,7 +132,7 @@ public class DataValidateStocksController
         this.updateViewOnEnter();
 
         //transfer to viewer
-        event.forwardTo(DataValidateStocksView.class);
+        event.forwardTo(DataValidateStocksViewFL.class);
     }
 
     private void updateViewOnEnter()
@@ -296,6 +297,13 @@ public class DataValidateStocksController
          */
         this.updateGridOnChange();
     }
+
+//    @Override
+//    public void createMenuTabs()
+//    {
+//        //none; not changing top tabs
+//        //todo: change top menu prefs icon route
+//    }
 
     @Override
     public void createMenuTabs()

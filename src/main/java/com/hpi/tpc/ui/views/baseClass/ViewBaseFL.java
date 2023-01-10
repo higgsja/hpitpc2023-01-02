@@ -3,23 +3,23 @@ package com.hpi.tpc.ui.views.baseClass;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.spring.annotation.*;
-import lombok.*;
-import org.springframework.stereotype.*;
 
+
+/**
+ * Abstract class for content element on each page
+ */
 @UIScope
 @VaadinSessionScope
-@Component
-@Getter
-public abstract class ViewBase
-    extends VerticalLayout
+public abstract class ViewBaseFL
+    extends FlexLayout
 {
-    public ViewBase()
+    public ViewBaseFL()
     {
-        this.setClassName("viewBase");
+        this.setClassName("viewBaseFL");
         
         this.setMinWidth("320px");
-        this.setWidth("550px");
-        this.setHeight("100%");
+        
+        this.setSizeFull();
     }
 
     public Label titleFormat(String title)

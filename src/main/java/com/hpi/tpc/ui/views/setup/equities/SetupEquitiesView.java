@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @PermitAll
 //@CssImport("./styles/setupEquities.css")
 public class SetupEquitiesView
-    extends ViewBase
+    extends ViewBaseFL
     implements BeforeEnterObserver
 {
 
