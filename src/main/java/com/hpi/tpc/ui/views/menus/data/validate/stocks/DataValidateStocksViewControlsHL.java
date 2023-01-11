@@ -11,7 +11,7 @@ import org.springframework.stereotype.*;
 
 @Getter
 @Component
-public class DataValidateStocksControlsHL
+public class DataValidateStocksViewControlsHL
     extends ControlsHLBase
 {
 
@@ -28,7 +28,7 @@ public class DataValidateStocksControlsHL
     private HorizontalLayout checkBoxesHL;
     private HorizontalLayout buttonsHL;
 
-    public DataValidateStocksControlsHL()
+    public DataValidateStocksViewControlsHL()
     {
         this.doLayout();
     }
@@ -36,7 +36,7 @@ public class DataValidateStocksControlsHL
     @Override
     public final void doLayout()
     {
-        this.addClassName("stocksValidateControls");
+        this.addClassName("dataValidateStocksControlsHL");
 
         this.comboAccounts = new ComboBox<>();
         this.comboTickers = new ComboBox<>();
@@ -67,7 +67,7 @@ public class DataValidateStocksControlsHL
         this.checkboxSkip.setValue(check);
     }
 
-    public Boolean getCheckgboxSkipValue()
+    public Boolean getCheckboxSkipValue()
     {
         return this.checkboxSkip.getValue();
     }

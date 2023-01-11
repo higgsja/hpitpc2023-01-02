@@ -79,12 +79,13 @@ public class MainLayout
             UI.getCurrent().navigate(((MyTab) event.getSelectedTab()).getNavTarget());
         });
         this.setPrimarySection(Section.DRAWER);
-        
+
         //construct the navBar
         this.addToNavbar(true, new DrawerToggle(), this.noteIcon());
     }
-    
-    private Icon noteIcon(){
+
+    private Icon noteIcon()
+    {
         Icon pencilIcon;
 
         pencilIcon = new Icon(VaadinIcon.PENCIL);
@@ -117,11 +118,45 @@ public class MainLayout
         }
     }
 
+    public void removeTopMenuBar()
+    {
+        if (this.menuBar != null)
+        {
+            this.remove(this.menuBar);
+            this.menuBar = null;
+        }
+    }
+
+    public void removePagePrefsHL()
+    {
+        if (this.pagePrefsHL != null)
+        {
+            this.remove(this.pagePrefsHL);
+            this.pagePrefsHL = null;
+        }
+    }
+
+    public void updatePagePrefsHL(HorizontalLayout prefsPageHL)
+    {
+        this.addToNavbar();
+    }
+
     public void addTopMenu(MenuBar menuBar, HorizontalLayout pagePrefsHL)
     {
+        //hit
         this.addToNavbar(menuBar, pagePrefsHL);
         this.menuBar = menuBar;
         this.pagePrefsHL = pagePrefsHL;
+    }
+
+    public void addTopMenuBar(MenuBar menuBar)
+    {
+        this.addToNavbar(menuBar);
+    }
+
+    public void addPagePrefsHL(HorizontalLayout pagePrefsHL)
+    {
+        this.addToNavbar(pagePrefsHL);
     }
 
 //    public void clearNavBar()
@@ -143,7 +178,6 @@ public class MainLayout
 //            }
 //        }
 //    }
-
     public void getClientSectorLists()
     {
         //query data from backend

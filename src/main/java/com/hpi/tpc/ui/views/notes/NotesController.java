@@ -47,7 +47,7 @@ public class NotesController
     @PostConstruct
     private void construct()
     {
-        this.setClassName("notesMenu");
+        this.addClassName("notesMenu");
         this.menuBar.setId("notesMenuId");
 
         //get any preferences

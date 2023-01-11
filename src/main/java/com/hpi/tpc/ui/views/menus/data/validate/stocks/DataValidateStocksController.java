@@ -15,7 +15,6 @@ import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
-import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -31,25 +30,46 @@ import org.springframework.stereotype.*;
 @UIScope
 @VaadinSessionScope
 @Route(value = ROUTE_DATA_VALIDATE_STOCKS_CONTROLLER, layout = MainLayout.class)
-@NoArgsConstructor
 @PermitAll
 @Component
 public class DataValidateStocksController
-    extends ViewControllerBase  //flexLayout
+    extends ViewControllerBase //flexLayout
     implements BeforeEnterObserver
 {
 
     @Autowired private DataValidateStocksModel dataValidateStocksModel;
-    @Autowired private DataValidateStocksViewFL dataValidateStocksView;
     @Autowired private TPCDAOImpl serviceTPC;
+
+    private final DataValidateStocksViewVL dataValidateStocksViewVL;
+    private final DataValidateStocksViewTitleVL dataValidateStocksViewTitleVL;
+    private final DataValidateStocksViewControlsHL dataValidateStocksViewControlsHL;
+    private final DataValidateStocksViewGridVL dataValidateStocksViewGridVL;
 
     private Registration dataProviderListener = null;
 
-    @PostConstruct
-    private void construct()
+    public DataValidateStocksController()
     {
-//        this.addClassName("dataValidateStocksController");
+        this.addClassName("dataValidateStocksController");
+        
+        //no preferences
+        this.createPreferencesTab(null);
 
+        this.dataValidateStocksViewVL = new DataValidateStocksViewVL();
+        this.add(this.dataValidateStocksViewVL);
+        
+        this.dataValidateStocksViewTitleVL = new DataValidateStocksViewTitleVL();
+        this.dataValidateStocksViewVL.add(this.dataValidateStocksViewTitleVL);
+
+        this.dataValidateStocksViewControlsHL = new DataValidateStocksViewControlsHL();
+        this.dataValidateStocksViewVL.add(this.dataValidateStocksViewControlsHL);
+
+        this.dataValidateStocksViewGridVL = new DataValidateStocksViewGridVL();
+        this.dataValidateStocksViewVL.add(this.dataValidateStocksViewGridVL);
+    }
+
+    @PostConstruct
+    public void construct()
+    {
         this.dataValidateStocksModel.getPrefs("StockValidate");
 
         this.setCheckboxSkipValue(this.dataValidateStocksModel.getSelectedSkip());
@@ -61,90 +81,102 @@ public class DataValidateStocksController
 
         this.setListeners();
     }
-    
-    private ComboBox<EditAccountModel> getComboAccounts(){
-        return this.dataValidateStocksView.getComboAccounts();
-    }
-    
-    private ComboBox<TickerModel> getComboTickers(){
-        return this.dataValidateStocksView.getComboTickers();
+
+    private ComboBox<EditAccountModel> getComboAccounts()
+    {
+        return this.dataValidateStocksViewControlsHL.getComboAccounts();
     }
 
-    private Checkbox getCheckboxSkip(){
-        return this.dataValidateStocksView.getCheckboxSkip();
+    private ComboBox<TickerModel> getComboTickers()
+    {
+        return this.dataValidateStocksViewControlsHL.getComboTickers();
     }
-    
+
+    private Checkbox getCheckboxSkip()
+    {
+        return this.dataValidateStocksViewControlsHL.getCheckboxSkip();
+    }
+
     private void setCheckboxSkipValue(Boolean skip)
     {
-        this.dataValidateStocksView.setCheckboxSkipValue(skip);
+        this.dataValidateStocksViewControlsHL.setCheckboxSkipValue(skip);
     }
 
     private Boolean getCheckboxSkipValue()
     {
-        return this.dataValidateStocksView.getCheckboxSkipValue();
+        return this.dataValidateStocksViewControlsHL.getCheckboxSkipValue();
     }
 
-    private Checkbox getCheckboxValidated(){
-        return this.dataValidateStocksView.getCheckboxValidated();
+    private Checkbox getCheckboxValidated()
+    {
+        return this.dataValidateStocksViewControlsHL.getCheckboxValidated();
     }
-    
+
     private void setCheckboxValidatedValue(Boolean skip)
     {
-        this.dataValidateStocksView.setCheckboxValidatedValue(skip);
+        this.dataValidateStocksViewControlsHL.setCheckboxValidatedValue(skip);
     }
 
     private Boolean getCheckboxValidatedValue()
     {
-        return this.dataValidateStocksView.getCheckboxValidatedValue();
+        return this.dataValidateStocksViewControlsHL.getCheckboxValidatedValue();
     }
 
-    private Button getButtonSave(){
-        return this.dataValidateStocksView.getButtonSave();
+    private Button getButtonSave()
+    {
+        return this.dataValidateStocksViewControlsHL.getButtonSave();
     }
-    
+
     private void setButtonSaveEnabled(Boolean enabled)
     {
-        this.dataValidateStocksView.setButtonSaveEnabled(enabled);
+        this.dataValidateStocksViewControlsHL.setButtonSaveEnabled(enabled);
     }
-    
-    private Button getButtonCancel(){
-        return this.dataValidateStocksView.getButtonCancel();
+
+    private Button getButtonCancel()
+    {
+        return this.dataValidateStocksViewControlsHL.getButtonCancel();
     }
 
     private void setButtonCancelEnabled(Boolean enabled)
     {
-        this.dataValidateStocksView.setButtonCancelEnabled(enabled);
+        this.dataValidateStocksViewControlsHL.setButtonCancelEnabled(enabled);
     }
 
-    public Grid<ValidateStockTransactionModel> getGrid(){
-        return this.dataValidateStocksView.getGrid();
+    public Grid<ValidateStockTransactionModel> getGrid()
+    {
+        return this.dataValidateStocksViewGridVL.getGrid();
     }
-    
-    public FooterRow getFooterRow(){
-        return this.dataValidateStocksView.getFooterRow();
+
+    public FooterRow getFooterRow()
+    {
+        return this.dataValidateStocksViewGridVL.getFooterRow();
     }
 
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {
+        super.beforeEnter(event);
+
+        //log feature use
         this.serviceTPC.AppTracking("WTPC:Data:Validate:Stocks");
 
-        this.updateViewOnEnter();
-
-        //transfer to viewer
-        event.forwardTo(DataValidateStocksViewFL.class);
+        //refresh data on every entry
+        this.updateDataOnEnter();
+        
+        //change the preferences route
+        this.updatePrefsIcon();
     }
 
-    private void updateViewOnEnter()
+    private void updateDataOnEnter()
     {
         /**
          * update data on every enter as data may have changed
          */
-        this.updateViewOnEnterAccounts();
-        this.updateViewOnEnterTickers();
+        this.updateDataOnEnterAccounts();
+        this.updateDataOnEnterTickers();
     }
 
-    private void updateViewOnEnterAccounts()
+    private void updateDataOnEnterAccounts()
     {
         /**
          * update accounts data from database into the view
@@ -158,7 +190,7 @@ public class DataValidateStocksController
         this.dataValidateStocksModel.setSelectedAccountModel(this.getComboAccounts().getValue());
     }
 
-    private void updateViewOnEnterTickers()
+    private void updateDataOnEnterTickers()
     {
         /**
          * update tickers from database into the view
@@ -220,7 +252,6 @@ public class DataValidateStocksController
         Grid.Column aColumn = this.getGrid().getColumnByKey("units");
 
         this.getFooterRow().getCell(aColumn).setText(unitsTotal.toString());
-
     }
 
     private void setListeners()
@@ -271,7 +302,7 @@ public class DataValidateStocksController
         this.dataProviderListener = this.dataValidateStocksModel
             .getGridDataProvider().addDataProviderListener(dataEvent ->
             {
-                //do not want enabled on simple filter change in data provider
+                //only enable if not a simple filter change in data provider
                 if (!this.dataValidateStocksModel.getBInFilterChange())
                 {
                     this.getButtonSave().setEnabled(true);
@@ -297,13 +328,6 @@ public class DataValidateStocksController
          */
         this.updateGridOnChange();
     }
-
-//    @Override
-//    public void createMenuTabs()
-//    {
-//        //none; not changing top tabs
-//        //todo: change top menu prefs icon route
-//    }
 
     @Override
     public void createMenuTabs()

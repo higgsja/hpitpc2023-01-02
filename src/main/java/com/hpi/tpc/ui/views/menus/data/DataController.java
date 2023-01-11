@@ -1,6 +1,6 @@
 package com.hpi.tpc.ui.views.menus.data;
 
-import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataStocksView;
+import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataEquitiesStocksViewFL;
 import com.hpi.tpc.ui.views.main.*;
 import com.hpi.tpc.ui.views.menus.ViewControllerBase;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
@@ -106,7 +106,7 @@ public class DataController
         super.doNavBar(ROUTE_DATA_PREFERENCES);
 
         //send to default view
-        bee.forwardTo(DataStocksView.class);
+        bee.forwardTo(DataEquitiesStocksViewFL.class);
     }
 
 }

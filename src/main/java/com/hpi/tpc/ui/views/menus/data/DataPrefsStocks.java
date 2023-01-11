@@ -1,7 +1,7 @@
 package com.hpi.tpc.ui.views.menus.data;
 
-import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataStocksModel;
-import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataStocksView;
+import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataEquitiesStocksModel;
+import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataEquitiesStocksViewFL;
 import com.flowingcode.vaadin.addons.twincolgrid.*;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.prefs.*;
@@ -32,8 +32,8 @@ public class DataPrefsStocks
     @Autowired private MainLayout mainLayout;
     @Autowired private TPCDAOImpl serviceTPC;
     @Autowired private PrefsController prefsController;
-    @Autowired private DataStocksModel dataStocksMVCModel;
-    @Autowired private DataStocksView dataStocksMVCView;
+    @Autowired private DataEquitiesStocksModel dataStocksMVCModel;
+    @Autowired private DataEquitiesStocksViewFL dataStocksMVCView;
 
     private TwinColGrid<Attribute> twinColGrid;
 

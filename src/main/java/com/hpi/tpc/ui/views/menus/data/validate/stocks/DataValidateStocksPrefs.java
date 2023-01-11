@@ -1,8 +1,9 @@
-package com.hpi.tpc.ui.views.notes;
+package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 
 import com.hpi.tpc.ui.views.main.MainLayout;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.ui.views.baseClass.*;
+import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.security.*;
@@ -18,11 +19,11 @@ import org.springframework.stereotype.*;
 @UIScope
 @VaadinSessionScope
 @Component
-@Route(value = ROUTE_NOTES_PREFERENCES, layout = MainLayout.class)
-@PageTitle(TITLE_PAGE_NOTES)
+@Route(value = ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES, layout = MainLayout.class)
+@PageTitle(TITLE_PAGE_DATA_VALIDATE_STOCKS_PREFERENCES)
 @NoArgsConstructor
 @PermitAll
-public class NotesPrefs
+public class DataValidateStocksPrefs
     extends PagePrefsBase
     implements BeforeEnterObserver
 {
@@ -30,6 +31,6 @@ public class NotesPrefs
     @Override
     public void beforeEnter(BeforeEnterEvent bee)
     {
-        this.init("NotesHelp");
+        this.init("DataValidateStocksPrefsHelp");
     }
 }

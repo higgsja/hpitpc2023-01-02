@@ -24,6 +24,6 @@ public class DataInfo
     @PostConstruct
     public void construct()
     {
-        this.init("ConfigDataHelp");
+        this.init("DataHelp");
     }
 }
