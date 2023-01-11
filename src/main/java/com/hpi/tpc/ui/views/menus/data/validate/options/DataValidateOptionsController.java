@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.*;
 @NoArgsConstructor
 @PermitAll
 public class DataValidateOptionsController
-    extends ViewControllerBase
+    extends ViewControllerBase //flexlayout
     implements BeforeEnterObserver
 {
     @Autowired private DataValidateOptionsModel dataValidateOptionsModel;

@@ -11,7 +11,7 @@ import org.springframework.stereotype.*;
 
 @Getter
 @Component
-public class DataValidateOptionsControlsHL
+public class DataValidateOptionsViewControlsHL
     extends ControlsHLBase
 {
 
@@ -28,7 +28,7 @@ public class DataValidateOptionsControlsHL
     private HorizontalLayout checkBoxesHL;
     private HorizontalLayout buttonsHL;
 
-    public DataValidateOptionsControlsHL()
+    public DataValidateOptionsViewControlsHL()
     {
         this.doLayout();
     }

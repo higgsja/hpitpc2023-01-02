@@ -33,14 +33,14 @@ import org.springframework.stereotype.Component;
 @PageTitle(TITLE_PAGE_DATA + ":" + TITLE_PAGE_DATA_EQUITIES_STOCKS)
 @NoArgsConstructor
 @PermitAll
-public class DataStocksView
+public class DataEquitiesStocksViewFL
     extends ViewBaseFL
     implements BeforeEnterObserver
 {
 
     @Autowired private MainLayout mainLayout;
     @Autowired private TPCDAOImpl tpcService;
-    @Autowired private DataStocksModel dataStocksModel;
+    @Autowired private DataEquitiesStocksModel dataStocksModel;
     @Autowired private PrefsController prefsController;
     @Autowired private FinVizEquityInfoModelService equityInfoService;
 
@@ -544,5 +544,7 @@ public class DataStocksView
         {
             this.mainLayout.setDrawerOpened(false);
         }
+        
+
     }
 }

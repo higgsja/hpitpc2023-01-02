@@ -26,6 +26,6 @@ public class ToolsPrefs
     @Override
     public void beforeEnter(BeforeEnterEvent bee)
     {
-        this.init("ConfigToolsHelp");
+        this.init("ToolsHelp");
     }
 }

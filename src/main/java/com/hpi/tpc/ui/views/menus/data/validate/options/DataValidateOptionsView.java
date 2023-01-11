@@ -36,9 +36,9 @@ public class DataValidateOptionsView
     @Autowired private DataValidateOptionsModel optionsModel;
 
     @Getter private VerticalLayout titleVL;
-    private DataValidateOptionsGrid grid;
+    private DataValidateOptionsViewGridVL grid;
 
-    private DataValidateOptionsControlsHL controlsHL;
+    private DataValidateOptionsViewControlsHL controlsHL;
     private HorizontalLayout comboBoxesHL;
     @Getter private ComboBox<EditAccountModel> comboAccounts;
     @Getter private ComboBox<TickerModel> comboTickers;
@@ -58,10 +58,10 @@ public class DataValidateOptionsView
 
         this.add(this.titleFormat("Validate Options Transactions"));
 
-        this.controlsHL = new DataValidateOptionsControlsHL();
+        this.controlsHL = new DataValidateOptionsViewControlsHL();
         this.add(this.controlsHL);
 
-        this.grid = new DataValidateOptionsGrid();
+        this.grid = new DataValidateOptionsViewGridVL();
         this.add(this.grid.getGridVL());
     }
 

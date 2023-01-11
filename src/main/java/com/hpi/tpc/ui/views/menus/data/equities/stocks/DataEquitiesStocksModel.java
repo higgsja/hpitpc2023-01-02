@@ -22,7 +22,7 @@ import org.springframework.stereotype.*;
 @VaadinSessionScope
 @Component
 @NoArgsConstructor
-public class DataStocksModel
+public class DataEquitiesStocksModel
 {
 
     @Autowired private JdbcTemplate jdbcTemplate;

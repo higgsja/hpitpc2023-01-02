@@ -1,6 +1,5 @@
 package com.hpi.tpc.ui.views.menus;
 
-import com.hpi.tpc.ui.views.notes.notes.NotesMVC_M;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.vaadin.flow.component.*;
@@ -22,11 +21,12 @@ public abstract class ViewControllerBase
     implements BeforeEnterObserver
 {
 
-    @Getter @Autowired private MainLayout mainLayout;
-    @Getter @Autowired private PrefsController prefsController;
+    @Autowired private MainLayout mainLayout;
+    @Autowired private PrefsController prefsController;
 //    @Autowired private NotesMVC_M notesMVCModel;
 
-    @Getter public final MenuBar menuBar;
+    public MenuBar menuBar;
+    private HorizontalLayout prefsPageHL;
 
     public ViewControllerBase()
     {
@@ -42,13 +42,27 @@ public abstract class ViewControllerBase
      */
     public void doNavBar(String prefsPage)
     {
-
         //clear the old menu items
         this.mainLayout.removeTopMenu();
 
-        //add the new menu items
-        this.mainLayout.addTopMenu(this.menuBar, this.createPreferencesTab(prefsPage));
+        this.prefsPageHL = this.createPreferencesTab(prefsPage);
 
+        //add the new menu items
+        this.mainLayout.addTopMenu(this.menuBar, this.prefsPageHL);
+    }
+
+    /**
+     * Change the gear icon route as necessary
+     * When there is no preference page, prefsPageHL is set to null
+     */
+    public void updatePrefsIcon()
+    {
+        this.mainLayout.removePagePrefsHL();
+
+        if (prefsPageHL != null)
+        {
+            this.mainLayout.addPagePrefsHL(prefsPageHL);
+        }
     }
 
     /**
@@ -59,19 +73,24 @@ public abstract class ViewControllerBase
     /*
      * create the preferences icon and listener for the top menuBar
      */
-    private HorizontalLayout createPreferencesTab(String prefsPage)
+    public HorizontalLayout createPreferencesTab(String prefsPage)
     {
         //hit
         Icon prefsIcon;
         HorizontalLayout prefsHorizontalLayout;
 
         prefsHorizontalLayout = new HorizontalLayout();
+        prefsHorizontalLayout.setWidth("100%");
+        prefsHorizontalLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+
+        if (prefsPage == null)
+        {
+            return prefsHorizontalLayout;
+        }
 
         prefsIcon = new Icon(VaadinIcon.COG);
         prefsIcon.setColor("#169FF3");
         prefsHorizontalLayout.add(prefsIcon);
-        prefsHorizontalLayout.setWidth("100%");
-        prefsHorizontalLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
 
         //add listener to prefs page
         prefsIcon.addClickListener((ClickEvent<Icon> t) ->
@@ -85,9 +104,9 @@ public abstract class ViewControllerBase
     @Override
     public void beforeEnter(BeforeEnterEvent bee)
     {
-        if (this.getPrefsController().getPref("TPCDrawerClose").equalsIgnoreCase("yes"))
+        if (this.prefsController.getPref("TPCDrawerClose").equalsIgnoreCase("yes"))
         {
-            this.getMainLayout().setDrawerOpened(false);
+            this.mainLayout.setDrawerOpened(false);
         }
     }
 }
