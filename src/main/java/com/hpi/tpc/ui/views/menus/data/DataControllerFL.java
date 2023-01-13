@@ -1,9 +1,9 @@
 package com.hpi.tpc.ui.views.menus.data;
 
-import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataEquitiesStocksViewFL;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.ViewControllerBase;
+import com.hpi.tpc.ui.views.menus.ViewControllerBaseFL;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
+import com.hpi.tpc.ui.views.menus.data.equities.stocks.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
 import com.vaadin.flow.router.*;
@@ -29,8 +29,8 @@ import org.springframework.beans.factory.annotation.*;
 @org.springframework.stereotype.Component
 @NoArgsConstructor
 @PermitAll
-public class DataController
-    extends ViewControllerBase
+public class DataControllerFL
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
@@ -39,7 +39,7 @@ public class DataController
     @PostConstruct
     private void construct()
     {
-        this.setClassName("dataController");
+        this.addClassName("dataController");
 
         //get any preferences
         this.dataModel.getPrefs();
@@ -86,7 +86,7 @@ public class DataController
         MenuItem showStocks = equitiesSubMenu.addItem(TAB_DATA_EQUITIES_STOCKS_TITLE);
         showStocks.addClickListener((ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(ROUTE_DATA_EQUITIES_STOCKS);
+            UI.getCurrent().navigate(ROUTE_DATA_EQUITIES_STOCKS_CONTROLLER);
         });
 
         MenuItem infoItem = this.menuBar.addItem(TAB_DATA_INFO);
@@ -103,10 +103,10 @@ public class DataController
         super.beforeEnter(bee);
 
         //set navBar for this menu
-        super.doNavBar(ROUTE_DATA_PREFERENCES);
+//        super.doNavBar(ROUTE_DATA_EQUITIES_STOCKS_PREFERENCES);
 
         //send to default view
-        bee.forwardTo(DataEquitiesStocksViewFL.class);
+        bee.forwardTo(DataEquitiesStocksController.class);
     }
 
 }
