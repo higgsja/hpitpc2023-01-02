@@ -41,17 +41,15 @@ public class MainLayout
     @Getter private HashMap<Integer, Double> clientSectorIdTgtPctHashMap;
     //clientEquityAttributes does not change often
     @Getter private List<ClientEquityModel> clientEquityAttributesModels;
+    //top menu
 
-    //top menu 
-    private DrawerToggle drawerToggle;
-    private Icon noteIcon;
-    private MenuBar menuBar;
+    private final Icon noteIcon;
+    @Getter private MenuBar menuBar;
     private HorizontalLayout pagePrefsHL;
-
-    private Registration tabSelectionListener;
 
     public MainLayout()
     {
+        this.noteIcon = this.noteIcon();
     }
 
     @PostConstruct
@@ -74,7 +72,7 @@ public class MainLayout
 
         //construct the drawer
         this.addToDrawer(this.mainDrawer.getMainMenuTabs());
-        this.tabSelectionListener = this.mainDrawer.getMainMenuTabs().addSelectedChangeListener(event ->
+        this.mainDrawer.getMainMenuTabs().addSelectedChangeListener(event ->
         {
             UI.getCurrent().navigate(((MyTab) event.getSelectedTab()).getNavTarget());
         });
@@ -103,20 +101,20 @@ public class MainLayout
         return pencilIcon;
     }
 
-    public void removeTopMenu()
-    {
-        if (this.menuBar != null)
-        {
-            this.remove(this.menuBar);
-            this.menuBar = null;
-        }
-
-        if (this.pagePrefsHL != null)
-        {
-            this.remove(this.pagePrefsHL);
-            this.pagePrefsHL = null;
-        }
-    }
+//    public void removeTopMenu()
+//    {
+//        if (this.menuBar != null)
+//        {
+//            this.remove(this.menuBar);
+//            this.menuBar = null;
+//        }
+//
+//        if (this.pagePrefsHL != null)
+//        {
+//            this.remove(this.pagePrefsHL);
+//            this.pagePrefsHL = null;
+//        }
+//    }
 
     public void removeTopMenuBar()
     {
@@ -135,49 +133,56 @@ public class MainLayout
             this.pagePrefsHL = null;
         }
     }
+    
+    public void addPagePrefsHL(HorizontalLayout pagePrefsHL)
+    {
+        this.addToNavbar(pagePrefsHL);
+        this.pagePrefsHL = pagePrefsHL;
+    }
 
     public void updatePagePrefsHL(HorizontalLayout prefsPageHL)
     {
-        this.addToNavbar();
+        this.removePagePrefsHL();
+        this.addPagePrefsHL(prefsPageHL);
     }
 
     public void addTopMenu(MenuBar menuBar, HorizontalLayout pagePrefsHL)
     {
         //hit
-        this.addToNavbar(menuBar, pagePrefsHL);
+        this.addToNavbar(true, new DrawerToggle(), this.noteIcon, menuBar, pagePrefsHL);
         this.menuBar = menuBar;
         this.pagePrefsHL = pagePrefsHL;
+    }
+    
+    public void updateTopMenu(MenuBar menuBar, HorizontalLayout pagePrefsHL){
+        this.removeTopMenu();
+        
+        this.addTopMenu(menuBar, pagePrefsHL);
     }
 
     public void addTopMenuBar(MenuBar menuBar)
     {
         this.addToNavbar(menuBar);
     }
-
-    public void addPagePrefsHL(HorizontalLayout pagePrefsHL)
+    public void removeTopMenu()
     {
-        this.addToNavbar(pagePrefsHL);
+        Element mainLayoutElement;
+        //get array of all elements in the layout; process those with attribute of 'slot'
+        for (Object c : this.getElement().getChildren().toArray())
+        {
+            mainLayoutElement = (Element) c;
+            //only want slot elements
+            if (mainLayoutElement.getAttribute("slot") != null
+                //and those that are 'navbar'
+                && (mainLayoutElement.getAttribute("slot").equalsIgnoreCase("navbar")
+                //or 'navbar touch-optimized'
+                || mainLayoutElement.getAttribute("slot").equalsIgnoreCase("navbar touch-optimized")))
+            {
+                //then remove them from the navBar
+                this.getElement().removeChild((Element) c);
+            }
+        }
     }
-
-//    public void clearNavBar()
-//    {
-//        Element mainLayoutElement;
-//        //get array of all elements in the layout; process those with attribute of 'slot'
-//        for (Object c : this.getElement().getChildren().toArray())
-//        {
-//            mainLayoutElement = (Element) c;
-//            //only want slot elements
-//            if (mainLayoutElement.getAttribute("slot") != null
-//                //and those that are 'navbar'
-//                && (mainLayoutElement.getAttribute("slot").equalsIgnoreCase("navbar")
-//                //or 'navbar touch-optimized'
-//                || mainLayoutElement.getAttribute("slot").equalsIgnoreCase("navbar touch-optimized")))
-//            {
-//                //then remove them from the navBar
-//                this.getElement().removeChild((Element) c);
-//            }
-//        }
-//    }
     public void getClientSectorLists()
     {
         //query data from backend
