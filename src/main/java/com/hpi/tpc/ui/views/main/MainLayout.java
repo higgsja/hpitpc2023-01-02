@@ -13,7 +13,6 @@ import com.vaadin.flow.component.icon.*;
 import com.vaadin.flow.component.menubar.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.dom.*;
-import com.vaadin.flow.shared.*;
 import com.vaadin.flow.spring.annotation.*;
 import com.vaadin.flow.theme.lumo.*;
 import java.util.*;
@@ -44,8 +43,8 @@ public class MainLayout
     //top menu
 
     private final Icon noteIcon;
-    @Getter private MenuBar menuBar;
-    private HorizontalLayout pagePrefsHL;
+//    @Getter private MenuBar menuBar;
+//    private HorizontalLayout pagePrefsHL;
 
     public MainLayout()
     {
@@ -101,70 +100,23 @@ public class MainLayout
         return pencilIcon;
     }
 
-//    public void removeTopMenu()
-//    {
-//        if (this.menuBar != null)
-//        {
-//            this.remove(this.menuBar);
-//            this.menuBar = null;
-//        }
-//
-//        if (this.pagePrefsHL != null)
-//        {
-//            this.remove(this.pagePrefsHL);
-//            this.pagePrefsHL = null;
-//        }
-//    }
-
-    public void removeTopMenuBar()
+    public void doNavBar(MenuBar menuBar, HorizontalLayout prefsPageHL)
     {
-        if (this.menuBar != null)
-        {
-            this.remove(this.menuBar);
-            this.menuBar = null;
-        }
-    }
-
-    public void removePagePrefsHL()
-    {
-        if (this.pagePrefsHL != null)
-        {
-            this.remove(this.pagePrefsHL);
-            this.pagePrefsHL = null;
-        }
-    }
-    
-    public void addPagePrefsHL(HorizontalLayout pagePrefsHL)
-    {
-        this.addToNavbar(pagePrefsHL);
-        this.pagePrefsHL = pagePrefsHL;
+        this.removeNavBar();
+        
+        this.addToNavbar(true, new DrawerToggle(), this.noteIcon, menuBar, prefsPageHL);
     }
 
     public void updatePagePrefsHL(HorizontalLayout prefsPageHL)
     {
         this.removePagePrefsHL();
-        this.addPagePrefsHL(prefsPageHL);
+        this.addToNavbar(prefsPageHL);
     }
 
-    public void addTopMenu(MenuBar menuBar, HorizontalLayout pagePrefsHL)
-    {
-        //hit
-        this.addToNavbar(true, new DrawerToggle(), this.noteIcon, menuBar, pagePrefsHL);
-        this.menuBar = menuBar;
-        this.pagePrefsHL = pagePrefsHL;
-    }
-    
-    public void updateTopMenu(MenuBar menuBar, HorizontalLayout pagePrefsHL){
-        this.removeTopMenu();
-        
-        this.addTopMenu(menuBar, pagePrefsHL);
-    }
-
-    public void addTopMenuBar(MenuBar menuBar)
-    {
-        this.addToNavbar(menuBar);
-    }
-    public void removeTopMenu()
+    /**
+     * Removes the existing navBar
+     */
+    public void removeNavBar()
     {
         Element mainLayoutElement;
         //get array of all elements in the layout; process those with attribute of 'slot'
@@ -183,6 +135,34 @@ public class MainLayout
             }
         }
     }
+
+    /**
+     * Removes the existing gear icon if it is in the navBar
+     */
+    public void removePagePrefsHL()
+    {
+        Element mainLayoutElement;
+        //get array of all elements in the layout; process those with attribute of 'slot'
+        for (Object c : this.getElement().getChildren().toArray())
+        {
+            mainLayoutElement = (Element) c;
+            //only want slot elements
+            if (mainLayoutElement.getAttribute("slot") != null
+                //and those that are 'navbar'
+                && (mainLayoutElement.getAttribute("slot").equalsIgnoreCase("navbar")
+                //or 'navbar touch-optimized'
+                || mainLayoutElement.getAttribute("slot").equalsIgnoreCase("navbar touch-optimized")))
+            {
+                //then remove them from the navBar
+                if (this.getElement().getAttribute("class") != null
+                    && this.getElement().getAttribute("Class").equalsIgnoreCase("prefsicon"))
+                {
+                    this.getElement().removeChild((Element) c);
+                }
+            }
+        }
+    }
+
     public void getClientSectorLists()
     {
         //query data from backend

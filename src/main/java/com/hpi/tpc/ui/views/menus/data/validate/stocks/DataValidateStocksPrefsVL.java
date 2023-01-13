@@ -1,13 +1,13 @@
 package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 
 import com.hpi.tpc.ui.views.main.MainLayout;
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
+import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.security.*;
-import lombok.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -21,16 +21,23 @@ import org.springframework.stereotype.*;
 @Component
 @Route(value = ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES, layout = MainLayout.class)
 @PageTitle(TITLE_PAGE_DATA_VALIDATE_STOCKS_PREFERENCES)
-@NoArgsConstructor
 @PermitAll
-public class DataValidateStocksPrefs
+public class DataValidateStocksPrefsVL
     extends PagePrefsBase
     implements BeforeEnterObserver
 {
+    @Autowired MainLayout mainLayout;
+    public DataValidateStocksPrefsVL(){
+        this.addClassName("dataValidateStocksPrefsVL");
+    }
 
     @Override
     public void beforeEnter(BeforeEnterEvent bee)
     {
+        //initialize the help display
         this.init("DataValidateStocksPrefsHelp");
+        
+        //update the preferences gear (remove)
+        this.mainLayout.updatePagePrefsHL(new HorizontalLayout());
     }
 }

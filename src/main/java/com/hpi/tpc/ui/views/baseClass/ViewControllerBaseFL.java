@@ -1,8 +1,9 @@
-package com.hpi.tpc.ui.views.menus;
+package com.hpi.tpc.ui.views.baseClass;
 
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.vaadin.flow.component.*;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.*;
 import com.vaadin.flow.component.menubar.*;
 import com.vaadin.flow.component.orderedlayout.*;
@@ -40,13 +41,23 @@ public abstract class ViewControllerBaseFL
      */
     public void doNavBar(String prefsPage)
     {
-        //clear the old menu items
-        this.mainLayout.removeTopMenu();
-
         this.prefsPageHL = this.createPreferencesTabHL(prefsPage);
+        
+        //set the top menu        
+        this.mainLayout.doNavBar(this.menuBar, prefsPageHL);
 
         //add the new menu items
-        this.mainLayout.addTopMenu(this.menuBar, this.prefsPageHL);
+//        this.mainLayout.addTopMenu(this.menuBar, this.prefsPageHL);
+    }
+    
+    public void updateNavBar(String prefsPage){
+        this.prefsPageHL = this.createPreferencesTabHL(prefsPage);
+        
+        //update the top menu        
+        this.mainLayout.updatePagePrefsHL(prefsPageHL);
+        
+                //update the top menu        
+        this.mainLayout.updatePagePrefsHL(prefsPageHL);
     }
 
     /**
@@ -61,7 +72,7 @@ public abstract class ViewControllerBaseFL
     /**
      * create top menuBar tabs and listeners
      */
-    public abstract void createMenuTabs();
+    public abstract void addMenuBarTabs();
 
     /*
      * create the preferences icon and listener for the top menuBar
@@ -75,6 +86,7 @@ public abstract class ViewControllerBaseFL
         prefsHorizontalLayout = new HorizontalLayout();
         prefsHorizontalLayout.setWidth("100%");
         prefsHorizontalLayout.setJustifyContentMode(FlexComponent.JustifyContentMode.END);
+        prefsHorizontalLayout.setClassName("prefsIcon");
 
         if (prefsPage == null)
         {
@@ -101,5 +113,20 @@ public abstract class ViewControllerBaseFL
         {
             this.mainLayout.setDrawerOpened(false);
         }
+    }
+    
+    public final Label titleFormat(String title)
+    {
+        Label label = new Label(title);
+        label.getElement().getStyle().set("font-size", "14px");
+        label.getElement().getStyle().set("font-family", "Arial");
+//        label.getElement().getStyle().set("color", "#169FF3");
+        label.getElement().getStyle().set("margin-top", "0px");
+        label.getElement().getStyle().set("margin-bottom", "0px");
+        label.getElement().getStyle().set("margin-block-start", "0px");
+        label.getElement().getStyle().set("margin-block-end", "0px");
+        label.getElement().getStyle().set("line-height", "1em");
+
+        return label;
     }
 }

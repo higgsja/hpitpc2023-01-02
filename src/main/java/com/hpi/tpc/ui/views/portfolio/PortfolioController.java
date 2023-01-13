@@ -1,8 +1,8 @@
 package com.hpi.tpc.ui.views.portfolio;
 
 import static com.hpi.tpc.AppConst.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import com.hpi.tpc.ui.views.portfolio.track.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.*;
 @NoArgsConstructor
 @PermitAll
 public class PortfolioController
-    extends ViewControllerBase
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver, BeforeLeaveObserver
 {
 
@@ -45,14 +45,14 @@ public class PortfolioController
         //get any preferences
         this.portfolioModel.getPrefs();
 
-        this.createMenuTabs();
+        this.addMenuBarTabs();
     }
 
     /*
      * create the tab and listeners; add to the menuBar
      */
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         MenuItem planItem = this.menuBar.addItem(TITLE_PORTFOLIO_PLAN);
         MenuItem trackItem = this.menuBar.addItem(TITLE_PORTFOLIO_TRACK);

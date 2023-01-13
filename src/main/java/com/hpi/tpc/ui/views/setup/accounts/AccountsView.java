@@ -148,4 +148,10 @@ public class AccountsView
     {
         this.topLeftVL.getAcctActiveCheckbox().setValue(active);
     }
+
+    @Override
+    public void addMenuBarTabs()
+    {
+        //none
+    }
 }

@@ -1,7 +1,7 @@
 package com.hpi.tpc.ui.views.menus.data;
 
 import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataEquitiesStocksModel;
-import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataEquitiesStocksViewFL;
+import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataEquitiesStocksControllerFL;
 import com.flowingcode.vaadin.addons.twincolgrid.*;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.prefs.*;
@@ -24,7 +24,7 @@ import org.springframework.stereotype.*;
 @PageTitle(TITLE_PAGE_DATA + ": " + TITLE_COACHING_GAINS)
 @Component
 @PermitAll
-public class DataPrefsStocks
+public class DataPrefsStocksVL
     extends VerticalLayout
     implements BeforeEnterObserver, BeforeLeaveObserver
 {
@@ -33,7 +33,7 @@ public class DataPrefsStocks
     @Autowired private TPCDAOImpl serviceTPC;
     @Autowired private PrefsController prefsController;
     @Autowired private DataEquitiesStocksModel dataStocksMVCModel;
-    @Autowired private DataEquitiesStocksViewFL dataStocksMVCView;
+    @Autowired private DataEquitiesStocksControllerFL dataStocksMVCView;
 
     private TwinColGrid<Attribute> twinColGrid;
 

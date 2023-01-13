@@ -2,8 +2,8 @@ package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 
 import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.button.*;
 import com.vaadin.flow.component.checkbox.*;
@@ -16,7 +16,7 @@ import java.util.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
+import org.springframework.stereotype.Component;
 
 /*
  * Controller: Interface between Model and View to process business logic and incoming
@@ -32,45 +32,45 @@ import org.springframework.stereotype.*;
 @Route(value = ROUTE_DATA_VALIDATE_STOCKS_CONTROLLER, layout = MainLayout.class)
 @PermitAll
 @Component
-public class DataValidateStocksController
-    extends ViewControllerBase //flexLayout
+public class DataValidateStocksControllerFL
+    extends ViewControllerBaseFL //flexLayout
     implements BeforeEnterObserver
 {
 
+    @Autowired private MainLayout mainLayout; 
     @Autowired private DataValidateStocksModel dataValidateStocksModel;
     @Autowired private TPCDAOImpl serviceTPC;
 
-    private final DataValidateStocksViewVL dataValidateStocksViewVL;
-    private final DataValidateStocksViewTitleVL dataValidateStocksViewTitleVL;
-    private final DataValidateStocksViewControlsHL dataValidateStocksViewControlsHL;
-    private final DataValidateStocksViewGridVL dataValidateStocksViewGridVL;
+    private final DataValidateStocksVL dataValidateStocksViewVL;
+    private final DataValidateStocksTitleVL dataValidateStocksViewTitleVL;
+    private final DataValidateStocksControlsHL dataValidateStocksViewControlsHL;
+    private final DataValidateStocksGridVL dataValidateStocksViewGridVL;
 
     private Registration dataProviderListener = null;
 
-    public DataValidateStocksController()
+    public DataValidateStocksControllerFL()
     {
         this.addClassName("dataValidateStocksController");
         
-        //no preferences
-        this.createPreferencesTab(null);
-
-        this.dataValidateStocksViewVL = new DataValidateStocksViewVL();
+        this.dataValidateStocksViewVL = new DataValidateStocksVL();
         this.add(this.dataValidateStocksViewVL);
         
-        this.dataValidateStocksViewTitleVL = new DataValidateStocksViewTitleVL();
+        this.dataValidateStocksViewTitleVL = new DataValidateStocksTitleVL();
         this.dataValidateStocksViewVL.add(this.dataValidateStocksViewTitleVL);
 
-        this.dataValidateStocksViewControlsHL = new DataValidateStocksViewControlsHL();
+        this.dataValidateStocksViewControlsHL = new DataValidateStocksControlsHL();
         this.dataValidateStocksViewVL.add(this.dataValidateStocksViewControlsHL);
 
-        this.dataValidateStocksViewGridVL = new DataValidateStocksViewGridVL();
+        this.dataValidateStocksViewGridVL = new DataValidateStocksGridVL();
         this.dataValidateStocksViewVL.add(this.dataValidateStocksViewGridVL);
     }
 
     @PostConstruct
     public void construct()
     {
-        this.dataValidateStocksModel.getPrefs("StockValidate");
+        this.prefsPageHL = this.createPreferencesTabHL(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
+
+        this.dataValidateStocksModel.getPrefs("DataValidateStocks");
 
         this.setCheckboxSkipValue(this.dataValidateStocksModel.getSelectedSkip());
 
@@ -84,72 +84,72 @@ public class DataValidateStocksController
 
     private ComboBox<EditAccountModel> getComboAccounts()
     {
-        return this.dataValidateStocksViewControlsHL.getComboAccounts();
+        return this.dataValidateStocksViewControlsHL.getValidateStocksComboAccounts();
     }
 
     private ComboBox<TickerModel> getComboTickers()
     {
-        return this.dataValidateStocksViewControlsHL.getComboTickers();
+        return this.dataValidateStocksViewControlsHL.getValidateStocksComboTickers();
     }
 
     private Checkbox getCheckboxSkip()
     {
-        return this.dataValidateStocksViewControlsHL.getCheckboxSkip();
+        return this.dataValidateStocksViewControlsHL.getValidateStocksCheckboxSkip();
     }
 
     private void setCheckboxSkipValue(Boolean skip)
     {
-        this.dataValidateStocksViewControlsHL.setCheckboxSkipValue(skip);
+        this.getCheckboxSkip().setValue(skip);
     }
 
     private Boolean getCheckboxSkipValue()
     {
-        return this.dataValidateStocksViewControlsHL.getCheckboxSkipValue();
+        return this.getCheckboxSkip().getValue();
     }
 
     private Checkbox getCheckboxValidated()
     {
-        return this.dataValidateStocksViewControlsHL.getCheckboxValidated();
+        return this.dataValidateStocksViewControlsHL.getValidateStocksCheckboxValidated();
     }
 
     private void setCheckboxValidatedValue(Boolean skip)
     {
-        this.dataValidateStocksViewControlsHL.setCheckboxValidatedValue(skip);
+        this.getCheckboxValidated().setValue(skip);
     }
 
     private Boolean getCheckboxValidatedValue()
     {
-        return this.dataValidateStocksViewControlsHL.getCheckboxValidatedValue();
+        return this.getCheckboxValidated().getValue();
     }
 
     private Button getButtonSave()
     {
-        return this.dataValidateStocksViewControlsHL.getButtonSave();
+        return this.dataValidateStocksViewControlsHL.getValidateStocksButtonSave();
     }
 
     private void setButtonSaveEnabled(Boolean enabled)
     {
-        this.dataValidateStocksViewControlsHL.setButtonSaveEnabled(enabled);
+        this.getButtonSave().setEnabled(enabled);
     }
 
     private Button getButtonCancel()
     {
-        return this.dataValidateStocksViewControlsHL.getButtonCancel();
+        return this.dataValidateStocksViewControlsHL.getValidateStocksButtonCancel();
     }
 
     private void setButtonCancelEnabled(Boolean enabled)
     {
-        this.dataValidateStocksViewControlsHL.setButtonCancelEnabled(enabled);
+        this.getButtonCancel().setEnabled(enabled);
     }
 
     public Grid<ValidateStockTransactionModel> getGrid()
     {
-        return this.dataValidateStocksViewGridVL.getGrid();
+        return this.dataValidateStocksViewGridVL.getValidateStocksGrid();
     }
 
     public FooterRow getFooterRow()
     {
-        return this.dataValidateStocksViewGridVL.getFooterRow();
+        return this.dataValidateStocksViewGridVL.getValidateStocksGridFooterRow();
     }
 
     @Override
@@ -165,6 +165,7 @@ public class DataValidateStocksController
         
         //change the preferences route
         this.updatePrefsIcon();
+//        this.doNavBar(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
     }
 
     private void updateDataOnEnter()
@@ -330,7 +331,7 @@ public class DataValidateStocksController
     }
 
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         //none; not changing top tabs
         //todo: change top menu prefs icon route

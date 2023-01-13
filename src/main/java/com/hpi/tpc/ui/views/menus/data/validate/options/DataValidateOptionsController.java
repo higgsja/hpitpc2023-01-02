@@ -2,8 +2,8 @@ package com.hpi.tpc.ui.views.menus.data.validate.options;
 
 import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.button.*;
 import com.vaadin.flow.component.checkbox.*;
@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.*;
 @NoArgsConstructor
 @PermitAll
 public class DataValidateOptionsController
-    extends ViewControllerBase //flexlayout
+    extends ViewControllerBaseFL //flexlayout
     implements BeforeEnterObserver
 {
     @Autowired private DataValidateOptionsModel dataValidateOptionsModel;
@@ -452,7 +452,7 @@ private void setGridDataProviderListener()
     }
 
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         //none; not changing top tabs
         //todo: change top menu prefs icon route

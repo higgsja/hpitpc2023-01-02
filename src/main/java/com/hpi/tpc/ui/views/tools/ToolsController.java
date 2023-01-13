@@ -1,8 +1,8 @@
 package com.hpi.tpc.ui.views.tools;
 
 import static com.hpi.tpc.AppConst.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import com.hpi.tpc.ui.views.tools.hedge.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
@@ -21,7 +21,7 @@ import org.springframework.beans.factory.annotation.*;
  * Tools layout, the playing field for the rest of the tools gui
  */
 public class ToolsController
-    extends ViewControllerBase
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
@@ -33,14 +33,14 @@ public class ToolsController
 
         this.toolsModel.getPrefs("Tools");
 
-        this.createMenuTabs();        
+        this.addMenuBarTabs();        
     }
 
     /**
      * create the tabs and listeners; add to the menuBar
      */
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         final String[][] selectTab =
         {
@@ -52,7 +52,7 @@ public class ToolsController
 
         for (String[] selectTab1 : selectTab)
         {
-            menuBar.addItem(selectTab1[0], (ClickEvent<MenuItem> event) ->
+            this.menuBar.addItem(selectTab1[0], (ClickEvent<MenuItem> event) ->
             {
                 UI.getCurrent().navigate(selectTab1[1]);
             });

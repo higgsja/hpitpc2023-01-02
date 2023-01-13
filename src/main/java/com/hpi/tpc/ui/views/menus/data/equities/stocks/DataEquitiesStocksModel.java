@@ -42,8 +42,8 @@ public class DataEquitiesStocksModel
 
     public void getPrefs()
     {
-        this.prefsController.readPrefsByPrefix("DataStockInfo");
-        this.stringColumns = this.prefsController.getPref("DataStockInfoColumns");
+        this.prefsController.readPrefsByPrefix("DataEquitiesStocks");
+        this.stringColumns = this.prefsController.getPref("DataEquitiesStocksColumns");
     }
 
     public void writePrefs(TwinColGrid<Attribute> twinColGrid)

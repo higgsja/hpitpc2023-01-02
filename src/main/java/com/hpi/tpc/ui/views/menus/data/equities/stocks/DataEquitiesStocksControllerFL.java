@@ -29,12 +29,12 @@ import org.springframework.stereotype.Component;
 @UIScope
 @VaadinSessionScope
 @Component
-@Route(value = ROUTE_DATA_EQUITIES_STOCKS, layout = MainLayout.class)
+@Route(value = ROUTE_DATA_EQUITIES_STOCKS_CONTROLLER, layout = MainLayout.class)
 @PageTitle(TITLE_PAGE_DATA + ":" + TITLE_PAGE_DATA_EQUITIES_STOCKS)
 @NoArgsConstructor
 @PermitAll
-public class DataEquitiesStocksViewFL
-    extends ViewBaseFL
+public class DataEquitiesStocksControllerFL
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
@@ -58,11 +58,11 @@ public class DataEquitiesStocksViewFL
     public void construct()
     {
         this.setSizeFull();
-        this.addClassName("dataStocksView");
+        this.addClassName("dataEquitiesStocksControllerFL");
 
         this.dataStocksModel.getPrefs();
 
-        this.add(this.titleFormat("Stocks"));
+        this.add(this.titleFormat("Stocks Info"));
 
         this.gridSetup();
     }
@@ -544,7 +544,17 @@ public class DataEquitiesStocksViewFL
         {
             this.mainLayout.setDrawerOpened(false);
         }
-        
 
+        //update data on every entry
+        this.dataStocksModel.initData();
+        
+        //set navBar for this menu
+        this.doNavBar(ROUTE_DATA_EQUITIES_STOCKS_PREFERENCES);
+    }
+
+    @Override
+    public void addMenuBarTabs()
+    {
+        //none    
     }
 }
