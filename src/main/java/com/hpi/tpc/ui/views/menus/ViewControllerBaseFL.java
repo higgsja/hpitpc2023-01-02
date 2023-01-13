@@ -7,7 +7,6 @@ import com.vaadin.flow.component.icon.*;
 import com.vaadin.flow.component.menubar.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
-import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -16,19 +15,18 @@ import org.springframework.stereotype.Component;
  * common methods and fields for View Controllers
  */
 @Component
-public abstract class ViewControllerBase
+public abstract class ViewControllerBaseFL
     extends FlexLayout
     implements BeforeEnterObserver
 {
 
     @Autowired private MainLayout mainLayout;
     @Autowired private PrefsController prefsController;
-//    @Autowired private NotesMVC_M notesMVCModel;
 
     public MenuBar menuBar;
-    private HorizontalLayout prefsPageHL;
+    public HorizontalLayout prefsPageHL;
 
-    public ViewControllerBase()
+    public ViewControllerBaseFL()
     {
         this.setClassName("viewControllerBase");
         this.menuBar = new MenuBar();
@@ -45,7 +43,7 @@ public abstract class ViewControllerBase
         //clear the old menu items
         this.mainLayout.removeTopMenu();
 
-        this.prefsPageHL = this.createPreferencesTab(prefsPage);
+        this.prefsPageHL = this.createPreferencesTabHL(prefsPage);
 
         //add the new menu items
         this.mainLayout.addTopMenu(this.menuBar, this.prefsPageHL);
@@ -57,12 +55,7 @@ public abstract class ViewControllerBase
      */
     public void updatePrefsIcon()
     {
-        this.mainLayout.removePagePrefsHL();
-
-        if (prefsPageHL != null)
-        {
-            this.mainLayout.addPagePrefsHL(prefsPageHL);
-        }
+        this.mainLayout.updatePagePrefsHL(prefsPageHL);
     }
 
     /**
@@ -73,7 +66,7 @@ public abstract class ViewControllerBase
     /*
      * create the preferences icon and listener for the top menuBar
      */
-    public HorizontalLayout createPreferencesTab(String prefsPage)
+    public HorizontalLayout createPreferencesTabHL(String prefsPage)
     {
         //hit
         Icon prefsIcon;

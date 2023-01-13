@@ -16,7 +16,11 @@ public class DataConst
     public static final String ROUTE_DATA_PREFERENCES = "DataPrefs";
 
     public static final String ROUTE_DATA_EQUITIES_OPTIONS = "DataEquitiesOptions";
-    public static final String ROUTE_DATA_EQUITIES_STOCKS = "DataEquitiesStocks";
+    
+    public static final String ROUTE_DATA_EQUITIES_STOCKS_CONTROLLER = "DataEquitiesStocksController";
+    public static final String ROUTE_DATA_EQUITIES_STOCKS_PREFERENCES = "DataEquitiesStocksPrefs";
+//    public static final String ROUTE_DATA_EQUITIES_STOCKS = "DataEquitiesStocks";
+    public static final String TITLE_PAGE_DATA_EQUITIES_STOCKS_PREFERENCES = "Data:Equities:Stocks:Prefs";
     
     public static final String ROUTE_DATA_VALIDATE_OPTIONS_CONTROLLER = "DataValidateOptionsController";
     public static final String ROUTE_DATA_VALIDATE_OPTIONS = "DataValidateOptions";
