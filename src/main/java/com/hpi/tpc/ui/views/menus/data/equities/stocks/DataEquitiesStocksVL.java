@@ -8,6 +8,6 @@ public class DataEquitiesStocksVL
 
     public DataEquitiesStocksVL()
     {
-        this.addClassName("dataValidateStocksVL");
+        this.addClassName("dataEquitiesStocksVL");
     }    
 }

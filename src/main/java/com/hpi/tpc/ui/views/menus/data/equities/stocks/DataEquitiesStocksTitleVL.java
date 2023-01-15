@@ -8,8 +8,8 @@ public class DataEquitiesStocksTitleVL
 
     public DataEquitiesStocksTitleVL()
     {
-        this.addClassName("dataValidateStocksTitleVL");
+        this.addClassName("dataEquitiesStocksTitleVL");
         
-        this.setTitle("Validate Stock Transactions");
+        this.setTitle("Stock Data");
     }
 }

@@ -40,10 +40,10 @@ public class DataValidateStocksControllerFL
     @Autowired private DataValidateStocksModel dataValidateStocksModel;
     @Autowired private TPCDAOImpl serviceTPC;
 
-    private final DataValidateStocksVL dataValidateStocksViewVL;
-    private final DataValidateStocksTitleVL dataValidateStocksViewTitleVL;
-    private final DataValidateStocksControlsHL dataValidateStocksViewControlsHL;
-    private final DataValidateStocksGridVL dataValidateStocksViewGridVL;
+    private final DataValidateStocksVL dataValidateStocksVL;
+    private final DataValidateStocksTitleVL dataValidateStocksTitleVL;
+    private final DataValidateStocksControlsHL dataValidateStocksControlsHL;
+    private final DataValidateStocksGridVL dataValidateStocksGridVL;
 
     private Registration dataProviderListener = null;
 
@@ -51,17 +51,17 @@ public class DataValidateStocksControllerFL
     {
         this.addClassName("dataValidateStocksController");
         
-        this.dataValidateStocksViewVL = new DataValidateStocksVL();
-        this.add(this.dataValidateStocksViewVL);
+        this.dataValidateStocksVL = new DataValidateStocksVL();
+        this.add(this.dataValidateStocksVL);
         
-        this.dataValidateStocksViewTitleVL = new DataValidateStocksTitleVL();
-        this.dataValidateStocksViewVL.add(this.dataValidateStocksViewTitleVL);
+        this.dataValidateStocksTitleVL = new DataValidateStocksTitleVL();
+        this.dataValidateStocksVL.add(this.dataValidateStocksTitleVL);
 
-        this.dataValidateStocksViewControlsHL = new DataValidateStocksControlsHL();
-        this.dataValidateStocksViewVL.add(this.dataValidateStocksViewControlsHL);
+        this.dataValidateStocksControlsHL = new DataValidateStocksControlsHL();
+        this.dataValidateStocksVL.add(this.dataValidateStocksControlsHL);
 
-        this.dataValidateStocksViewGridVL = new DataValidateStocksGridVL();
-        this.dataValidateStocksViewVL.add(this.dataValidateStocksViewGridVL);
+        this.dataValidateStocksGridVL = new DataValidateStocksGridVL();
+        this.dataValidateStocksVL.add(this.dataValidateStocksGridVL);
     }
 
     @PostConstruct
@@ -83,17 +83,17 @@ public class DataValidateStocksControllerFL
 
     private ComboBox<EditAccountModel> getComboAccounts()
     {
-        return this.dataValidateStocksViewControlsHL.getValidateStocksComboAccounts();
+        return this.dataValidateStocksControlsHL.getValidateStocksComboAccounts();
     }
 
     private ComboBox<TickerModel> getComboTickers()
     {
-        return this.dataValidateStocksViewControlsHL.getValidateStocksComboTickers();
+        return this.dataValidateStocksControlsHL.getValidateStocksComboTickers();
     }
 
     private Checkbox getCheckboxSkip()
     {
-        return this.dataValidateStocksViewControlsHL.getValidateStocksCheckboxSkip();
+        return this.dataValidateStocksControlsHL.getValidateStocksCheckboxSkip();
     }
 
     private void setCheckboxSkipValue(Boolean skip)
@@ -108,7 +108,7 @@ public class DataValidateStocksControllerFL
 
     private Checkbox getCheckboxValidated()
     {
-        return this.dataValidateStocksViewControlsHL.getValidateStocksCheckboxValidated();
+        return this.dataValidateStocksControlsHL.getValidateStocksCheckboxValidated();
     }
 
     private void setCheckboxValidatedValue(Boolean skip)
@@ -123,7 +123,7 @@ public class DataValidateStocksControllerFL
 
     private Button getButtonSave()
     {
-        return this.dataValidateStocksViewControlsHL.getValidateStocksButtonSave();
+        return this.dataValidateStocksControlsHL.getValidateStocksButtonSave();
     }
 
     public void setButtonSaveEnabled(Boolean enabled)
@@ -133,7 +133,7 @@ public class DataValidateStocksControllerFL
 
     private Button getButtonCancel()
     {
-        return this.dataValidateStocksViewControlsHL.getValidateStocksButtonCancel();
+        return this.dataValidateStocksControlsHL.getValidateStocksButtonCancel();
     }
 
     public void setButtonCancelEnabled(Boolean enabled)
@@ -143,12 +143,12 @@ public class DataValidateStocksControllerFL
 
     public Grid<ValidateStockTransactionModel> getGrid()
     {
-        return this.dataValidateStocksViewGridVL.getValidateStocksGrid();
+        return this.dataValidateStocksGridVL.getValidateStocksGrid();
     }
 
     public FooterRow getFooterRow()
     {
-        return this.dataValidateStocksViewGridVL.getValidateStocksGridFooterRow();
+        return this.dataValidateStocksGridVL.getValidateStocksGridFooterRow();
     }
 
     @Override

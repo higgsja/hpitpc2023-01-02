@@ -19,8 +19,8 @@ import org.springframework.stereotype.*;
 @UIScope
 @VaadinSessionScope
 @Component
-@Route(value = ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES, layout = MainLayout.class)
-@PageTitle(TITLE_PAGE_DATA_VALIDATE_STOCKS_PREFERENCES)
+@Route(value = ROUTE_DATA_EQUITIES_STOCKS_PREFERENCES, layout = MainLayout.class)
+@PageTitle(TITLE_PAGE_DATA_EQUITIES_STOCKS_PREFERENCES)
 @PermitAll
 public class DataEquitiesStocksPrefsVL
     extends PagePrefsBase

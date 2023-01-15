@@ -33,7 +33,7 @@ public class DataPrefsStocksVL
     @Autowired private TPCDAOImpl serviceTPC;
     @Autowired private PrefsController prefsController;
     @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
-    @Autowired private DataEquitiesStocksControllerFL dataStocksMVCView;
+    @Autowired private DataEquitiesStocksControllerFL dataEquitiesStocksControllerFL;
 
     private TwinColGrid<Attribute> twinColGrid;
 
@@ -76,7 +76,7 @@ public class DataPrefsStocksVL
 //        this.dataStocksMVCModel.getPrefs();
         //refresh the layout
         //reset the grid based on preference columns
-        this.dataStocksMVCView.gridSetup();
+        this.dataEquitiesStocksControllerFL.getDataEquitiesStocksGridVL().doLayout();
 
 //        this.doTwinColLayout();
     }
@@ -95,7 +95,7 @@ public class DataPrefsStocksVL
 
     private void doTwinColLayout()
     {
-        this.dataEquitiesStocksModel.initData();
+        this.dataEquitiesStocksModel.initAttributeData();
 
 //        this.twinColGrid = new TwinColGrid<>(
 //            this.dataStocksMVCModel.getAvailAttributes(), "")
