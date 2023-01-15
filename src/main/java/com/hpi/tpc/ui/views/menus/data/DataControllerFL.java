@@ -3,10 +3,9 @@ package com.hpi.tpc.ui.views.menus.data;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
-import com.hpi.tpc.ui.views.menus.data.validate.stocks.*;
+import com.hpi.tpc.ui.views.menus.data.equities.stocks.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
-import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
@@ -35,22 +34,23 @@ public class DataControllerFL
     implements BeforeEnterObserver
 {
 
-    @Autowired private MainLayout mainLayout;
+    //not used here but instantiate the singleton for later use
+//    @Autowired DataValidateStocksControllerFL dataValidateStocksControllerFL;
+    //data model singleton as can be used in other places
     @Autowired private DataModel dataModel;
-
+    @Autowired private MainLayout mainLayout;
+    
     @PostConstruct
     private void construct()
     {
         this.addClassName("dataController");
+        
+        this.dataModel = new DataModel();
 
         //get any preferences
         this.dataModel.getPrefs();
 
         this.addMenuBarTabs();
-        
-        this.prefsPageHL = new HorizontalLayout();
-        
-//        this.mainLayout.doNavBar(menuBar, prefsPageHL);
     }
 
     /*
@@ -109,11 +109,11 @@ public class DataControllerFL
         super.beforeEnter(bee);
 
         //set navBar for this menu
-        this.mainLayout.doNavBar(menuBar, prefsPageHL);
+        this.mainLayout.doNavBar(this.menuBar, this.prefsPageHL);
 
         //send to default view
-//        bee.forwardTo(DataEquitiesStocksControllerFL.class);
-        bee.forwardTo(DataValidateStocksControllerFL.class);
+        bee.forwardTo(DataEquitiesStocksControllerFL.class);
+//        bee.forwardTo(DataValidateStocksControllerFL.class);
     }
 
 }

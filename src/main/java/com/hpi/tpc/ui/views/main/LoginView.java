@@ -3,7 +3,6 @@ package com.hpi.tpc.ui.views.main;
 import com.hpi.tpc.*;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.app.security.*;
-import com.hpi.tpc.ui.views.menus.data.*;
 import com.hpi.tpc.ui.views.notes.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.login.*;

@@ -20,6 +20,9 @@ import javax.annotation.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 
+/**
+ * Provides the primary layout for the app
+ */
 @UIScope
 @VaadinSessionScope
 @org.springframework.stereotype.Component
@@ -46,6 +49,9 @@ public class MainLayout
 //    @Getter private MenuBar menuBar;
 //    private HorizontalLayout pagePrefsHL;
 
+    /**
+     * Constructor
+     */
     public MainLayout()
     {
         this.noteIcon = this.noteIcon();
@@ -103,8 +109,12 @@ public class MainLayout
     public void doNavBar(MenuBar menuBar, HorizontalLayout prefsPageHL)
     {
         this.removeNavBar();
+
+        this.addToNavbar(true, new DrawerToggle(), this.noteIcon, menuBar);
         
-        this.addToNavbar(true, new DrawerToggle(), this.noteIcon, menuBar, prefsPageHL);
+        if (prefsPageHL != null){
+            this.addToNavbar(prefsPageHL);
+        }
     }
 
     public void updatePagePrefsHL(HorizontalLayout prefsPageHL)

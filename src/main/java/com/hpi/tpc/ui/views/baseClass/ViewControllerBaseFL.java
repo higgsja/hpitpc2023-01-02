@@ -32,6 +32,8 @@ public abstract class ViewControllerBaseFL
         this.setClassName("viewControllerBase");
         this.menuBar = new MenuBar();
         this.menuBar.setOpenOnHover(true);
+        
+        this.prefsPageHL = null;
     }
 
     /**

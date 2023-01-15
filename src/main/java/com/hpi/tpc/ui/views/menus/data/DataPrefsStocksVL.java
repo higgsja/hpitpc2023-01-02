@@ -32,7 +32,7 @@ public class DataPrefsStocksVL
     @Autowired private MainLayout mainLayout;
     @Autowired private TPCDAOImpl serviceTPC;
     @Autowired private PrefsController prefsController;
-    @Autowired private DataEquitiesStocksModel dataStocksMVCModel;
+    @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
     @Autowired private DataEquitiesStocksControllerFL dataStocksMVCView;
 
     private TwinColGrid<Attribute> twinColGrid;
@@ -70,7 +70,7 @@ public class DataPrefsStocksVL
     public void beforeLeave(BeforeLeaveEvent event)
     {
         //write the changes
-        this.dataStocksMVCModel.writePrefs(this.twinColGrid);
+        this.dataEquitiesStocksModel.writePrefs(this.twinColGrid);
 
         //read them back to ensure model represents current state
 //        this.dataStocksMVCModel.getPrefs();
@@ -95,15 +95,15 @@ public class DataPrefsStocksVL
 
     private void doTwinColLayout()
     {
-        this.dataStocksMVCModel.initData();
+        this.dataEquitiesStocksModel.initData();
 
 //        this.twinColGrid = new TwinColGrid<>(
 //            this.dataStocksMVCModel.getAvailAttributes(), "")
 //            .addColumn(Attribute::getAttribute, "Attributes");
-        this.twinColGrid.getAvailableGrid().setItems(this.dataStocksMVCModel.getAvailAttributes());
+        this.twinColGrid.getAvailableGrid().setItems(this.dataEquitiesStocksModel.getAvailAttributes());
 //        this.twinColGrid.getAvailableGrid().getDataProvider().refreshAll();
 
-        this.twinColGrid.getSelectionGrid().setItems(this.dataStocksMVCModel.getSelectedAttributes());
+        this.twinColGrid.getSelectionGrid().setItems(this.dataEquitiesStocksModel.getSelectedAttributes());
 //        this.twinColGrid.getSelectionGrid().getDataProvider().refreshAll();
 
 //        this.twinColGrid.setValue(this.dataStocksMVCModel.getSelectedAttributes());

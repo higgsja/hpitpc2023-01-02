@@ -1,5 +1,6 @@
-package com.hpi.tpc.ui.views.menus.data.validate.stocks;
+package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 
+import com.hpi.tpc.ui.views.menus.data.validate.stocks.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.checkbox.*;
@@ -7,7 +8,7 @@ import com.vaadin.flow.component.grid.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 
-public class DataValidateStocksGridVL
+public class DataEquitiesStocksGridVL
     extends ViewBaseVL
 {
 
@@ -17,7 +18,7 @@ public class DataValidateStocksGridVL
     @Getter private final Grid<ValidateStockTransactionModel> validateStocksGrid;
     @Getter private final FooterRow validateStocksGridFooterRow;
 
-    public DataValidateStocksGridVL()
+    public DataEquitiesStocksGridVL()
     {
         this.addClassName("dataValidateStocksGridVL");
 

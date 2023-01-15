@@ -36,8 +36,7 @@ public class DataValidateStocksControllerFL
     extends ViewControllerBaseFL //flexLayout
     implements BeforeEnterObserver
 {
-
-    @Autowired private MainLayout mainLayout; 
+    //data model singleton as used in multiple places
     @Autowired private DataValidateStocksModel dataValidateStocksModel;
     @Autowired private TPCDAOImpl serviceTPC;
 
@@ -102,10 +101,10 @@ public class DataValidateStocksControllerFL
         this.getCheckboxSkip().setValue(skip);
     }
 
-    private Boolean getCheckboxSkipValue()
-    {
-        return this.getCheckboxSkip().getValue();
-    }
+//    private Boolean getCheckboxSkipValue()
+//    {
+//        return this.getCheckboxSkip().getValue();
+//    }
 
     private Checkbox getCheckboxValidated()
     {
@@ -117,17 +116,17 @@ public class DataValidateStocksControllerFL
         this.getCheckboxValidated().setValue(skip);
     }
 
-    private Boolean getCheckboxValidatedValue()
-    {
-        return this.getCheckboxValidated().getValue();
-    }
+//    private Boolean getCheckboxValidatedValue()
+//    {
+//        return this.getCheckboxValidated().getValue();
+//    }
 
     private Button getButtonSave()
     {
         return this.dataValidateStocksViewControlsHL.getValidateStocksButtonSave();
     }
 
-    private void setButtonSaveEnabled(Boolean enabled)
+    public void setButtonSaveEnabled(Boolean enabled)
     {
         this.getButtonSave().setEnabled(enabled);
     }
@@ -137,7 +136,7 @@ public class DataValidateStocksControllerFL
         return this.dataValidateStocksViewControlsHL.getValidateStocksButtonCancel();
     }
 
-    private void setButtonCancelEnabled(Boolean enabled)
+    public void setButtonCancelEnabled(Boolean enabled)
     {
         this.getButtonCancel().setEnabled(enabled);
     }
@@ -165,7 +164,6 @@ public class DataValidateStocksControllerFL
         
         //change the preferences route
         this.updatePrefsIcon();
-//        this.doNavBar(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
     }
 
     private void updateDataOnEnter()
@@ -276,7 +274,7 @@ public class DataValidateStocksControllerFL
         this.getCheckboxSkip().addValueChangeListener(
             vcEvent ->
         {
-            this.dataValidateStocksModel.filterChange(vcEvent.getValue(), null);
+            this.dataValidateStocksModel.filterChange(vcEvent.getValue(), null);            
         });
 
         this.getCheckboxValidated().addValueChangeListener(
@@ -285,12 +283,9 @@ public class DataValidateStocksControllerFL
             this.dataValidateStocksModel.filterChange(null, vcEvent.getValue());
         });
 
-        this.getButtonSave().addClickListener(
-            vcEvent -> this.doSave());
+        this.getButtonSave().addClickListener(vcEvent -> this.doSave());
 
-        this.getButtonCancel().
-            addClickListener(
-                vcEvent -> this.doCancel());
+        this.getButtonCancel().addClickListener(vcEvent -> this.doCancel());
     }
 
     private void setGridDataProviderListener()
@@ -313,7 +308,8 @@ public class DataValidateStocksControllerFL
 
     private void doCancel()
     {
-        int i = 0;
+        //cancel all changes and restart fresh from the database
+        this.getUI().get().navigate(ROUTE_DATA_VALIDATE_STOCKS_CONTROLLER);
     }
 
     private void doSave()
