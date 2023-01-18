@@ -1,12 +1,11 @@
-package com.hpi.tpc.ui.views.menus.data;
+package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 
-import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataEquitiesStocksModel;
-import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataEquitiesStocksControllerFL;
 import com.flowingcode.vaadin.addons.twincolgrid.*;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.main.*;
+import com.hpi.tpc.ui.views.menus.data.Attribute;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
@@ -20,11 +19,11 @@ import org.springframework.stereotype.*;
 @NoArgsConstructor
 @UIScope
 @VaadinSessionScope
-@Route(value = ROUTE_DATA_PREFERENCES, layout = MainLayout.class)
+@Route(value = ROUTE_DATA_EQUITIES_STOCKS_PREFERENCES, layout = MainLayout.class)
 @PageTitle(TITLE_PAGE_DATA + ": " + TITLE_COACHING_GAINS)
 @Component
 @PermitAll
-public class DataPrefsStocksVL
+public class DataEquitiesStocksPrefs
     extends VerticalLayout
     implements BeforeEnterObserver, BeforeLeaveObserver
 {
@@ -40,7 +39,7 @@ public class DataPrefsStocksVL
     @PostConstruct
     protected void constuct()
     {
-        this.addClassName("dataPrefsStock");
+        this.addClassName("dataEquitiesStocksPrefs");
 
         this.twinColGrid = new TwinColGrid<Attribute>()
             .withAvailableGridCaption("Available")
@@ -57,13 +56,19 @@ public class DataPrefsStocksVL
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {
-        this.serviceTPC.AppTracking("TPC:Data:Equities:Stocks");
+        this.serviceTPC.AppTracking("TPC:Data:Equities:Stocks:Preferences");
 
         if (this.prefsController.getPref("TPCDrawerClose").
             equalsIgnoreCase("yes"))
         {
             this.mainLayout.setDrawerOpened(false);
         }
+        
+        //update the data
+        this.dataEquitiesStocksModel.initAttributeData();
+        
+        //update the gear
+        this.mainLayout.updatePagePrefsHL(null);
     }
 
     @Override
@@ -76,7 +81,9 @@ public class DataPrefsStocksVL
 //        this.dataStocksMVCModel.getPrefs();
         //refresh the layout
         //reset the grid based on preference columns
-        this.dataEquitiesStocksControllerFL.getDataEquitiesStocksGridVL().doLayout();
+        //not necessary as we re-read when enter dataEquitiesStocks
+//        this.dataEquitiesStocksControllerFL.getDataEquitiesStocksGridVL()
+//            .doLayout(this.dataEquitiesStocksModel.getStringColumns());
 
 //        this.doTwinColLayout();
     }
@@ -95,7 +102,7 @@ public class DataPrefsStocksVL
 
     private void doTwinColLayout()
     {
-        this.dataEquitiesStocksModel.initAttributeData();
+//        this.dataEquitiesStocksModel.initAttributeData();
 
 //        this.twinColGrid = new TwinColGrid<>(
 //            this.dataStocksMVCModel.getAvailAttributes(), "")

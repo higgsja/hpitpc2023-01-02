@@ -11,6 +11,7 @@ import javax.annotation.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.jdbc.core.*;
+import org.springframework.jdbc.support.rowset.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -24,12 +25,16 @@ public class DataEquitiesStocksModel
 {
 
     @Autowired private JdbcTemplate jdbcTemplate;
-    @Autowired private TPCDAOImpl serviceTPC;
+//    @Autowired private TPCDAOImpl serviceTPC;
+    @Autowired private FinVizEquityInfoModelService equityInfoService;
     @Autowired private PrefsController prefsController;
 
     @Getter private String stringColumns;
     @Getter private List<Attribute> availAttributes;
     @Getter private LinkedHashSet<Attribute> selectedAttributes;
+    @Getter private FilterFinVizInfo gridFilter;
+    @Getter private ConfigurableFilterDataProvider<FinVizEquityInfoModel, 
+        Void, FilterFinVizInfo> dataProvider;
 
     public DataEquitiesStocksModel()
     {
@@ -41,6 +46,8 @@ public class DataEquitiesStocksModel
         this.availAttributes = new ArrayList<>();
 
         this.selectedAttributes = new LinkedHashSet<>();
+        
+        this.dataProvider = null;
     }
 
     public void getPrefs(String prefs)
@@ -69,38 +76,35 @@ public class DataEquitiesStocksModel
 
     public void initAttributeData()
     {
-//        SqlRowSet rs;
-//        String columnsCSV;
+        SqlRowSet rs;
+        String columnsCSV;
         StringTokenizer tokenizer;
         Attribute tempAttribute;
 
-//        columnsCSV = null;
+        columnsCSV = null;
         this.selectedAttributes.clear();
         this.availAttributes.clear();
 
         //populate selected
-////        this.getPrefs();
-//
-//        tokenizer = new StringTokenizer(this.stringColumns, ",");
-//        while (tokenizer.hasMoreElements())
-//        {
-//            this.selectedAttributes.add(new Attribute(tokenizer.nextToken().trim()));
-//        }
-        //get full list of attributes without selected
-//        String sql = "select KeyValue from hlhtxc5_dmOfx.TPCPreferences where JoomlaId = 0 and KeyId = 'DataEquitiesStocksColumns';";
-//        rs = jdbcTemplate.queryForRowSet(sql);
-//
-//        while (rs.next())
-//        {
-//            //only one row
-//            columnsCSV = rs.getString("KeyValue");
-//        }
-//
-//        tokenizer = new StringTokenizer(columnsCSV, ",");
-        
         tokenizer = new StringTokenizer(this.stringColumns, ",");
+        while (tokenizer.hasMoreElements())
+        {
+            this.selectedAttributes.add(new Attribute(tokenizer.nextToken().trim()));
+        }
+        
+        //get full list of attributes without selected
+        String sql = "select KeyValue from hlhtxc5_dmOfx.TPCPreferences where JoomlaId = 0 and KeyId = 'DataEquitiesStocksColumns';";
+        rs = jdbcTemplate.queryForRowSet(sql);
 
-        //add to available only if not already selected
+        while (rs.next())
+        {
+            //only one row
+            columnsCSV = rs.getString("KeyValue");
+        }
+
+        tokenizer = new StringTokenizer(columnsCSV, ",");
+        
+        //add to available only if not already in selected
         while (tokenizer.hasMoreElements())
         {
             tempAttribute = new Attribute(tokenizer.nextToken().trim());
@@ -110,15 +114,19 @@ public class DataEquitiesStocksModel
                 this.availAttributes.add(tempAttribute);
             }
         }
+        
+        //sort available
         this.availAttributes.sort(Comparator.comparing(Attribute::getAttribute));
     }
     
-    private void dataProviderSetup()
+    public void finVizEquityInfoModelGridDataProviderSetup()
     {
+        //todo: likely does not take a ConfigurableFilterDataProvider
+        //we are actually filtering in the query
+        //this means get a new empty filter
         this.gridFilter = new FilterFinVizInfo();
-
-        DataProvider<FinVizEquityInfoModel, FilterFinVizInfo> dataProvider
-            = DataProvider.fromFilteringCallbacks(
+        
+        DataProvider<FinVizEquityInfoModel, FilterFinVizInfo> dp = DataProvider.fromFilteringCallbacks(
                 query ->
             {
                 return this.equityInfoService.findAll(query.getOffset(),
@@ -130,58 +138,60 @@ public class DataEquitiesStocksModel
                     query.getLimit(), query.getFilter());
             });
 
-        var dp = dataProvider.withConfigurableFilter();
+        this.dataProvider = dp.withConfigurableFilter();
+            
+        this.dataProvider.setFilter(gridFilter);
+        
+//        this.dataProvider = dp;
 
-        dp.setFilter(gridFilter);
-
-        this.equityInfoGrid.setItems(dp);
+//        this.equityInfoGrid.setItems(dp);
     }
     
      /**
      * retrieves data for the grid
      */
-    public void updateGridData()
-    {
-        List<ValidateStockTransactionModel> aList;
-        ValidateStockTransactionModel tmpVstm;
-
-        this.dbList.clear();
-
-        //refresh grid data
-        aList = serviceTPC.getEquitiesStockTransactionModels(
-            this.selectedAccountModel, this.selectedTickerModel);
-        for (ValidateStockTransactionModel model : aList)
-        {
-            tmpVstm = ValidateStockTransactionModel.builder()
-                .joomlaId(model.getJoomlaId())
-                .dbAcctId(model.getDbAcctId())
-                .equityId(model.getEquityId())
-                .ticker(model.getTicker())
-                .secName(model.getSecName())
-                .lastPrice(model.getLastPrice())
-                .dtAsOf(model.getDtAsOf())
-                .units(model.getUnits())
-                .tradePrice(model.getTradePrice())
-                .markUpDn(model.getMarkUpDn())
-                .commission(model.getCommission())
-                .taxes(model.getTaxes())
-                .fees(model.getFees())
-                .total(model.getTotal())
-                .brokerId(model.getBrokerId())
-                .dtTrade(model.getDtTrade())
-                .fiTId(model.getFiTId())
-                .transactionType(model.getTransactionType())
-                .skip(model.getSkip())
-                .bSkip(model.getBSkip())
-                .validated(model.getValidated())
-                .bValidated(model.getBValidated())
-                .complete(model.getComplete())
-                .bComplete(model.getBComplete())
-                .build();
-            this.dbList.add(tmpVstm);
-        }
-
-        this.gridDataProvider = new ListDataProvider<>(aList);
-        this.gridDataProvider.refreshAll();
-    }
+//    public void updateGridData()
+//    {
+//        List<ValidateStockTransactionModel> aList;
+//        ValidateStockTransactionModel tmpVstm;
+//
+//        this.dbList.clear();
+//
+//        //refresh grid data
+//        aList = serviceTPC.getEquitiesStockTransactionModels(
+//            this.selectedAccountModel, this.selectedTickerModel);
+//        for (ValidateStockTransactionModel model : aList)
+//        {
+//            tmpVstm = ValidateStockTransactionModel.builder()
+//                .joomlaId(model.getJoomlaId())
+//                .dbAcctId(model.getDbAcctId())
+//                .equityId(model.getEquityId())
+//                .ticker(model.getTicker())
+//                .secName(model.getSecName())
+//                .lastPrice(model.getLastPrice())
+//                .dtAsOf(model.getDtAsOf())
+//                .units(model.getUnits())
+//                .tradePrice(model.getTradePrice())
+//                .markUpDn(model.getMarkUpDn())
+//                .commission(model.getCommission())
+//                .taxes(model.getTaxes())
+//                .fees(model.getFees())
+//                .total(model.getTotal())
+//                .brokerId(model.getBrokerId())
+//                .dtTrade(model.getDtTrade())
+//                .fiTId(model.getFiTId())
+//                .transactionType(model.getTransactionType())
+//                .skip(model.getSkip())
+//                .bSkip(model.getBSkip())
+//                .validated(model.getValidated())
+//                .bValidated(model.getBValidated())
+//                .complete(model.getComplete())
+//                .bComplete(model.getBComplete())
+//                .build();
+//            this.dbList.add(tmpVstm);
+//        }
+//
+//        this.gridDataProvider = new ListDataProvider<>(aList);
+//        this.gridDataProvider.refreshAll();
+//    }
 }

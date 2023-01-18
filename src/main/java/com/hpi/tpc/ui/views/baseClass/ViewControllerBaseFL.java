@@ -29,9 +29,11 @@ public abstract class ViewControllerBaseFL
 
     public ViewControllerBaseFL()
     {
-        this.setClassName("viewControllerBase");
+        this.setClassName("viewControllerBaseFL");
         this.menuBar = new MenuBar();
         this.menuBar.setOpenOnHover(true);
+        
+        this.setSizeFull();
         
         this.prefsPageHL = null;
     }
@@ -58,18 +60,18 @@ public abstract class ViewControllerBaseFL
         //update the top menu        
         this.mainLayout.updatePagePrefsHL(prefsPageHL);
         
-                //update the top menu        
-        this.mainLayout.updatePagePrefsHL(prefsPageHL);
+//                //update the top menu        
+//        this.mainLayout.updatePagePrefsHL(prefsPageHL);
     }
 
-    /**
-     * Change the gear icon route as necessary
-     * When there is no preference page, prefsPageHL is set to null
-     */
-    public void updatePrefsIcon()
-    {
-        this.mainLayout.updatePagePrefsHL(prefsPageHL);
-    }
+//    /**
+//     * Change the gear icon route as necessary
+//     * When there is no preference page, prefsPageHL is set to null
+//     */
+//    public void updatePrefsIcon()
+//    {
+//        this.mainLayout.updatePagePrefsHL(prefsPageHL);
+//    }
 
     /**
      * create top menuBar tabs and listeners

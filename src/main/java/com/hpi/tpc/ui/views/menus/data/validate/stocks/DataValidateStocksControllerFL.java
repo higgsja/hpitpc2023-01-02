@@ -62,12 +62,14 @@ public class DataValidateStocksControllerFL
 
         this.dataValidateStocksGridVL = new DataValidateStocksGridVL();
         this.dataValidateStocksVL.add(this.dataValidateStocksGridVL);
+        
+//        this.prefsPageHL = this.createPreferencesTabHL(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
     }
 
     @PostConstruct
     public void construct()
     {
-        this.prefsPageHL = this.createPreferencesTabHL(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
+        
 
         this.dataValidateStocksModel.getPrefs("DataValidateStocks");
 
@@ -163,7 +165,8 @@ public class DataValidateStocksControllerFL
         this.updateDataOnEnter();
         
         //change the preferences route
-        this.updatePrefsIcon();
+//        this.updatePrefsIcon();
+        this.updateNavBar(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
     }
 
     private void updateDataOnEnter()

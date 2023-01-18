@@ -1,5 +1,6 @@
 package com.hpi.tpc.ui.views.menus.data;
 
+import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataModel;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;

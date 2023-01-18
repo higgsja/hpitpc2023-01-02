@@ -6,6 +6,7 @@ import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
+import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
@@ -30,14 +31,17 @@ public class DataValidateStocksPrefsVL
     public DataValidateStocksPrefsVL(){
         this.addClassName("dataValidateStocksPrefsVL");
     }
+    
+    @PostConstruct
+    public void construct(){
+                //initialize the help display
+        this.init("DataValidateStocksPrefsHelp");        
+    }
 
     @Override
     public void beforeEnter(BeforeEnterEvent bee)
     {
-        //initialize the help display
-        this.init("DataValidateStocksPrefsHelp");
-        
         //update the preferences gear (remove)
-        this.mainLayout.updatePagePrefsHL(new HorizontalLayout());
+        this.mainLayout.updatePagePrefsHL(null);
     }
 }

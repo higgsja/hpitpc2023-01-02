@@ -1,7 +1,6 @@
 package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 
 import lombok.*;
-import org.springframework.stereotype.*;
 
 //@Component
 @NoArgsConstructor @AllArgsConstructor

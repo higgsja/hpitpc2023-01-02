@@ -111,16 +111,20 @@ public class MainLayout
         this.removeNavBar();
 
         this.addToNavbar(true, new DrawerToggle(), this.noteIcon, menuBar);
-        
-        if (prefsPageHL != null){
-            this.addToNavbar(prefsPageHL);
+
+        if (prefsPageHL != null)
+        {
+            this.addToNavbar(true, prefsPageHL);
         }
     }
 
     public void updatePagePrefsHL(HorizontalLayout prefsPageHL)
     {
         this.removePagePrefsHL();
-        this.addToNavbar(prefsPageHL);
+        if (prefsPageHL != null)
+        {
+            this.addToNavbar(true, prefsPageHL);
+        }
     }
 
     /**
@@ -141,6 +145,7 @@ public class MainLayout
                 || mainLayoutElement.getAttribute("slot").equalsIgnoreCase("navbar touch-optimized")))
             {
                 //then remove them from the navBar
+                //should not really work: removing from array in the for statement
                 this.getElement().removeChild((Element) c);
             }
         }
@@ -152,6 +157,8 @@ public class MainLayout
     public void removePagePrefsHL()
     {
         Element mainLayoutElement;
+        Element removeElement = null;
+
         //get array of all elements in the layout; process those with attribute of 'slot'
         for (Object c : this.getElement().getChildren().toArray())
         {
@@ -164,12 +171,17 @@ public class MainLayout
                 || mainLayoutElement.getAttribute("slot").equalsIgnoreCase("navbar touch-optimized")))
             {
                 //then remove them from the navBar
-                if (this.getElement().getAttribute("class") != null
-                    && this.getElement().getAttribute("Class").equalsIgnoreCase("prefsicon"))
+                if (mainLayoutElement.getAttribute("class") != null
+                    && mainLayoutElement.getAttribute("class").equalsIgnoreCase("prefsicon"))
                 {
-                    this.getElement().removeChild((Element) c);
+                    removeElement = mainLayoutElement;
                 }
             }
+        }
+
+        if (removeElement != null)
+        {
+            this.getElement().removeChild(removeElement);
         }
     }
 

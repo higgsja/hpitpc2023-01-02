@@ -2,54 +2,61 @@ package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 
 import static com.helger.commons.string.StringHelper.*;
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.component.textfield.*;
-import com.vaadin.flow.data.provider.*;
 import com.vaadin.flow.data.value.*;
 import java.util.*;
 import javax.annotation.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
 
 public class DataEquitiesStocksGridVL
     extends ViewBaseVL
 {
 
 //    @Autowired private DataEquitiesStocksControllerFL dataEquitiesStocksControllerFL;
-    @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
-    @Autowired private FinVizEquityInfoModelService equityInfoService;
-
+//    @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
+//    @Autowired private FinVizEquityInfoModelService equityInfoService;
     @Getter private final Grid<FinVizEquityInfoModel> finVizEquityInfoModelGrid;
     @Getter private final FooterRow finVizEquityInfoModelGridFooterRow;
 
     private HeaderRow gridHeaderRow1;
     private HeaderRow gridHeaderRow2;
-    private TextField filterTicker;
-    private TextField filterSector;
-    private TextField filterIndustry;
+    @Getter private final TextField filterTicker;
+    @Getter private final TextField filterSector;
+    @Getter private final TextField filterIndustry;
 
-    FilterFinVizInfo gridFilter;
+//    private FilterFinVizInfo gridFilter;
 
     public DataEquitiesStocksGridVL()
     {
-        this.addClassName("dataValidateStocksGridVL");
+        this.addClassName("dataEquitiesStocksGridVL");
 
         this.finVizEquityInfoModelGrid = new Grid<>();
         this.finVizEquityInfoModelGridFooterRow = this.finVizEquityInfoModelGrid.appendFooterRow();
         this.add(this.finVizEquityInfoModelGrid);
+        
+        this.filterTicker = new TextField();
+        this.filterSector = new TextField();
+        this.filterIndustry = new TextField();
 
         this.getElement().getStyle().set("padding", "0");
     }
-    
+
     @PostConstruct
-    public void construct(){
-        this.doLayout();
+    public void construct()
+    {
+        //does not get called when class instantiated from new()
+        //or because this has autowire dataEquitiesStocksModel as does dataEquitiesStocksControllerFL
+        // which does the new()
+//        this.doLayout();
     }
 
-    public final void doLayout()
+    public final void doLayout(String columnList)
     {
+        //remove existing grid columns
+        finVizEquityInfoModelGrid.removeAllColumns();
+
         this.finVizEquityInfoModelGrid.setPageSize(50);
         this.finVizEquityInfoModelGrid.setSizeFull();
         this.finVizEquityInfoModelGrid.addClassName("equity-grid");
@@ -67,7 +74,7 @@ public class DataEquitiesStocksGridVL
         //set columns based on preferences
         List<String> columns = new ArrayList<>();
 
-        StringTokenizer tokenizer = new StringTokenizer(this.dataEquitiesStocksModel.getStringColumns(), ",");
+        StringTokenizer tokenizer = new StringTokenizer(columnList, ",");
         while (tokenizer.hasMoreElements())
         {
             columns.add(tokenizer.nextToken());
@@ -357,7 +364,9 @@ public class DataEquitiesStocksGridVL
 
         this.setColumnFilters();
 
-        this.dataProviderSetup();
+//        this.dataEquitiesStocksModel.finVizEquityInfoModelGridDataProviderSetup();
+//        this.finVizEquityInfoModelGrid.setItems(this.dataEquitiesStocksModel.getDataProvider());
+//        this.dataProviderSetup();
     }
 
     private void setHeaderRow2()
@@ -401,7 +410,8 @@ public class DataEquitiesStocksGridVL
 
         if (this.finVizEquityInfoModelGrid.getColumnByKey("tgtPrice") != null)
         {
-            this.gridHeaderRow2.getCell(this.finVizEquityInfoModelGrid.getColumnByKey("tgtPrice")).setText("Target");
+            this.gridHeaderRow2.getCell(this.finVizEquityInfoModelGrid.getColumnByKey("tgtPrice"))
+                .setText("Target");
         }
 
         if (this.finVizEquityInfoModelGrid.getColumnByKey("anrec") != null)
@@ -411,7 +421,8 @@ public class DataEquitiesStocksGridVL
 
         if (this.finVizEquityInfoModelGrid.getColumnByKey("earndate") != null)
         {
-            this.gridHeaderRow2.getCell(this.finVizEquityInfoModelGrid.getColumnByKey("earndate")).setText("Earnings");
+            this.gridHeaderRow2.getCell(this.finVizEquityInfoModelGrid.getColumnByKey("earndate"))
+                .setText("Earnings");
         }
 
         if (this.finVizEquityInfoModelGrid.getColumnByKey("epscy") != null)
@@ -435,69 +446,47 @@ public class DataEquitiesStocksGridVL
         }
     }
 
-    private void dataProviderSetup()
-    {
-        this.gridFilter = new FilterFinVizInfo();
-
-        DataProvider<FinVizEquityInfoModel, FilterFinVizInfo> dataProvider
-            = DataProvider.fromFilteringCallbacks(
-                query ->
-            {
-                return this.equityInfoService.findAll(query.getOffset(),
-                    query.getLimit(), query.getFilter());
-            },
-                query ->
-            {
-                return this.equityInfoService.findAllCount(query.getOffset(),
-                    query.getLimit(), query.getFilter());
-            });
-
-        var dp = dataProvider.withConfigurableFilter();
-
-        dp.setFilter(gridFilter);
-
-        this.finVizEquityInfoModelGrid.setItems(dp);
-    }
-
     private void setColumnFilters()
     {
         //header row        
         this.gridHeaderRow1 = this.finVizEquityInfoModelGrid.appendHeaderRow();
 
         //ticker column filter
-        this.filterTicker = new TextField();
+//        this.filterTicker = new TextField();
         this.filterTicker.setWidth("95px");
         this.filterTicker.setWidthFull();
         this.filterTicker.setPlaceholder("Filter...");
         this.filterTicker.setClearButtonVisible(true);
         this.filterTicker.setValueChangeMode(ValueChangeMode.TIMEOUT);
         //add filter to header row
-        this.gridHeaderRow1.getCell(this.finVizEquityInfoModelGrid.getColumnByKey("ticker")).setComponent(this.filterTicker);
+        this.gridHeaderRow1.getCell(this.finVizEquityInfoModelGrid.getColumnByKey("ticker"))
+            .setComponent(this.filterTicker);
         //add listener
-        this.filterTicker.addValueChangeListener(event ->
-        {
-            this.gridFilter.setFilterTicker(event.getValue());
-            this.finVizEquityInfoModelGrid.getDataProvider().refreshAll();
-        });
+//        this.filterTicker.addValueChangeListener(event ->
+//        {
+//            this.gridFilter.setFilterTicker(event.getValue());
+//            this.finVizEquityInfoModelGrid.getDataProvider().refreshAll();
+//        });
 
         //sector column filter
-        this.filterSector = new TextField();
+//        this.filterSector = new TextField();
         this.filterSector.setWidth("130px");
         this.filterSector.setWidthFull();
         this.filterSector.setPlaceholder("Filter...");
         this.filterSector.setClearButtonVisible(true);
         this.filterSector.setValueChangeMode(ValueChangeMode.TIMEOUT);
         //add filter to header row
-        this.gridHeaderRow1.getCell(this.finVizEquityInfoModelGrid.getColumnByKey("sector")).setComponent(this.filterSector);
+        this.gridHeaderRow1.getCell(this.finVizEquityInfoModelGrid.getColumnByKey("sector"))
+            .setComponent(this.filterSector);
         //add listener
-        this.filterSector.addValueChangeListener(event ->
-        {
-            this.gridFilter.setFilterSector(event.getValue());
-            this.finVizEquityInfoModelGrid.getDataProvider().refreshAll();
-        });
+//        this.filterSector.addValueChangeListener(event ->
+//        {
+//            this.gridFilter.setFilterSector(event.getValue());
+//            this.finVizEquityInfoModelGrid.getDataProvider().refreshAll();
+//        });
 
         //industry column filter
-        this.filterIndustry = new TextField();
+//        this.filterIndustry = new TextField();
         this.filterIndustry.setWidth("130px");
         this.filterIndustry.setWidthFull();
         this.filterIndustry.setPlaceholder("Filter...");
@@ -507,10 +496,10 @@ public class DataEquitiesStocksGridVL
         this.gridHeaderRow1.getCell(this.finVizEquityInfoModelGrid.getColumnByKey("industry"))
             .setComponent(this.filterIndustry);
         //add listener
-        this.filterIndustry.addValueChangeListener(event ->
-        {
-            this.gridFilter.setFilterIndustry(event.getValue());
-            this.finVizEquityInfoModelGrid.getDataProvider().refreshAll();
-        });
+//        this.filterIndustry.addValueChangeListener(event ->
+//        {
+//            this.gridFilter.setFilterIndustry(event.getValue());
+//            this.finVizEquityInfoModelGrid.getDataProvider().refreshAll();
+//        });
     }
 }
