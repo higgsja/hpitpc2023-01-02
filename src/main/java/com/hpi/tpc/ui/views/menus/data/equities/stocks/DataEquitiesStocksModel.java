@@ -30,8 +30,8 @@ public class DataEquitiesStocksModel
     @Autowired private PrefsController prefsController;
 
     @Getter private String stringColumns;
-    @Getter private List<Attribute> availAttributes;
-    @Getter private LinkedHashSet<Attribute> selectedAttributes;
+    @Getter private List<Attribute> availableAttributes;
+    @Getter private HashSet<Attribute> selectedAttributes;
     @Getter private FilterFinVizInfo gridFilter;
     @Getter private ConfigurableFilterDataProvider<FinVizEquityInfoModel, 
         Void, FilterFinVizInfo> dataProvider;
@@ -43,7 +43,7 @@ public class DataEquitiesStocksModel
     @PostConstruct
     private void construct()
     {
-        this.availAttributes = new ArrayList<>();
+        this.availableAttributes = new ArrayList<>();
 
         this.selectedAttributes = new LinkedHashSet<>();
         
@@ -83,7 +83,7 @@ public class DataEquitiesStocksModel
 
         columnsCSV = null;
         this.selectedAttributes.clear();
-        this.availAttributes.clear();
+        this.availableAttributes.clear();
 
         //populate selected
         tokenizer = new StringTokenizer(this.stringColumns, ",");
@@ -111,12 +111,12 @@ public class DataEquitiesStocksModel
 
             if (!this.selectedAttributes.contains(tempAttribute))
             {
-                this.availAttributes.add(tempAttribute);
+                this.availableAttributes.add(tempAttribute);
             }
         }
         
         //sort available
-        this.availAttributes.sort(Comparator.comparing(Attribute::getAttribute));
+        this.availableAttributes.sort(Comparator.comparing(Attribute::getAttribute));
     }
     
     public void finVizEquityInfoModelGridDataProviderSetup()

@@ -3,7 +3,6 @@ package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 import com.hpi.tpc.ui.views.main.MainLayout;
 import com.hpi.tpc.ui.views.baseClass.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
-import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;

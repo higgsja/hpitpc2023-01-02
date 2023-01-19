@@ -396,12 +396,10 @@ private ComboBox<EditAccountModel> getComboAccounts(){
             this.dataValidateOptionsModel.filterChange(null, vcEvent.getValue());
         });
 
-        this.getButtonSave().addClickListener(
-            vcEvent -> this.doSave());
+        this.getButtonSave().addClickListener(vcEvent -> this.doSave());
 
         this.getButtonCancel().
-            addClickListener(
-                vcEvent -> this.doCancel());
+            addClickListener(vcEvent -> this.doCancel());
     }
 
 //    private void setDataProviderListener() {

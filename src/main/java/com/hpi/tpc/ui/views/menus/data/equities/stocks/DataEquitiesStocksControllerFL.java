@@ -54,9 +54,8 @@ public class DataEquitiesStocksControllerFL
         //grid in content
         this.dataEquitiesStocksGridVL = new DataEquitiesStocksGridVL();
         this.dataEquitiesStocksVL.add(this.dataEquitiesStocksGridVL);
-//        this.add(this.dataEquitiesStocksVL);
-
-//        this.prefsPageHL = this.createPreferencesTabHL(ROUTE_DATA_EQUITIES_STOCKS_PREFERENCES);
+        
+        
     }
 
     @PostConstruct
