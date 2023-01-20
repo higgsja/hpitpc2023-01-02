@@ -1,4 +1,4 @@
-package com.hpi.tpc.ui.views.menus.data.equities.stocks;
+package com.hpi.tpc.ui.views.menus.data.equities.stocks.prefs;
 
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.button.*;
