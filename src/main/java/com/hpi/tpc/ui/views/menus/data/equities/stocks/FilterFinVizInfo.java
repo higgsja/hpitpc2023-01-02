@@ -2,7 +2,6 @@ package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 
 import lombok.*;
 
-//@Component
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class FilterFinVizInfo

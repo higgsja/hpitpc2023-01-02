@@ -1,6 +1,5 @@
 package com.hpi.tpc.ui.views.menus.data;
 
-import com.hpi.tpc.ui.views.menus.data.equities.stocks.DataModel;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
@@ -35,10 +34,6 @@ public class DataControllerFL
     implements BeforeEnterObserver
 {
 
-    //not used here but instantiate the singleton for later use
-//    @Autowired DataValidateStocksControllerFL dataValidateStocksControllerFL;
-    //data model singleton as can be used in other places
-    @Autowired private DataModel dataModel;
     @Autowired private MainLayout mainLayout;
     
     @PostConstruct
@@ -46,11 +41,6 @@ public class DataControllerFL
     {
         this.addClassName("dataController");
         
-        this.dataModel = new DataModel();
-
-        //get any preferences
-        this.dataModel.getPrefs();
-
         this.addMenuBarTabs();
     }
 

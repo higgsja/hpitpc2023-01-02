@@ -54,8 +54,6 @@ public class DataEquitiesStocksControllerFL
         //grid in content
         this.dataEquitiesStocksGridVL = new DataEquitiesStocksGridVL();
         this.dataEquitiesStocksVL.add(this.dataEquitiesStocksGridVL);
-        
-        
     }
 
     @PostConstruct

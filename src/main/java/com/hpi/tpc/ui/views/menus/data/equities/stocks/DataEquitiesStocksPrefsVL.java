@@ -26,7 +26,7 @@ import org.springframework.stereotype.Component;
 @PermitAll
 public class DataEquitiesStocksPrefsVL
     extends ViewBaseVL
-    implements BeforeEnterObserver, BeforeLeaveObserver
+    implements BeforeEnterObserver
 {
 
     @Autowired private MainLayout mainLayout;
@@ -48,14 +48,12 @@ public class DataEquitiesStocksPrefsVL
         this.setWidth("400px");
         this.setHeight("100%");
 
-        
-
     }
 
     @PostConstruct
     protected void constuct()
     {
-this.title = new DataEquitiesStocksPrefsTitleVL();
+        this.title = new DataEquitiesStocksPrefsTitleVL();
 
         this.twinColGrid = new TwinColGrid<Attribute>()
             .withAvailableGridCaption("Available")
@@ -64,10 +62,9 @@ this.title = new DataEquitiesStocksPrefsTitleVL();
             .withSizeFull()
             .withDragAndDropSupport()
             .selectRowOnClick()
-//            .addColumn(Attribute::getAttribute, "Attributes");
-            .addSortableColumn(Attribute::getAttribute, 
+            .addSortableColumn(Attribute::getAttribute,
                 Comparator.comparing(Attribute::getAttribute), "Attributes");
-        
+
         this.controls = new DataEquitiesStocksPrefsControlsHL();
 
         this.doButtonListeners();
@@ -90,15 +87,6 @@ this.title = new DataEquitiesStocksPrefsTitleVL();
             {
                 this.doSelectionChanged();
             });
-
-//        this.dataProviderListener = this.twinColGrid.addValueChangeListener(e ->
-//        {
-//            this.doSelectionChanged();
-//        });
-//        this.twinColGrid.getAvailableGrid().addSelectionListener(e ->
-//        {
-//            int i = 0;
-//        });        
     }
 
     private void removeDataListeners()
@@ -123,6 +111,8 @@ this.title = new DataEquitiesStocksPrefsTitleVL();
     {
         //write the changes
         this.dataEquitiesStocksModel.writePrefs(this.twinColGrid);
+        
+        this.controls.getEquitiesStocksPrefsSave().setEnabled(false);
     }
 
     private void doSelectionChanged()
@@ -142,25 +132,13 @@ this.title = new DataEquitiesStocksPrefsTitleVL();
         }
         //update the data
         this.updateData();
+        
+        //update buttons
+        this.controls.getEquitiesStocksPrefsSave().setEnabled(false);
+        this.controls.getEquitiesStocksPrefsCancel().setEnabled(true);
 
         //update the gear
         this.mainLayout.updatePagePrefsHL(null);
-    }
-
-    @Override
-    public void beforeLeave(BeforeLeaveEvent event)
-    {
-        //write the changes
-//        this.dataEquitiesStocksModel.writePrefs(this.twinColGrid);
-
-        //read them back to ensure model represents current state
-//        this.dataStocksMVCModel.getPrefs();
-        //refresh the layout
-        //reset the grid based on preference columns
-        //not necessary as we re-read when enter dataEquitiesStocks
-//        this.dataEquitiesStocksControllerFL.getDataEquitiesStocksGridVL()
-//            .doLayout(this.dataEquitiesStocksModel.getStringColumns());
-//        this.doTwinColLayout();
     }
 
     private void updateData()

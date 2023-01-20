@@ -25,14 +25,11 @@ public class DataEquitiesStocksPrefsControlsHL
         this.addClassName("dataEquitiesStocksPrefsControlsHL");
 
         this.equitiesStocksPrefsSave = new Button("Save");
-        this.equitiesStocksPrefsSave.setEnabled(false);
         this.equitiesStocksPrefsCancel = new Button("Cancel");
-        this.equitiesStocksPrefsCancel.setEnabled(false);
 
         this.buttonsHL = new HorizontalLayout(this.equitiesStocksPrefsSave, this.equitiesStocksPrefsCancel);
         this.buttonsHL.setClassName("dataEquitiesStocksPrefsControlsButtons");
 
         this.add(this.buttonsHL);
     }
-
 }
