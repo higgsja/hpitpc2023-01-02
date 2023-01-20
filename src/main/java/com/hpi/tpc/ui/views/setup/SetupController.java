@@ -1,8 +1,8 @@
 package com.hpi.tpc.ui.views.setup;
 
 import static com.hpi.tpc.AppConst.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import com.hpi.tpc.ui.views.setup.equities.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.*;
  * Target for navigation from appDrawer
  */
 public class SetupController
-    extends ViewControllerBase
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
@@ -42,14 +42,14 @@ public class SetupController
         this.setupModel.getPrefs("Setup");
 
         //create top menu tabs
-        this.createMenuTabs();
+        this.addMenuBarTabs();
     }
 
     /*
      * create the tabs and listeners; add to the menuBar
      */
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
 
         final String[][] selectTab =

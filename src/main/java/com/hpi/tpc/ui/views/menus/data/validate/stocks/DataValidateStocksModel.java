@@ -16,7 +16,9 @@ import org.springframework.stereotype.*;
  * responds to requests from View and instructions from Controller
  */
 @Component
-public class DataValidateStocksModel {
+public class DataValidateStocksModel
+{
+
     @Autowired private TPCDAOImpl serviceTPC;
     @Autowired @Getter private PrefsController prefsController;
 
@@ -30,24 +32,27 @@ public class DataValidateStocksModel {
     @Getter @Setter private TickerModel selectedTickerModel;
     @Getter @Setter private Boolean selectedSkip = false;
     @Getter @Setter private Boolean selectedValidated = false;
-    
+
     /**
-     * track when setting a filter. Do not want to enable save if only 
+     * track when setting a filter. Do not want to enable save if only
      * a filter change on the data provider
      */
     @Getter private Boolean bInFilterChange = false;
 
-    public DataValidateStocksModel() {
+    public DataValidateStocksModel()
+    {
         this.dbList = new ArrayList<>();
     }
-    
-    public void updateAccountModels() {
+
+    public void updateAccountModels()
+    {
         this.accountModels = this.serviceTPC.getAccountModels();
         //set nothing selected
         this.selectedAccountModel = null;
     }
 
-    public void updateTickerModels() {
+    public void updateTickerModels()
+    {
         this.tickerModels = this.serviceTPC.getTickerModels(this.selectedAccountModel);
         //set nothing selected
         this.selectedTickerModel = null;
@@ -56,7 +61,8 @@ public class DataValidateStocksModel {
     /**
      * retrieves data for the grid
      */
-    public void updateGridData() {
+    public void updateGridData()
+    {
         List<ValidateStockTransactionModel> aList;
         ValidateStockTransactionModel tmpVstm;
 
@@ -65,7 +71,8 @@ public class DataValidateStocksModel {
         //refresh grid data
         aList = serviceTPC.getValidateStockTransactionModels(
             this.selectedAccountModel, this.selectedTickerModel);
-        for (ValidateStockTransactionModel model : aList) {
+        for (ValidateStockTransactionModel model : aList)
+        {
             tmpVstm = ValidateStockTransactionModel.builder()
                 .joomlaId(model.getJoomlaId())
                 .dbAcctId(model.getDbAcctId())
@@ -101,50 +108,64 @@ public class DataValidateStocksModel {
 
     /**
      * Set data filters on data set
-     * @param skipBoolean:      true to view only Skip records
+     *
+     * @param skipBoolean: true to view only Skip records
      * @param validatedBoolean: true to view only Validated records
      */
-    public void filterChange(Boolean skipBoolean, Boolean validatedBoolean) {
-        if (this.gridDataProvider == null) {
+    public void filterChange(Boolean skipBoolean, Boolean validatedBoolean)
+    {
+        if (this.gridDataProvider == null)
+        {
             return;
         }
         this.bInFilterChange = true;
 
         this.gridDataProvider.clearFilters();
-        this.selectedSkip = skipBoolean != null ?
-                            skipBoolean : this.selectedSkip;
-        this.selectedValidated = validatedBoolean != null ?
-                                 validatedBoolean : this.selectedValidated;
+        this.selectedSkip = skipBoolean != null
+            ? skipBoolean : this.selectedSkip;
+        this.selectedValidated = validatedBoolean != null
+            ? validatedBoolean : this.selectedValidated;
 
-        if (this.selectedSkip) {
-            this.gridDataProvider.addFilter(transaction ->
-                Objects.equals(transaction.getBSkip(), this.selectedSkip));
+        if (this.selectedSkip)
+        {
+            this.gridDataProvider.addFilter(transaction
+                -> Objects.equals(transaction.getBSkip(), this.selectedSkip));
         }
 
-        if (this.selectedValidated) {
-            this.gridDataProvider.addFilter(transaction ->
-                Objects.equals(transaction.getBValidated(),
+        if (this.selectedValidated)
+        {
+            this.gridDataProvider.addFilter(transaction
+                -> Objects.equals(transaction.getBValidated(),
                     this.selectedValidated));
         }
         this.bInFilterChange = false;
     }
 
-    public void getPrefs(String prefs) {
+    public void getPrefs(String prefs)
+    {
         this.prefsController.readPrefsByPrefix(prefs);
-        this.selectedSkip = this.prefsController
-            .getPref("StockValidateSkip").equals("Yes");
-        this.selectedValidated = this.prefsController
-            .getPref("StockValidateValidated").equals("Yes");
+        if (this.prefsController.getPref("ValidateValidateSkip") != null)
+        {
+            this.selectedSkip = this.prefsController
+                .getPref("StockValidateSkip").equals("Yes");
+        }
+        if (this.prefsController.getPref("ValidateSkip") != null)
+        {
+            this.selectedValidated = this.prefsController
+                .getPref("StockValidateValidated").equals("Yes");
+        }
     }
 
-    public void writePrefs(String skip, String validated) {
+    public void writePrefs(String skip, String validated)
+    {
         //preferences, update the hashmap, then write to database
         this.prefsController.setPref("StockValidateSkip", skip);
         this.prefsController.setPref("StockValidateValidated", validated);
         this.prefsController.writePrefsByPrefix("StockValidate");
     }
 
-    void doSave() {
+    void doSave()
+    {
         Integer i;
         Iterator dataProviderIterator;
         ValidateStockTransactionModel tmpModel;
@@ -163,12 +184,14 @@ public class DataValidateStocksModel {
 
         dataProviderIterator = this.gridDataProvider.getItems().iterator();
 
-        while (dataProviderIterator.hasNext()) {
+        while (dataProviderIterator.hasNext())
+        {
             tmpModel = (ValidateStockTransactionModel) dataProviderIterator.next();
-            if (tmpModel.getBSkip().equals(this.dbList.get(i).getBSkip())) {
+            if (tmpModel.getBSkip().equals(this.dbList.get(i).getBSkip()))
+            {
                 //no change
-            }
-            else {
+            } else
+            {
                 //new skip
                 //write to database
                 this.writeTransaction(
@@ -178,10 +201,11 @@ public class DataValidateStocksModel {
                     tmpModel.getFiTId());
             }
 
-            if (tmpModel.getBValidated().equals(this.dbList.get(i).getBValidated())) {
+            if (tmpModel.getBValidated().equals(this.dbList.get(i).getBValidated()))
+            {
                 //no change
-            }
-            else {
+            } else
+            {
                 //new validated
                 //write to database
                 this.writeTransaction(
@@ -195,7 +219,8 @@ public class DataValidateStocksModel {
     }
 
     private void writeTransaction(Boolean skip, Boolean validated,
-        Integer acctId, String fiTId) {
+        Integer acctId, String fiTId)
+    {
         String sql;
 
         sql = String.format(ValidateStockTransactionModel.SQL_UPDATE_INVTRAN,

@@ -5,8 +5,8 @@ import com.hpi.tpc.ui.views.notes.notes.NotesMVC_M;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
 import com.vaadin.flow.component.html.*;
@@ -35,7 +35,7 @@ import org.springframework.beans.factory.annotation.*;
  * Target for navigation from appDrawer
  */
 public class NotesController
-    extends ViewControllerBase
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
@@ -53,14 +53,14 @@ public class NotesController
         //get any preferences
         this.notesModel.getPrefs();
 
-        this.createMenuTabs();
+        this.addMenuBarTabs();
     }
 
     /*
      * create top menuBar tabs and listeners
      */
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         MenuItem notesItem = this.menuBar.addItem(TITLE_NOTES);
         SubMenu notesSubMenu = notesItem.getSubMenu();

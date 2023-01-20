@@ -1,9 +1,8 @@
 package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 
 import lombok.*;
-import org.springframework.stereotype.*;
 
-@Component
+//@Component
 @NoArgsConstructor @AllArgsConstructor
 @Getter @Setter
 public class FinVizEquityInfoSort

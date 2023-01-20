@@ -1,8 +1,8 @@
 package com.hpi.tpc.ui.views.coaching;
 
 import static com.hpi.tpc.AppConst.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
 import com.vaadin.flow.router.*;
@@ -20,7 +20,7 @@ import org.springframework.beans.factory.annotation.*;
 @NoArgsConstructor
 @PermitAll
 public class CoachingController
-    extends ViewControllerBase
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver, BeforeLeaveObserver
 {
     @Autowired private CoachingModel coachingModel;
@@ -34,14 +34,14 @@ public class CoachingController
         //get any preferences
         this.coachingModel.getPrefs();
 
-        this.createMenuTabs();
+        this.addMenuBarTabs();
     }
     
     /*
      * create the tabs and listeners; add to the menuBar
      */
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         MenuItem benchmarkItem = this.menuBar.addItem(ROUTE_COACHING_PERFORMANCE_BENCHMARK);
 

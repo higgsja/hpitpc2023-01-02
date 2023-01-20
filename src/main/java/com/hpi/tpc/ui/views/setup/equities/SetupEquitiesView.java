@@ -29,7 +29,7 @@ import org.springframework.stereotype.Component;
 @PermitAll
 //@CssImport("./styles/setupEquities.css")
 public class SetupEquitiesView
-    extends ViewBaseFL
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
@@ -157,5 +157,11 @@ public class SetupEquitiesView
 //        {
 //            this.appController.setDrawerOpened(false);
 //        }
+    }
+
+    @Override
+    public void addMenuBarTabs()
+    {
+        //none
     }
 }

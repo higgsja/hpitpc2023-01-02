@@ -11,6 +11,9 @@ import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
 import org.springframework.stereotype.Component;
 
+/**
+ *  Privides code for app main drawer
+ */
 @UIScope
 @VaadinSessionScope
 @Getter
@@ -29,6 +32,9 @@ public class MainDrawer
     private final Tab admin;
     private final Tab about;
 
+/**
+ * Constructor
+ */
     public MainDrawer()
     {
         //setup up the drawer tabs

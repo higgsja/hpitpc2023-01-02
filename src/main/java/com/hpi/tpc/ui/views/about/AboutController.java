@@ -1,8 +1,8 @@
 package com.hpi.tpc.ui.views.about;
 
 import static com.hpi.tpc.AppConst.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
 import com.vaadin.flow.router.*;
@@ -26,7 +26,7 @@ import org.springframework.beans.factory.annotation.*;
  * Target for navigation from appDrawer
  */
 public class AboutController
-    extends ViewControllerBase
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
@@ -39,7 +39,7 @@ public class AboutController
 
         this.aboutModel.getPrefs("About");
 
-        this.createMenuTabs();
+        this.addMenuBarTabs();
     }
 
     /**
@@ -47,7 +47,7 @@ public class AboutController
      *
      */
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         final String[][] selectTab =
         {
@@ -73,6 +73,10 @@ public class AboutController
         }
     }
 
+    /**
+     *
+     * @param bee
+     */
     @Override
     public void beforeEnter(BeforeEnterEvent bee)
     {

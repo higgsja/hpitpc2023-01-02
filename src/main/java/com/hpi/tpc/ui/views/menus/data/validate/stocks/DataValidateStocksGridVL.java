@@ -6,26 +6,24 @@ import com.vaadin.flow.component.checkbox.*;
 import com.vaadin.flow.component.grid.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.*;
 
-
-@Component
-public class DataValidateStocksViewGridVL
+public class DataValidateStocksGridVL
     extends ViewBaseVL
 {
 
+    @Autowired private DataValidateStocksControllerFL dataValidateStocksControllerFL;
     @Autowired private DataValidateStocksModel dataValidateStocksModel;
 
-    @Getter @Setter private Grid<ValidateStockTransactionModel> grid;
-    @Getter @Setter private FooterRow footerRow;
+    @Getter private final Grid<ValidateStockTransactionModel> validateStocksGrid;
+    @Getter private final FooterRow validateStocksGridFooterRow;
 
-    public DataValidateStocksViewGridVL()
+    public DataValidateStocksGridVL()
     {
-        this.setClassName("dataValidateStocsGridVL");
+        this.addClassName("dataValidateStocksGridVL");
 
-        this.grid = new Grid();
-        this.footerRow = this.grid.appendFooterRow();
-        this.add(this.grid);
+        this.validateStocksGrid = new Grid();
+        this.validateStocksGridFooterRow = this.validateStocksGrid.appendFooterRow();
+        this.add(this.validateStocksGrid);
         
         this.getElement().getStyle().set("padding", "0");
 
@@ -34,65 +32,65 @@ public class DataValidateStocksViewGridVL
 
     private void doLayout()
     {
-        this.grid.setColumnReorderingAllowed(true);
-        this.grid.recalculateColumnWidths();
+        this.validateStocksGrid.setColumnReorderingAllowed(true);
+        this.validateStocksGrid.recalculateColumnWidths();
         
-        this.grid.setAllRowsVisible(false);
+        this.validateStocksGrid.setAllRowsVisible(false);
 
-        this.grid.addClassName("dataValidateStocksGrid");
-        this.grid.setThemeName("dense");
+        this.validateStocksGrid.addClassName("dataValidateStocksGrid");
+        this.validateStocksGrid.setThemeName("dense");
 
-        this.grid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
-        this.grid.addThemeVariants(GridVariant.LUMO_COMPACT);
-        this.grid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
+        this.validateStocksGrid.addThemeVariants(GridVariant.LUMO_NO_BORDER);
+        this.validateStocksGrid.addThemeVariants(GridVariant.LUMO_COMPACT);
+        this.validateStocksGrid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
 
-        this.grid.setSelectionMode(Grid.SelectionMode.SINGLE);
+        this.validateStocksGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
 
-        this.grid.addColumn(ValidateStockTransactionModel::getEquityId)
+        this.validateStocksGrid.addColumn(ValidateStockTransactionModel::getEquityId)
             .setHeader("EquityId")
             .setTextAlign(ColumnTextAlign.CENTER)
             .setAutoWidth(true)
             .setFrozen(true)
             .setSortProperty("equityId");
 
-        this.grid.addColumn(ValidateStockTransactionModel::getDtTrade)
+        this.validateStocksGrid.addColumn(ValidateStockTransactionModel::getDtTrade)
             .setHeader("Trade Date")
             .setTextAlign(ColumnTextAlign.CENTER)
             .setAutoWidth(true)
             .setSortProperty("tradeDate");
 
-        this.grid.addColumn(ValidateStockTransactionModel::getUnits)
+        this.validateStocksGrid.addColumn(ValidateStockTransactionModel::getUnits)
             .setHeader("Units")
             .setTextAlign(ColumnTextAlign.END)
             .setAutoWidth(true)
             .setSortProperty("units")
             .setKey("units");
 
-        this.grid.addColumn(ValidateStockTransactionModel::getTradePrice)
+        this.validateStocksGrid.addColumn(ValidateStockTransactionModel::getTradePrice)
             .setHeader("Trade Price")
             .setTextAlign(ColumnTextAlign.END)
             .setAutoWidth(true)
             .setSortProperty("tradePrice");
 
-        this.grid.addColumn(ValidateStockTransactionModel::getLastPrice)
+        this.validateStocksGrid.addColumn(ValidateStockTransactionModel::getLastPrice)
             .setHeader("Last Price")
             .setTextAlign(ColumnTextAlign.END)
             .setAutoWidth(true)
             .setSortProperty("lastPrice");
 
-        this.grid.addColumn(ValidateStockTransactionModel::getFiTId)
+        this.validateStocksGrid.addColumn(ValidateStockTransactionModel::getFiTId)
             .setHeader("FiTId")
             .setTextAlign(ColumnTextAlign.END)
             .setAutoWidth(true)
             .setSortProperty("fiTId");
 
-        this.grid.addColumn(ValidateStockTransactionModel::getTransactionType)
+        this.validateStocksGrid.addColumn(ValidateStockTransactionModel::getTransactionType)
             .setHeader("TransType")
             .setTextAlign(ColumnTextAlign.END)
             .setAutoWidth(true)
             .setSortProperty("transType");
 
-        this.grid.addComponentColumn(vstm ->
+        this.validateStocksGrid.addComponentColumn(vstm ->
         {
             Checkbox checkBox = new Checkbox();
             checkBox.setValue(vstm.getBSkip());
@@ -102,6 +100,8 @@ public class DataValidateStocksViewGridVL
                 vstm.setBSkip(event.getValue());
                 //inform listeners
                 this.dataValidateStocksModel.getGridDataProvider().refreshItem(vstm);
+                //Enable Save
+                this.dataValidateStocksControllerFL.setButtonSaveEnabled(true);
             });
 
             return checkBox;
@@ -110,7 +110,7 @@ public class DataValidateStocksViewGridVL
             .setAutoWidth(true)
             .setTextAlign(ColumnTextAlign.CENTER);
 
-        this.grid.addComponentColumn(vstm ->
+        this.validateStocksGrid.addComponentColumn(vstm ->
         {
             Checkbox checkBox = new Checkbox();
             checkBox.setValue(vstm.getBValidated());
@@ -119,7 +119,9 @@ public class DataValidateStocksViewGridVL
                 //make the change
                 vstm.setBValidated(event.getValue());
                 //inform listeners
-                dataValidateStocksModel.getGridDataProvider().refreshItem(vstm);
+                this.dataValidateStocksModel.getGridDataProvider().refreshItem(vstm);
+                //enable Cancel
+                this.dataValidateStocksControllerFL.setButtonCancelEnabled(true);
             });
 
             return checkBox;
@@ -129,7 +131,7 @@ public class DataValidateStocksViewGridVL
             .setTextAlign(ColumnTextAlign.CENTER);
 
         //disallow client changes
-        this.grid.addComponentColumn(votm ->
+        this.validateStocksGrid.addComponentColumn(votm ->
         {
             Checkbox checkBox = new Checkbox();
             checkBox.setValue(votm.getBComplete());

@@ -1,7 +1,7 @@
 package com.hpi.tpc.ui.views.menus.data;
 
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.ViewControllerBaseFL;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import com.hpi.tpc.ui.views.menus.data.equities.stocks.*;
 import com.vaadin.flow.component.*;
@@ -34,24 +34,21 @@ public class DataControllerFL
     implements BeforeEnterObserver
 {
 
-    @Autowired private DataModel dataModel;
-
+    @Autowired private MainLayout mainLayout;
+    
     @PostConstruct
     private void construct()
     {
         this.addClassName("dataController");
-
-        //get any preferences
-        this.dataModel.getPrefs();
-
-        this.createMenuTabs();
+        
+        this.addMenuBarTabs();
     }
 
     /*
      * create top menuBar tabs and listeners
      */
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         //Validate
         MenuItem validateItem = this.menuBar.addItem(TAB_DATA_VALIDATE_TITLE);
@@ -103,10 +100,11 @@ public class DataControllerFL
         super.beforeEnter(bee);
 
         //set navBar for this menu
-//        super.doNavBar(ROUTE_DATA_EQUITIES_STOCKS_PREFERENCES);
+        this.mainLayout.doNavBar(this.menuBar, this.prefsPageHL);
 
         //send to default view
-        bee.forwardTo(DataEquitiesStocksController.class);
+        bee.forwardTo(DataEquitiesStocksControllerFL.class);
+//        bee.forwardTo(DataValidateStocksControllerFL.class);
     }
 
 }

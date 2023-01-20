@@ -1,8 +1,8 @@
 package com.hpi.tpc.ui.views.menus.admin;
 
 import static com.hpi.tpc.AppConst.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import com.vaadin.flow.component.contextmenu.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
@@ -29,7 +29,7 @@ import org.springframework.beans.factory.annotation.*;
  * Target for navigation from appDrawer
  */
 public class AdminMenu
-    extends ViewControllerBase
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
@@ -45,14 +45,14 @@ public class AdminMenu
         //get any preferences associated with this feature
         this.adminModel.getPrefs();
 
-        this.createMenuTabs();
+        this.addMenuBarTabs();
     }
 
     /*
      * create the tabs and listeners; add to the menuBar
      */
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         MenuItem menuItem;
         ArrayList<SubMenu> subMenus;

@@ -9,7 +9,13 @@ import org.springframework.jdbc.support.rowset.*;
 public class PagePrefsBase
     extends VerticalLayout
 {
-   @Autowired private JdbcTemplate jdbcTemplate;
+
+    @Autowired private JdbcTemplate jdbcTemplate;
+
+    public PagePrefsBase()
+    {
+        this.setClassName("pagePrefsBase");
+    }
 
     public void init(String keyId)
     {
@@ -31,5 +37,5 @@ public class PagePrefsBase
         aSpan.getElement().setProperty("innerHTML", keyValue);
 
         this.add(aSpan);
-    } 
+    }
 }

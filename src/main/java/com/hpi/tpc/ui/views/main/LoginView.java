@@ -16,7 +16,8 @@ import com.vaadin.flow.theme.lumo.*;
 @Route(value = AppConst.LOGON)
 @PageTitle(TITLE_PAGE_LOGON)
 //@JsModule("./styles/shared-styles.js")
-public class LoginView extends LoginOverlay
+public class LoginView 
+    extends LoginOverlay
     implements AfterNavigationObserver,
                BeforeEnterObserver {
     private static final LoginI18n I18N = LoginI18n.createDefault();

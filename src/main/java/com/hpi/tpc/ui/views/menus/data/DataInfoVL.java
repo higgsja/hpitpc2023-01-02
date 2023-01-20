@@ -17,7 +17,7 @@ import org.springframework.stereotype.*;
 @PageTitle(TITLE_PAGE_DATA)
 @Component
 @PermitAll
-public class DataInfo
+public class DataInfoVL
     extends PagePrefsBase
 {
 

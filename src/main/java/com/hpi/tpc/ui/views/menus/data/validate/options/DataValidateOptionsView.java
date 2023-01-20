@@ -30,7 +30,7 @@ import org.springframework.beans.factory.annotation.*;
 @PermitAll
 @NoArgsConstructor
 public class DataValidateOptionsView
-    extends ViewBaseFL
+    extends ViewControllerBaseFL
 {
 
     @Autowired private DataValidateOptionsModel optionsModel;
@@ -315,5 +315,11 @@ public class DataValidateOptionsView
     public FooterRow getFooterRow()
     {
         return this.grid.getFooterRow();
+    }
+
+    @Override
+    public void addMenuBarTabs()
+    {
+        //none
     }
 }

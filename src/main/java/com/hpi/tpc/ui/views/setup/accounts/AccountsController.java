@@ -2,8 +2,8 @@ package com.hpi.tpc.ui.views.setup.accounts;
 
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.data.entities.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
-import com.hpi.tpc.ui.views.menus.*;
 import com.vaadin.flow.data.provider.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
@@ -27,7 +27,7 @@ import org.springframework.beans.factory.annotation.*;
 @org.springframework.stereotype.Component
 @NoArgsConstructor
 public class AccountsController
-    extends ViewControllerBase
+    extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
@@ -613,7 +613,7 @@ public class AccountsController
     }
 
     @Override
-    public void createMenuTabs()
+    public void addMenuBarTabs()
     {
         //none
     }
