@@ -24,7 +24,6 @@ import org.springframework.stereotype.Component;
 @UIScope
 @VaadinSessionScope
 @Route(value = ROUTE_DATA_EQUITIES_STOCKS_CONTROLLER, layout = MainLayout.class)
-//@PageTitle(TITLE_PAGE_DATA + ":" + TITLE_PAGE_DATA_EQUITIES_STOCKS)
 @PermitAll
 @Component
 public class DataEquitiesStocksControllerFL
