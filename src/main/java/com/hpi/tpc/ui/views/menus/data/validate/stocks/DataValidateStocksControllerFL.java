@@ -165,8 +165,8 @@ public class DataValidateStocksControllerFL
         this.updateDataOnEnter();
         
         //change the preferences route
-//        this.updatePrefsIcon();
-        this.updateNavBar(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
+//        this.updateNavBar(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
+        this.updateNavBarGear(null);
     }
 
     private void updateDataOnEnter()

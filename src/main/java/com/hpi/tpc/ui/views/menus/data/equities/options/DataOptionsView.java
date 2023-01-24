@@ -37,24 +37,13 @@ public class DataOptionsView
 
     public DataOptionsView() {
         this.addClassName("dataStocksView");
-//        this.setSizeFull();
-    }
-
-    @PostConstruct
-    public void init() {
-    }
-
-    @PreDestroy
-    private void destruct() {
-        int i = 0;
     }
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         this.tpcService.AppTracking("TPC:Data:Equities:Options");
 
-        if (prefsController.getPref("TPCDrawerClose").
-            equalsIgnoreCase("yes")) {
+        if (prefsController.getPref("TPCDrawerClose").equalsIgnoreCase("yes")) {
             this.mainLayout.setDrawerOpened(false);
         }
     }

@@ -7,7 +7,6 @@ import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
 import com.vaadin.flow.data.provider.*;
 import java.util.*;
-import javax.annotation.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.jdbc.core.*;

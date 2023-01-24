@@ -8,6 +8,7 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
+import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 @NoArgsConstructor
@@ -19,11 +20,21 @@ import org.springframework.stereotype.*;
 @PermitAll
 public class DataInfoVL
     extends PagePrefsBase
+    implements BeforeEnterObserver
 {
+
+    @Autowired MainLayout mainLayout;
 
     @PostConstruct
     public void construct()
     {
         this.init("DataHelp");
+    }
+
+    @Override
+    public void beforeEnter(BeforeEnterEvent event)
+    {
+        //update the gear
+        this.mainLayout.updatePagePrefsHL(null);
     }
 }
