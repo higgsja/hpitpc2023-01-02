@@ -32,9 +32,9 @@ public abstract class ViewControllerBaseFL
         this.setClassName("viewControllerBaseFL");
         this.menuBar = new MenuBar();
         this.menuBar.setOpenOnHover(true);
-        
+
         this.setSizeFull();
-        
+
         this.prefsPageHL = null;
     }
 
@@ -45,33 +45,25 @@ public abstract class ViewControllerBaseFL
      */
     public void doNavBar(String prefsPage)
     {
-        this.prefsPageHL = this.createPreferencesTabHL(prefsPage);
-        
+        if (prefsPage != null)
+        {
+            this.prefsPageHL = this.createPreferencesTabHL(prefsPage);
+        }
+
         //set the top menu        
         this.mainLayout.doNavBar(this.menuBar, prefsPageHL);
-
-        //add the new menu items
-//        this.mainLayout.addTopMenu(this.menuBar, this.prefsPageHL);
     }
-    
-    public void updateNavBar(String prefsPage){
-        this.prefsPageHL = this.createPreferencesTabHL(prefsPage);
-        
+
+    public void updateNavBarGear(String prefsPage)
+    {
+        if (prefsPage != null)
+        {
+            this.prefsPageHL = this.createPreferencesTabHL(prefsPage);
+        }
+
         //update the top menu        
         this.mainLayout.updatePagePrefsHL(prefsPageHL);
-        
-//                //update the top menu        
-//        this.mainLayout.updatePagePrefsHL(prefsPageHL);
     }
-
-//    /**
-//     * Change the gear icon route as necessary
-//     * When there is no preference page, prefsPageHL is set to null
-//     */
-//    public void updatePrefsIcon()
-//    {
-//        this.mainLayout.updatePagePrefsHL(prefsPageHL);
-//    }
 
     /**
      * create top menuBar tabs and listeners
@@ -118,7 +110,7 @@ public abstract class ViewControllerBaseFL
             this.mainLayout.setDrawerOpened(false);
         }
     }
-    
+
     public final Label titleFormat(String title)
     {
         Label label = new Label(title);

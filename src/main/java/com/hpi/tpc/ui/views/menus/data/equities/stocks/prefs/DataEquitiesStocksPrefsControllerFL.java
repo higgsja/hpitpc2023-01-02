@@ -11,7 +11,6 @@ import com.vaadin.flow.component.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.shared.*;
 import com.vaadin.flow.spring.annotation.*;
-import java.util.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
@@ -52,16 +51,16 @@ public class DataEquitiesStocksPrefsControllerFL
     {
         this.addClassName("dataEquitiesStocksPrefs");
         this.setWidth("380px");
-        
+
         //title vertical layout
         this.title = new DataEquitiesStocksPrefsTitleVL();
-        
+
         //content vertical layout
         this.prefsVL = new DataEquitiesStocksPrefsVL();
-        
+
         //controls
         this.controls = new DataEquitiesStocksPrefsControlsHL();
-        
+
         //listeners
         this.doButtonListeners();
     }
@@ -75,22 +74,27 @@ public class DataEquitiesStocksPrefsControllerFL
             .withSelectionGridReordering()
             .withSizeFull()
             .withDragAndDropSupport()
-            .selectRowOnClick()
-            .addSortableColumn(Attribute::getAttribute,
-                Comparator.comparing(Attribute::getAttribute), "Attributes");
-        
+            .selectRowOnClick();
+
+        this.twinColGrid.addColumn(Attribute::getAttribute)
+            .setComparator(Attribute::getAttribute)
+            .setHeader("Attributes");
+
+        this.twinColGrid.setCaption("This is the caption");
+
         this.add(this.prefsVL);
         this.prefsVL.add(this.title);
         this.prefsVL.add(this.title);
         this.prefsVL.add(this.twinColGrid);
         this.prefsVL.add(this.controls);
     }
-    
-    private void doButtonListeners(){
+
+    private void doButtonListeners()
+    {
         this.controls.getEquitiesStocksPrefsSave().addClickListener(vcEvent -> this.doSave());
         this.controls.getEquitiesStocksPrefsCancel().addClickListener(vcEvent -> this.doCancel());
     }
-    
+
     private void doDataListeners()
     {
         this.selectedListener = this.twinColGrid.getSelectionGrid().getDataProvider()
@@ -99,7 +103,7 @@ public class DataEquitiesStocksPrefsControllerFL
                 this.doSelectionChanged();
             });
     }
-    
+
     private void removeDataListeners()
     {
         if (this.selectedListener != null)
@@ -112,7 +116,7 @@ public class DataEquitiesStocksPrefsControllerFL
             this.dataProviderListener.remove();
         }
     }
-    
+
     private void doCancel()
     {
         UI.getCurrent().navigate(DataEquitiesStocksControllerFL.class);
@@ -122,7 +126,7 @@ public class DataEquitiesStocksPrefsControllerFL
     {
         //write the changes
         this.dataEquitiesStocksModel.writePrefs(this.twinColGrid);
-        
+
         this.controls.getEquitiesStocksPrefsSave().setEnabled(false);
     }
 
@@ -131,7 +135,7 @@ public class DataEquitiesStocksPrefsControllerFL
         this.controls.getEquitiesStocksPrefsSave().setEnabled(true);
         this.controls.getEquitiesStocksPrefsCancel().setEnabled(true);
     }
-    
+
     private void updateData()
     {
         this.removeDataListeners();
@@ -152,7 +156,7 @@ public class DataEquitiesStocksPrefsControllerFL
 
         //update the data
         this.updateData();
-        
+
         //update buttons
         this.controls.getEquitiesStocksPrefsSave().setEnabled(false);
         this.controls.getEquitiesStocksPrefsCancel().setEnabled(true);
@@ -160,7 +164,7 @@ public class DataEquitiesStocksPrefsControllerFL
         //update the gear
         this.mainLayout.updatePagePrefsHL(null);
     }
-    
+
     @Override
     public void addMenuBarTabs()
     {

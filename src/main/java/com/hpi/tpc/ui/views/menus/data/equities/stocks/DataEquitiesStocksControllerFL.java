@@ -83,7 +83,7 @@ public class DataEquitiesStocksControllerFL
             .setItems(this.dataEquitiesStocksModel.getDataProvider());
 
         //change the preferences route
-        this.updateNavBar(ROUTE_DATA_EQUITIES_STOCKS_PREFERENCES);
+        this.updateNavBarGear(ROUTE_DATA_EQUITIES_STOCKS_PREFERENCES);
     }
     
     private void doStocksGridListeners(){
