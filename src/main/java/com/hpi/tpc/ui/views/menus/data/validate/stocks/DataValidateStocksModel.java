@@ -47,6 +47,7 @@ public class DataValidateStocksModel
     public void updateAccountModels()
     {
         this.accountModels = this.serviceTPC.getAccountModels();
+        
         //set nothing selected
         this.selectedAccountModel = null;
     }
@@ -141,6 +142,10 @@ public class DataValidateStocksModel
         this.bInFilterChange = false;
     }
 
+    /**
+     * currently not called as there are none
+     * @param prefs: Preferences prefix
+     */
     public void getPrefs(String prefs)
     {
         this.prefsController.readPrefsByPrefix(prefs);
@@ -156,6 +161,11 @@ public class DataValidateStocksModel
         }
     }
 
+    /**
+     * currently not called as there are no preferences
+     * @param skip
+     * @param validated 
+     */
     public void writePrefs(String skip, String validated)
     {
         //preferences, update the hashmap, then write to database

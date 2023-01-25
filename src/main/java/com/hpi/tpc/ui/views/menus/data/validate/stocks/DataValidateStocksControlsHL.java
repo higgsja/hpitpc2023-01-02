@@ -58,34 +58,4 @@ public class DataValidateStocksControlsHL
 
         this.add(this.comboBoxesHL, this.checkBoxesHL, this.buttonsHL);
     }
-
-//    public void setCheckboxSkipValue(Boolean check)
-//    {
-//        this.validateStocksCheckboxSkip.setValue(check);
-//    }
-//
-//    public Boolean getCheckboxSkipValue()
-//    {
-//        return this.validateStocksCheckboxSkip.getValue();
-//    }
-//
-//    public void setCheckboxValidatedValue(Boolean validated)
-//    {
-//        this.validateStocksCheckboxValidated.setValue(validated);
-//    }
-//
-//    public Boolean getCheckboxValidatedValue()
-//    {
-//        return this.validateStocksCheckboxValidated.getValue();
-//    }
-//
-//    public void setButtonSaveEnabled(Boolean enabled)
-//    {
-//        this.validateStocksButtonSave.setEnabled(enabled);
-//    }
-//
-//    public void setButtonCancelEnabled(Boolean enabled)
-//    {
-//        this.validateStocksButtonCancel.setEnabled(enabled);
-//    }
 }

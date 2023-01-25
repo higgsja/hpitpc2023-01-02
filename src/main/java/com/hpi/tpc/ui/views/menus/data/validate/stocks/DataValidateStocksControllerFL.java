@@ -36,6 +36,7 @@ public class DataValidateStocksControllerFL
     extends ViewControllerBaseFL //flexLayout
     implements BeforeEnterObserver
 {
+
     //data model singleton as used in multiple places
     @Autowired private DataValidateStocksModel dataValidateStocksModel;
     @Autowired private TPCDAOImpl serviceTPC;
@@ -50,10 +51,10 @@ public class DataValidateStocksControllerFL
     public DataValidateStocksControllerFL()
     {
         this.addClassName("dataValidateStocksController");
-        
+
         this.dataValidateStocksVL = new DataValidateStocksVL();
         this.add(this.dataValidateStocksVL);
-        
+
         this.dataValidateStocksTitleVL = new DataValidateStocksTitleVL();
         this.dataValidateStocksVL.add(this.dataValidateStocksTitleVL);
 
@@ -62,23 +63,21 @@ public class DataValidateStocksControllerFL
 
         this.dataValidateStocksGridVL = new DataValidateStocksGridVL();
         this.dataValidateStocksVL.add(this.dataValidateStocksGridVL);
-        
-//        this.prefsPageHL = this.createPreferencesTabHL(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
     }
 
     @PostConstruct
     public void construct()
     {
-        
 
-        this.dataValidateStocksModel.getPrefs("DataValidateStocks");
+        //there are none
+        //this.dataValidateStocksModel.getPrefs("DataValidateStocks");
 
         this.setCheckboxSkipValue(this.dataValidateStocksModel.getSelectedSkip());
 
         this.setCheckboxValidatedValue(this.dataValidateStocksModel.getSelectedValidated());
 
         this.setButtonSaveEnabled(false);
-        this.setButtonCancelEnabled(false);
+        this.setButtonCancelEnabled(true);
 
         this.setListeners();
     }
@@ -107,7 +106,6 @@ public class DataValidateStocksControllerFL
 //    {
 //        return this.getCheckboxSkip().getValue();
 //    }
-
     private Checkbox getCheckboxValidated()
     {
         return this.dataValidateStocksControlsHL.getValidateStocksCheckboxValidated();
@@ -122,7 +120,6 @@ public class DataValidateStocksControllerFL
 //    {
 //        return this.getCheckboxValidated().getValue();
 //    }
-
     private Button getButtonSave()
     {
         return this.dataValidateStocksControlsHL.getValidateStocksButtonSave();
@@ -163,9 +160,8 @@ public class DataValidateStocksControllerFL
 
         //refresh data on every entry
         this.updateDataOnEnter();
-        
-        //change the preferences route
-//        this.updateNavBar(ROUTE_DATA_VALIDATE_STOCKS_PREFERENCES);
+
+        //change the preferences route (none)
         this.updateNavBarGear(null);
     }
 
@@ -176,6 +172,10 @@ public class DataValidateStocksControllerFL
          */
         this.updateDataOnEnterAccounts();
         this.updateDataOnEnterTickers();
+        
+        //set the buttons
+        this.setButtonSaveEnabled(false);
+        this.setButtonCancelEnabled(false);
     }
 
     private void updateDataOnEnterAccounts()
@@ -185,9 +185,11 @@ public class DataValidateStocksControllerFL
          */
         //update data
         this.dataValidateStocksModel.updateAccountModels();
+
         //update view
         this.getComboAccounts().setItems(this.dataValidateStocksModel.getAccountModels());
         this.getComboAccounts().setValue(this.dataValidateStocksModel.getAccountModels().get(0));
+
         //update the data model
         this.dataValidateStocksModel.setSelectedAccountModel(this.getComboAccounts().getValue());
     }
@@ -199,19 +201,20 @@ public class DataValidateStocksControllerFL
          */
         //update data
         this.dataValidateStocksModel.updateTickerModels();
+
         //update view
         this.getComboTickers().setItems(this.dataValidateStocksModel.getTickerModels());
-        this.getComboTickers().setValue(this.dataValidateStocksModel
-            .getTickerModels().get(0));
+        this.getComboTickers().setValue(this.dataValidateStocksModel.getTickerModels().get(0));
+
         //update the data model
         this.dataValidateStocksModel.setSelectedTickerModel(this.getComboTickers().getValue());
     }
 
+    /**
+     * pull new data set on any grid change
+     */
     private void updateGridOnChange()
     {
-        /**
-         * any change to accounts or tickers pull new data set
-         */
         Iterator<ValidateStockTransactionModel> iterator;
         ValidateStockTransactionModel tmpModel;
         Double unitsTotal;
@@ -233,8 +236,7 @@ public class DataValidateStocksControllerFL
 
         this.dataValidateStocksModel.updateGridData();
 
-        this.getGrid().setDataProvider(
-            this.dataValidateStocksModel.getGridDataProvider());
+        this.getGrid().setDataProvider(this.dataValidateStocksModel.getGridDataProvider());
         this.setGridDataProviderListener();
 
         //set the totals
@@ -277,7 +279,7 @@ public class DataValidateStocksControllerFL
         this.getCheckboxSkip().addValueChangeListener(
             vcEvent ->
         {
-            this.dataValidateStocksModel.filterChange(vcEvent.getValue(), null);            
+            this.dataValidateStocksModel.filterChange(vcEvent.getValue(), null);
         });
 
         this.getCheckboxValidated().addValueChangeListener(
@@ -319,14 +321,15 @@ public class DataValidateStocksControllerFL
     {
         //write to database
         this.dataValidateStocksModel.doSave();
-        //fix buttons
-        this.getButtonSave().setEnabled(false);
-        this.getButtonCancel().setEnabled(false);
 
         /**
          * after save, pull from database and reset grid to be sure have the right data
          */
         this.updateGridOnChange();
+        
+        //fix buttons
+        this.getButtonSave().setEnabled(false);
+        this.getButtonCancel().setEnabled(false);
     }
 
     @Override
