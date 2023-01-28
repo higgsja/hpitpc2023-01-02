@@ -18,7 +18,7 @@ import lombok.*;
 @PageTitle(TITLE_PAGE_COACHING)
 @PermitAll
 public class CoachingPrefs
-    extends PagePrefsBase
+    extends PageInfoBase
     implements BeforeEnterObserver
 {
 

@@ -18,7 +18,7 @@ import lombok.*;
 @PageTitle(TITLE_PAGE_ADMIN)
 @PermitAll
 public class AdminPrefs
-    extends PagePrefsBase
+    extends PageInfoBase
     implements BeforeEnterObserver {
 
     @Override

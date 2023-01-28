@@ -3,6 +3,7 @@ package com.hpi.tpc.ui.views.main;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.app.security.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
+import static com.hpi.tpc.ui.views.notes.NotesConst.*;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.icon.*;
 import com.vaadin.flow.component.orderedlayout.*;
@@ -38,18 +39,26 @@ public class MainDrawer
     public MainDrawer()
     {
         //setup up the drawer tabs
-        this.notesTab = new MyTab(ROUTE_NOTES,
-            myHLayout((Icon) VaadinIcon.NOTEBOOK.create(), mySpan(ROUTE_NOTES)));
+        this.notesTab = new MyTab(ROUTE_NOTES_CONTROLLER,
+            myHLayout((Icon) VaadinIcon.NOTEBOOK.create(), mySpan(TITLE_PAGE_NOTES)));
+        
         this.data = new MyTab(ROUTE_DATA, myHLayout((Icon) VaadinIcon.DATABASE.create(),
-            mySpan(ROUTE_DATA)));
+            mySpan(TITLE_PAGE_DATA)));
+        
         this.portfolio = new MyTab(ROUTE_PORTFOLIO, myHLayout((Icon) VaadinIcon.PIE_CHART.create(), mySpan(
             ROUTE_PORTFOLIO)));
+        
         this.coaching = new MyTab(ROUTE_COACHING, myHLayout(VaadinIcon.DOCTOR.create(), mySpan(ROUTE_COACHING)));
+        
         this.tools = new MyTab(ROUTE_TOOLS, myHLayout((Icon) VaadinIcon.TOOLBOX.create(),
             mySpan(ROUTE_TOOLS)));
+        
         this.exit = new MyTab(ROUTE_EXIT, myHLayout((Icon) VaadinIcon.EXIT.create(), mySpan(ROUTE_EXIT)));
+        
         this.setup = new MyTab(ROUTE_SETUP, myHLayout((Icon) VaadinIcon.TOOLS.create(), mySpan(ROUTE_SETUP)));
+        
         this.admin = new MyTab(ROUTE_ADMIN, myHLayout((Icon) VaadinIcon.PUZZLE_PIECE.create(), mySpan(ROUTE_ADMIN)));
+        
         this.about = new MyTab(ROUTE_ABOUT, myHLayout((Icon) VaadinIcon.INFO_CIRCLE_O.create(), 
             mySpan(ROUTE_ABOUT)));
 
@@ -64,7 +73,7 @@ public class MainDrawer
         if (SecurityUtils.getUserId() != null
             && SecurityUtils.getUserId() == 816)
         {
-//            this.mainMenuTabs.add(new Hr());
+            this.mainMenuTabs.add(new Hr());
             this.mainMenuTabs.add(this.admin);
         }
     }

@@ -11,11 +11,11 @@ import lombok.*;
 public class MyTab 
     extends Tab
 {
-    @Getter private String navTarget;
+    @Getter private String navTargetTitle;
 
     public MyTab(String navTarget, Component... components)
     {
         super(components);
-        this.navTarget = navTarget;
+        this.navTargetTitle = navTarget;
     }
 }

@@ -16,7 +16,7 @@ import lombok.*;
 @PageTitle(TITLE_PORTFOLIO_PREFERENCES)
 @PermitAll
 public class PortfolioPrefs
-    extends PagePrefsBase
+    extends PageInfoBase
     implements BeforeEnterObserver
 {
 

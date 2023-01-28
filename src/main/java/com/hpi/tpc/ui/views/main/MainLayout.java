@@ -1,11 +1,12 @@
 package com.hpi.tpc.ui.views.main;
 
+import com.hpi.tpc.ui.views.notes.NotesModel;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
-import com.hpi.tpc.ui.views.notes.notes.*;
+import static com.hpi.tpc.ui.views.notes.NotesConst.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.applayout.*;
 import com.vaadin.flow.component.dependency.*;
@@ -34,7 +35,7 @@ public class MainLayout
     @Autowired private TPCDAOImpl serviceTPC;
     @Autowired private MainDrawer mainDrawer;
     @Autowired private PrefsController prefsController;
-    @Autowired private NotesMVC_M notesMVCModel;
+    @Autowired private NotesModel notesMVCModel;
 
     //globals
     @Getter private List<ClientSectorModel> clientAllSectorListModels;
@@ -79,7 +80,7 @@ public class MainLayout
         this.addToDrawer(this.mainDrawer.getMainMenuTabs());
         this.mainDrawer.getMainMenuTabs().addSelectedChangeListener(event ->
         {
-            UI.getCurrent().navigate(((MyTab) event.getSelectedTab()).getNavTarget());
+            UI.getCurrent().navigate(((MyTab) event.getSelectedTab()).getNavTargetTitle());
         });
         this.setPrimarySection(Section.DRAWER);
 
@@ -98,9 +99,9 @@ public class MainLayout
         pencilIcon.addClickListener(event ->
         {
             //give model a starter noteModel
-            notesMVCModel.setSelectedNoteModel(new NoteModel(SecurityUtils.getUserId().toString(),
+            this.notesMVCModel.setSelectedNoteModel(new NoteModel(SecurityUtils.getUserId().toString(),
                 null, null, null, null, null, null, null, null, null, "1", null));
-            UI.getCurrent().navigate(NOTES_ADD_VIEW);
+            UI.getCurrent().navigate(ROUTE_NOTES_VIEW_ADD);
         });
 
         return pencilIcon;

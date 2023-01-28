@@ -3,7 +3,7 @@ package com.hpi.tpc.ui.views.main;
 import com.hpi.tpc.*;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.app.security.*;
-import com.hpi.tpc.ui.views.notes.*;
+import com.hpi.tpc.ui.views.notes.mine.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.login.*;
 import com.vaadin.flow.dom.*;
@@ -16,13 +16,16 @@ import com.vaadin.flow.theme.lumo.*;
 @Route(value = AppConst.LOGON)
 @PageTitle(TITLE_PAGE_LOGON)
 //@JsModule("./styles/shared-styles.js")
-public class LoginView 
+public class LoginView
     extends LoginOverlay
     implements AfterNavigationObserver,
-               BeforeEnterObserver {
+    BeforeEnterObserver
+{
+
     private static final LoginI18n I18N = LoginI18n.createDefault();
 
-    public LoginView() {
+    public LoginView()
+    {
         I18N.setHeader(new LoginI18n.Header());
         I18N.getHeader().setTitle("Trader Performance Coach");
         I18N.getHeader().setDescription("High Performance Investing");
@@ -32,22 +35,25 @@ public class LoginView
         I18N.getForm().setTitle("Sign in");
         I18N.getForm().setUsername("HPI User Name");
         I18N.getForm().setPassword("Password");
-        
+
         ThemeList themeList = UI.getCurrent().getElement().getThemeList();
-        
-        if (themeList.contains(Lumo.DARK)){
-        }else
+
+        if (themeList.contains(Lumo.DARK))
+        {
+        } else
         {
             themeList.add(Lumo.DARK);
         }
     }
 
     @Override
-    public void beforeEnter(BeforeEnterEvent event) {
-        if (SecurityUtils.isUserLoggedIn()) {
-            event.forwardTo(NotesController.class);
-        }
-        else {
+    public void beforeEnter(BeforeEnterEvent event)
+    {
+        if (SecurityUtils.isUserLoggedIn())
+        {
+            event.forwardTo(NotesMineControllerFL.class);
+        } else
+        {
             setI18n(I18N);
             setForgotPasswordButtonVisible(false);
             setAction(AppConst.LOGON);
@@ -56,7 +62,8 @@ public class LoginView
     }
 
     @Override
-    public void afterNavigation(AfterNavigationEvent event) {
+    public void afterNavigation(AfterNavigationEvent event)
+    {
         setError(
             event.getLocation().getQueryParameters().getParameters().
                 containsKey(

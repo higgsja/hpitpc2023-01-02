@@ -7,7 +7,6 @@ import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.data.value.*;
 import java.util.*;
-import javax.annotation.*;
 import lombok.*;
 
 public class DataEquitiesStocksGridVL

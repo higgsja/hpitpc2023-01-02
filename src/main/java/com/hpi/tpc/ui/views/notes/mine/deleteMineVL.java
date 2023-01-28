@@ -1,9 +1,11 @@
-package com.hpi.tpc.ui.views.notes.notes;
+package com.hpi.tpc.ui.views.notes.mine;
 
+import com.hpi.tpc.ui.views.notes.NotesAbstractVL;
 import com.hpi.tpc.ui.views.main.MainLayout;
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.services.*;
+import static com.hpi.tpc.ui.views.notes.NotesConst.*;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
@@ -23,12 +25,12 @@ import org.springframework.stereotype.Component;
 @VaadinSessionScope
 @Component
 @NoArgsConstructor
-@Route(value = ROUTE_NOTES_MVC_VIEW_MINE, layout = MainLayout.class)
+//@Route(value = ROUTE_NOTES_VIEW_MINE, layout = MainLayout.class)
 @PermitAll
-@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_MINE)
-public class NotesMVC_V_Mine
-    extends NotesMVC_V_Abstract
-    implements BeforeEnterObserver, BeforeLeaveObserver
+//@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_MINE)
+public class deleteMineVL
+    extends NotesAbstractVL
+    implements BeforeEnterObserver
 {
 
     @Autowired private TPCDAOImpl noteService;
@@ -36,17 +38,16 @@ public class NotesMVC_V_Mine
     @PostConstruct
     private void construct()
     {
-        this.setId("notesContentViewMineID");
-        this.setClassName("notesContentViewMine");
         //this is hit; super is not unless called
+        this.addClassName("notesViewMineVL");
+        
+        this.getNotesGrid().addItemClickListener(event ->
+            {
+                this.getNotesModel().setSelectedNoteModel(event.getItem());
+                UI.getCurrent().navigate(ROUTE_NOTES_VIEW_EDIT);
+            });
     }
-
-    @PreDestroy
-    void destruct()
-    {
-        //hit on exit; super is not unless called
-    }
-
+    
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {
@@ -56,12 +57,6 @@ public class NotesMVC_V_Mine
         this.noteService.AppTracking("TPC:Notes:View:Mine");
 
         this.getData();
-    }
-
-    @Override
-    public void beforeLeave(BeforeLeaveEvent event)
-    {
-        //gets hit on the way to notesEdit
     }
 
     /*
@@ -74,10 +69,9 @@ public class NotesMVC_V_Mine
 
         aList = this.noteService.getByJId("mine");
 
-        //this.notesGrid.getDataProvider().refreshAll();
-        this.notesGrid.getDataProvider().refreshAll();
+//        this.notesGrid.getDataProvider().refreshAll();
 
         //this.notesGrid.setItems(aList);
-        this.notesGrid.setItems(aList);
+        this.getNotesGrid().setItems(aList);
     }
 }

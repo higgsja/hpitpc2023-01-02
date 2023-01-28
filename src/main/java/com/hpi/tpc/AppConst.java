@@ -1,18 +1,14 @@
 package com.hpi.tpc;
 
-
 /**
  * TITLE_... for window title bar title
  * MENU_... for left side menu
  * TAB_... for top tab
- * 
+ *
  */
 public class AppConst
 {
-//    /**
-//     * Data menu
-//     */
-//        public static final String DATA_EQUITIES_OPTIONS_VIEW = "DataEquitiesOptionsView";
+//    public static final String DATA_EQUITIES_OPTIONS_VIEW = "DataEquitiesOptionsView";
 //    public static final String DATA_EQUITIES_STOCKS_VIEW = "DataEquitiesStocksView";
 //    public static final String DATA_VALIDATE_OPTIONS_CONTROLLER = "DataValidateOptionsController";
 //    public static final String DATA_VALIDATE_OPTIONS_VIEW = "DataValidateOptionsView";
@@ -37,22 +33,31 @@ public class AppConst
 //    public static final String TITLE_DATA_STOCKS = "Stocks";
 //    public static final String TITLE_TAB_DATA_VALIDATE = "Validate";
 
-    /**
-     * 
-     */
-    
+//    public static final String NOTES_ADD_VIEW = "NotesAddView";
+//    public static final String NOTES_EDIT_VIEW = "EditView";
+//    public static final String ROUTE_NOTES = "Notes";
+//    public static final String ROUTE_NOTES_MVC_VIEW_ALL = "NotesMVCViewAll";
+//    public static final String ROUTE_NOTES_MVC_VIEW_ARCHIVED = "NotesMVCViewArchived";
+//    public static final String ROUTE_NOTES_MVC_VIEW_MINE = "NotesMVCViewMine";
+//    public static final String ROUTE_NOTES_PREFERENCES = "NotesPrefs";
+//    public static final String TITLE_NOTES = "Notes";
+//    public static final String TITLE_PAGE_NOTES = "Notes";
+//    public static final String TITLE_PAGE_NOTES_ADD = "Add";
+//    public static final String TITLE_PAGE_NOTES_ALL = "All";
+//    public static final String TITLE_PAGE_NOTES_ARCHIVED = "Archived";
+//    public static final String TITLE_PAGE_NOTES_EDIT = "Edit";
+//    public static final String TITLE_PAGE_NOTES_MINE = "Mine";
     public static final String ABOUT_CREDITS_VIEW = "CreditsView";
     public static final String ABOUT_REGISTER_VIEW = "RegisterView";
     public static final String ABOUT_VIEW = "AboutView";
-    
+
     public static final String HOME_URL = "";
     public static final String LOGIN_FAILURE_URL = "/logon?error";
     public static final String LOGIN_PROCESSING_URL = "/logon";
     public static final String LOGIN_URL = "/logon";
     public static final String LOGON = "logon";
     public static final String LOGOUT_SUCCESS_URL = "/logon";
-    public static final String NOTES_ADD_VIEW = "NotesAddView";
-    public static final String NOTES_EDIT_VIEW = "EditView";
+
     public static final String PORTFOLIO_PLAN_VIEW = "PortfolioPlanView";
     public static final String PORTFOLIO_TRACK_VIEW = "PortfolioTrackView";
     public static final String ROUTE_ABOUT = "About";
@@ -72,11 +77,6 @@ public class AppConst
     public static final String ROUTE_COACHING_PERFORMANCE_GAINS = "Gains";
     public static final String ROUTE_COACHING_PREFERENCES = "CoachingPrefs";
     public static final String ROUTE_EXIT = "Exit";
-    public static final String ROUTE_NOTES = "Notes";
-    public static final String ROUTE_NOTES_MVC_VIEW_ALL = "NotesMVCViewAll";
-    public static final String ROUTE_NOTES_MVC_VIEW_ARCHIVED = "NotesMVCViewArchived";
-    public static final String ROUTE_NOTES_MVC_VIEW_MINE = "NotesMVCViewMine";
-    public static final String ROUTE_NOTES_PREFERENCES = "NotesPrefs";
     public static final String ROUTE_PORTFOLIO = "Portfolio";
     public static final String ROUTE_PORTFOLIO_PREFERENCES = "PortfolioPrefs";
     public static final String ROUTE_SETUP = "Setup";
@@ -91,7 +91,6 @@ public class AppConst
     public static final String SETUP_SECTORS_VIEW = "SetupSectorsView";
     public static final String TITLE_COACHING_GAINS = "Gains";
 
-    public static final String TITLE_NOTES = "Notes";
     public static final String TITLE_PAGE_ABOUT = "About";
     public static final String TITLE_PAGE_ABOUT_CREDITS = "Credits";
     public static final String TITLE_PAGE_ABOUT_REGISTER = "Register";
@@ -105,12 +104,6 @@ public class AppConst
     public static final String TITLE_PAGE_LOGON = "Logon";
     public static final String TITLE_PAGE_LOGOUT = "Logout";
     public static final String TITLE_PAGE_MAIN = "TPC";
-    public static final String TITLE_PAGE_NOTES = "Notes";
-    public static final String TITLE_PAGE_NOTES_ADD = "Add";
-    public static final String TITLE_PAGE_NOTES_ALL = "All";
-    public static final String TITLE_PAGE_NOTES_ARCHIVED = "Archived";
-    public static final String TITLE_PAGE_NOTES_EDIT = "Edit";
-    public static final String TITLE_PAGE_NOTES_MINE = "Mine";
     public static final String TITLE_PAGE_SETUP = "Setup";
     public static final String TITLE_PAGE_SETUP_ACCOUNTS = "Setup:Accounts";
     public static final String TITLE_PORTFOLIO = "Portfolio";

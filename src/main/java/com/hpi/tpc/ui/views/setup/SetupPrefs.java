@@ -16,7 +16,7 @@ import lombok.*;
 @PageTitle(TITLE_PAGE_SETUP)
 @PermitAll
 public class SetupPrefs
-    extends PagePrefsBase
+    extends PageInfoBase
     implements BeforeEnterObserver
 {
     

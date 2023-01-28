@@ -6,13 +6,13 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
 
-public class PagePrefsBase
+public class PageInfoBase
     extends VerticalLayout
 {
 
     @Autowired private JdbcTemplate jdbcTemplate;
 
-    public PagePrefsBase()
+    public PageInfoBase()
     {
         this.setClassName("pagePrefsBase");
     }

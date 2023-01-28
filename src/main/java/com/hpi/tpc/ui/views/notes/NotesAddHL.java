@@ -1,12 +1,12 @@
-package com.hpi.tpc.ui.views.notes.notes;
+package com.hpi.tpc.ui.views.notes;
 
 import com.hpi.tpc.ui.views.main.MainLayout;
 import com.github.appreciated.apexcharts.config.*;
 import com.github.appreciated.apexcharts.config.annotations.*;
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
+import static com.hpi.tpc.ui.views.notes.NotesConst.*;
 import com.vaadin.flow.component.button.*;
 import com.vaadin.flow.component.combobox.*;
 import com.vaadin.flow.component.orderedlayout.*;
@@ -22,7 +22,7 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
- * Add a note.
+ * View for add a note
  * makes direct request for data from model
  * does not change data;
  * user actions are sent to the controller
@@ -30,17 +30,17 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
-@Route(value = NOTES_ADD_VIEW, layout = MainLayout.class)
+@Route(value = ROUTE_NOTES_VIEW_ADD, layout = MainLayout.class)
 @PermitAll
 @PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_ADD)
 //@CssImport("./styles/notesAddEdit.css")
 @Getter
 @Component
-public class NotesAddView
+public class NotesAddHL
     extends HorizontalLayout
     implements BeforeEnterObserver, BeforeLeaveObserver {
 
-    @Autowired private MainLayout appController;
+    @Autowired private MainLayout mainLayout;
     @Autowired private TPCDAOImpl noteService;
     @Autowired private PrefsController prefsController;
 
@@ -68,7 +68,7 @@ public class NotesAddView
     
     @Getter @Setter private Boolean isTicker;
 
-    public NotesAddView() {
+    public NotesAddHL() {
         this.ticker = new TextField();
         this.ticker.setRequired(true);
         this.ticker.setRequiredIndicatorVisible(true);
@@ -106,18 +106,18 @@ public class NotesAddView
 
     @PostConstruct
     public void construct() {
-        topLeft = new FlexLayout();
-        topLeft.addClassName("addEditForm");
-        topRight = new FlexLayout();
-        topRight.addClassName("addEditChart");
+        this.topLeft = new FlexLayout();
+        this.topLeft.addClassName("addEditForm");
+        this.topRight = new FlexLayout();
+        this.topRight.addClassName("addEditChart");
 
-        topRow = new FlexLayout();
-        topRow.setAlignItems(FlexComponent.Alignment.STRETCH);
-        topRow.setWidth("100%");
-        topRow.setHeight("100%");
-        topRow.add(topLeft, topRight);
-        topRow.setFlexGrow(1, topRight);
-        topRow.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        this.topRow = new FlexLayout();
+        this.topRow.setAlignItems(FlexComponent.Alignment.STRETCH);
+        this.topRow.setWidth("100%");
+        this.topRow.setHeight("100%");
+        this.topRow.add(this.topLeft, this.topRight);
+        this.topRow.setFlexGrow(1, this.topRight);
+        this.topRow.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         this.topLeft.setMaxWidth("100vw");
         this.topLeft.setMaxHeight("100vh");
         this.topRight.setMaxWidth("100vw");
@@ -125,7 +125,7 @@ public class NotesAddView
 
         this.addClassName("addEdit-content");
 
-        this.add(topRow);
+        this.add(this.topRow);
 
         this.buttons = new HorizontalLayout(this.buttonSave, this.buttonCancel, this.buttonArchive);
 
@@ -147,7 +147,7 @@ public class NotesAddView
 
         if (this.prefsController.getPref("TPCDrawerClose").
             equalsIgnoreCase("yes")) {
-            this.appController.setDrawerOpened(false);
+            this.mainLayout.setDrawerOpened(false);
         }
 
         this.formSetup();

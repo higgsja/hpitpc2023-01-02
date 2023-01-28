@@ -49,7 +49,7 @@ public class TPCDAOImpl
 
         notes = jdbcTemplate.query(sql, new NoteMapper());
 
-        notesFix(notes);
+        this.notesFix(notes);
 
         return notes;
     }
@@ -144,15 +144,9 @@ public class TPCDAOImpl
         newPrice = 0.0;
         newUnits = 0.0;
 
-        if (NumberUtils.isParsable(noteModel.getIPrice()))
-        {
-            newPrice = Double.parseDouble(noteModel.getIPrice());
-        }
+        newPrice = noteModel.getIPrice();
 
-        if (NumberUtils.isParsable(noteModel.getUnits()))
-        {
-            newUnits = Double.parseDouble(noteModel.getUnits());
-        }
+        newUnits = noteModel.getUnits();
 
         //adjust timestamp to match the database
         sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
@@ -213,15 +207,9 @@ public class TPCDAOImpl
         newPrice = 0.0;
         newUnits = 0.0;
 
-        if (NumberUtils.isParsable(noteModel.getIPrice()))
-        {
-            newPrice = Double.parseDouble(noteModel.getIPrice());
-        }
+        newPrice = noteModel.getIPrice();
 
-        if (NumberUtils.isParsable(noteModel.getUnits()))
-        {
-            newUnits = Double.parseDouble(noteModel.getUnits());
-        }
+        newUnits = noteModel.getUnits();
 
         //adjust timestamp to match the database
         sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
