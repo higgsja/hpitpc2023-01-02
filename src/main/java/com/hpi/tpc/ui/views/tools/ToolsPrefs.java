@@ -19,7 +19,7 @@ import lombok.*;
 @PageTitle(TITLE_TOOLS_PREFERENCES)
 @PermitAll
 public class ToolsPrefs
-    extends PagePrefsBase
+    extends PageInfoBase
     implements BeforeEnterObserver
 {
 

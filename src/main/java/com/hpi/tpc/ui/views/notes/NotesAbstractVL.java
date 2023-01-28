@@ -1,7 +1,8 @@
-package com.hpi.tpc.ui.views.notes.notes;
+package com.hpi.tpc.ui.views.notes;
 
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.prefs.*;
+import static com.hpi.tpc.ui.views.notes.NotesConst.*;
+import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.*;
 import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.component.orderedlayout.*;
@@ -11,24 +12,33 @@ import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Component;
 
 @Component
-//@CssImport(value = "./styles/tpc-grid-theme.css", id = "tpc-grid-theme", themeFor = "vaadin-grid")
 @CssImport(value = "./styles/tpc-grid-theme.css", themeFor = "vaadin-grid")
-public abstract class NotesMVC_V_Abstract
+public abstract class NotesAbstractVL
     extends VerticalLayout
     implements BeforeEnterObserver
 {
-    @Getter @Autowired public NotesMVC_M notesMVCModel;
 
-    @Getter public final Grid<NoteModel> notesGrid;
-    
-    @Autowired private PrefsController prefsController;
+    @Getter @Autowired private NotesModel notesModel;
 
-    public NotesMVC_V_Abstract()
+    @Getter private final Grid<NoteModel> notesGrid;
+
+    public NotesAbstractVL()
     {
+        this.setClassName("notesAbstractVL");
         this.notesGrid = new Grid<>();
-        this.notesGrid.setThemeName("dense");
 
         this.doTableSetup();
+        
+        this.doListeners();
+    }
+    
+    private void doListeners(){
+        //grid, mine
+        this.notesGrid.addItemClickListener(event -> {
+            this.notesModel.setSelectedNoteModel(event.getItem());
+            
+            UI.getCurrent().navigate(ROUTE_NOTES_VIEW_EDIT);
+        });
     }
 
     /*
@@ -36,25 +46,19 @@ public abstract class NotesMVC_V_Abstract
      */
     public abstract void getData();
 
-//    @PostConstruct
-//    void construct() {
-//        //not hit without super.construct() in child
-//    @PreDestroy
-//    void destruct() {
-//        //not hit
-
     /*
      * Complete the table layout
      */
     private void doTableSetup()
     {
-        this.notesGrid.setId("notes-grid-theme");
         this.notesGrid.setClassName("notesGrid");
+        this.notesGrid.setThemeName("dense");
+
         this.notesGrid.addThemeVariants(GridVariant.LUMO_COLUMN_BORDERS);
         this.notesGrid.addThemeVariants(GridVariant.LUMO_COMPACT);
         this.notesGrid.addThemeVariants(GridVariant.LUMO_ROW_STRIPES);
         this.notesGrid.setSelectionMode(Grid.SelectionMode.SINGLE);
-        this.notesGrid.setHeightByRows(true);
+        this.notesGrid.setAllRowsVisible(false);
 
         this.notesGrid.addColumn(NoteModel::getTicker)
             .setClassNameGenerator(noteModel -> "grid-cell")
@@ -89,8 +93,8 @@ public abstract class NotesMVC_V_Abstract
             .setAutoWidth(true)
             .setSortProperty("gainpct")
             .setClassNameGenerator(noteModel -> Double.parseDouble(
-            noteModel.getGainPct()) < -10.0 ? "grid-cell-neg" : 
-                Double.parseDouble(noteModel.getGainPct()) > 10.0 ? "grid-cell-grn" : "")
+            noteModel.getGainPct()) < -10.0 ? "grid-cell-neg"
+            : Double.parseDouble(noteModel.getGainPct()) > 10.0 ? "grid-cell-grn" : "")
             .setKey("gainpct")
             .setSortProperty("gainpctst")
             .setTextAlign(ColumnTextAlign.END);
@@ -184,12 +188,11 @@ public abstract class NotesMVC_V_Abstract
 
         this.add(this.notesGrid);
     }
-    
-    @Override
-    public void beforeEnter(BeforeEnterEvent event){
-        //do preferences
-//        this.prefsController.getPref("NotesRed");
-//        this.prefsController.getPref("NotesGreen");
-    }
 
+    @Override
+    public void beforeEnter(BeforeEnterEvent event)
+    {
+        //change the preferences route; do not do this
+//        this.mainLayout.updatePagePrefsHL(null);
+    }
 }

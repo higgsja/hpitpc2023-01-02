@@ -1,12 +1,12 @@
-package com.hpi.tpc.ui.views.notes.notes;
+package com.hpi.tpc.ui.views.notes;
 
 import com.hpi.tpc.ui.views.main.MainLayout;
 import com.github.appreciated.apexcharts.config.*;
 import com.github.appreciated.apexcharts.config.annotations.*;
 import com.hpi.tpc.services.TPCDAOImpl;
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
+import static com.hpi.tpc.ui.views.notes.NotesConst.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.*;
@@ -31,18 +31,18 @@ import org.springframework.stereotype.Component;
  */
 @UIScope
 @VaadinSessionScope
-@Route(value = NOTES_EDIT_VIEW, layout = MainLayout.class)
+@Route(value = ROUTE_NOTES_VIEW_EDIT, layout = MainLayout.class)
 @PermitAll
 @PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_EDIT)
-//@CssImport("./styles/notesAddEdit.css")
 @Component
-public class NotesEditView
+public class NotesEditHL
     extends HorizontalLayout
-    implements BeforeEnterObserver, BeforeLeaveObserver {
+    implements BeforeEnterObserver {
 
-    @Autowired private MainLayout appController;
+    @Autowired private MainLayout mainLayout;
     @Autowired private TPCDAOImpl noteService;
     @Autowired private PrefsController prefsController;
+    @Autowired private NotesModel notesModel;
 
     private FlexLayout topRow;
     private FlexLayout topLeft;
@@ -66,10 +66,10 @@ public class NotesEditView
 
     private VerticalLayout chartVerticalLayout;
     
-    @Setter private NoteModel selectedNoteModel;
+//    @Setter private NoteModel selectedNoteModel;
     
-    public NotesEditView() {
-        this.selectedNoteModel = null;
+    public NotesEditHL() {
+//        this.selectedNoteModel = null;
         
         this.ticker = new TextField();
         this.ticker.setRequired(true);
@@ -105,18 +105,18 @@ public class NotesEditView
 
     @PostConstruct
     public void construct() {
-        topLeft = new FlexLayout();
-        topLeft.addClassName("addEditForm");
-        topRight = new FlexLayout();
-        topRight.addClassName("addEditChart");
+        this.topLeft = new FlexLayout();
+        this.topLeft.addClassName("addEditForm");
+        this.topRight = new FlexLayout();
+        this.topRight.addClassName("addEditChart");
 
-        topRow = new FlexLayout();
-        topRow.setAlignItems(Alignment.STRETCH);
-        topRow.setWidth("100%");
-        topRow.setHeight("100%");
-        topRow.add(topLeft, topRight);
-        topRow.setFlexGrow(1, topRight);
-        topRow.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        this.topRow = new FlexLayout();
+        this.topRow.setAlignItems(Alignment.STRETCH);
+        this.topRow.setWidth("100%");
+        this.topRow.setHeight("100%");
+        this.topRow.add(this.topLeft, this.topRight);
+        this.topRow.setFlexGrow(1, topRight);
+        this.topRow.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         this.topLeft.setMaxWidth("100vw");
         this.topLeft.setMaxHeight("100vh");
         this.topRight.setMaxWidth("100vw");
@@ -124,7 +124,7 @@ public class NotesEditView
 
         this.addClassName("addEdit-content");
 
-        this.add(topRow);
+        this.add(this.topRow);
 
         this.buttons = new HorizontalLayout(this.buttonSave, this.buttonCancel, this.buttonArchive);
 
@@ -139,18 +139,13 @@ public class NotesEditView
         this.buttonSave.setEnabled(false);
     }
 
-    @PreDestroy
-    private void destruct() {
-
-    }
-
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
         this.noteService.AppTracking("TPC:Notes:Edit");
 
         if (this.prefsController.getPref("TPCDrawerClose").
             equalsIgnoreCase("yes")) {
-            this.appController.setDrawerOpened(false);
+            this.mainLayout.setDrawerOpened(false);
         }
 
         //fill form with data
@@ -185,10 +180,6 @@ public class NotesEditView
 //            this.buttonArchive.setVisible(false);
 //            this.buttonSave.setVisible(false);
 //        }
-    }
-
-    @Override
-    public void beforeLeave(BeforeLeaveEvent ble) {
     }
 
     private void formSetup() {
@@ -358,16 +349,15 @@ public class NotesEditView
     }
 
     private void setEditFields() {
-        //need selectedNoteModel from NotedsMVCModel
-        if (this.selectedNoteModel != null){
-        this.ticker.setValue(this.selectedNoteModel.getTicker());
-        this.actionsCB.setValue(this.selectedNoteModel.getAction());
-        this.notes.setValue(this.selectedNoteModel.getNotes());
-        this.units.setValue(this.selectedNoteModel.getUnits());
-        this.iPrice.setValue(this.selectedNoteModel.getIPrice());
-        this.alertsCB.setValue(this.selectedNoteModel.getTriggerType());
-        this.alert.setValue(this.selectedNoteModel.getTrigger());
-        this.description.setValue(this.selectedNoteModel.getDescription());
+        if (this.notesModel.getSelectedNoteModel() != null){
+        this.ticker.setValue(this.notesModel.getSelectedNoteModel().getTicker());
+        this.actionsCB.setValue(this.notesModel.getSelectedNoteModel().getAction());
+        this.notes.setValue(this.notesModel.getSelectedNoteModel().getNotes());
+        this.units.setValue(this.notesModel.getSelectedNoteModel().getUnits().toString());
+        this.iPrice.setValue(this.notesModel.getSelectedNoteModel().getIPrice().toString());
+        this.alertsCB.setValue(this.notesModel.getSelectedNoteModel().getTriggerType());
+        this.alert.setValue(this.notesModel.getSelectedNoteModel().getTrigger());
+        this.description.setValue(this.notesModel.getSelectedNoteModel().getDescription());
         }
     }
 }

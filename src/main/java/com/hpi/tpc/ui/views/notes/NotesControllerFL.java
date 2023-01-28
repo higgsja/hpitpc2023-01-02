@@ -1,12 +1,13 @@
 package com.hpi.tpc.ui.views.notes;
 
-import com.hpi.tpc.ui.views.notes.notes.NotesMVC_V_Mine;
-import com.hpi.tpc.ui.views.notes.notes.NotesMVC_M;
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
+import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
+import static com.hpi.tpc.ui.views.notes.NotesConst.*;
+import com.hpi.tpc.ui.views.notes.mine.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
 import com.vaadin.flow.component.html.*;
@@ -17,14 +18,6 @@ import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 
-@UIScope
-@VaadinSessionScope
-@org.springframework.stereotype.Component
-@PermitAll
-@Route(value = ROUTE_NOTES, layout = MainLayout.class)
-@RouteAlias(value = HOME_URL, layout = MainLayout.class)
-@PageTitle(TITLE_PAGE_NOTES)
-@NoArgsConstructor
 /*
  * Controller: Interface between Model and View to process business logic and incoming
  * requests:
@@ -34,25 +27,27 @@ import org.springframework.beans.factory.annotation.*;
  * receives input, optionally validates it and passes it to the model
  * Target for navigation from appDrawer
  */
-public class NotesController
+@UIScope
+@VaadinSessionScope
+@Route(value = ROUTE_NOTES_CONTROLLER, layout = MainLayout.class)
+@RouteAlias(value = HOME_URL, layout = MainLayout.class)
+@PageTitle(TITLE_PAGE_NOTES)
+@org.springframework.stereotype.Component
+@NoArgsConstructor
+@PermitAll
+public class NotesControllerFL
     extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
 
-    //not used here but must be instantiated here
-//    @Autowired private NotesMVCController notesMVCController;
-    @Autowired private NotesMVC_M notesMVCModel;
     @Autowired private NotesModel notesModel;
-
+    @Autowired private TPCDAOImpl noteService;
+    
     @PostConstruct
     private void construct()
     {
-        this.addClassName("notesMenu");
-        this.menuBar.setId("notesMenuId");
-
-        //get any preferences
-        this.notesModel.getPrefs();
-
+        this.addClassName("notesControllerFL");
+        
         this.addMenuBarTabs();
     }
 
@@ -62,36 +57,46 @@ public class NotesController
     @Override
     public void addMenuBarTabs()
     {
-        MenuItem notesItem = this.menuBar.addItem(TITLE_NOTES);
+        MenuItem notesItem = this.menuBar.addItem(TAB_NOTES_VIEW_TITLE);
         SubMenu notesSubMenu = notesItem.getSubMenu();
-        MenuItem notesAdd = notesSubMenu.addItem(TITLE_PAGE_NOTES_ADD);
+
+        MenuItem notesAdd = notesSubMenu.addItem(TAB_NOTES_VIEW_ADD_TITLE);
+
         notesSubMenu.add(new Hr());
-        MenuItem notesMineItem = notesSubMenu.addItem(TITLE_PAGE_NOTES_MINE);
-        MenuItem notesAllItem = notesSubMenu.addItem(TITLE_PAGE_NOTES_ALL);
+        MenuItem notesMineItem = notesSubMenu.addItem(TAB_NOTES_VIEW_MINE_TITLE);
+        MenuItem notesAllItem = notesSubMenu.addItem(TAB_NOTES_VIEW_ALL_TITLE);
+
         notesSubMenu.add(new Hr());
-        MenuItem notesDeletedItem = notesSubMenu.addItem(TITLE_PAGE_NOTES_ARCHIVED);
+        MenuItem notesArchivedItem = notesSubMenu.addItem(TAB_NOTES_VIEW_ARCHIVED_TITLE);
 
         notesAdd.addClickListener((ClickEvent<MenuItem> event) ->
         {
             //give model a starter noteModel
-            notesMVCModel.setSelectedNoteModel(new NoteModel(SecurityUtils.getUserId().toString(),
+            this.notesModel.setSelectedNoteModel(new NoteModel(SecurityUtils.getUserId().toString(),
                 null, null, null, null, null, null, null, null, null, "1", null));
-            UI.getCurrent().navigate(NOTES_ADD_VIEW);
+            UI.getCurrent().navigate(ROUTE_NOTES_VIEW_ADD);
         });
 
         notesMineItem.addClickListener((ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(ROUTE_NOTES_MVC_VIEW_MINE);
+            UI.getCurrent().navigate(ROUTE_NOTES_CONTROLLER_MINE);
         });
 
         notesAllItem.addClickListener((ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(ROUTE_NOTES_MVC_VIEW_ALL);
+            UI.getCurrent().navigate(ROUTE_NOTES_CONTROLLER_ALL);
         });
 
-        notesDeletedItem.addClickListener((ClickEvent<MenuItem> event) ->
+        notesArchivedItem.addClickListener((ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(ROUTE_NOTES_MVC_VIEW_ARCHIVED);
+            UI.getCurrent().navigate(ROUTE_NOTES_CONTROLLER_ARCHIVED);
+        });
+
+        MenuItem infoItem = this.menuBar.addItem(TAB_NOTES_INFO);
+
+        infoItem.addClickListener((ClickEvent<MenuItem> event) ->
+        {
+            UI.getCurrent().navigate(ROUTE_NOTES_INFO);
         });
     }
 
@@ -99,9 +104,14 @@ public class NotesController
     public void beforeEnter(BeforeEnterEvent bee)
     {
         super.beforeEnter(bee);
-        //refresh navBar for this view
-        super.doNavBar(ROUTE_NOTES_PREFERENCES);
+        
+        //log feature use
+        this.noteService.AppTracking("TPC:Notes:Mine:Controller");
 
-        bee.forwardTo(NotesMVC_V_Mine.class);
+        //set navBar for this menu
+        super.doNavBar(null);
+
+        //send to default view
+        bee.forwardTo(NotesMineControllerFL.class);
     }
 }

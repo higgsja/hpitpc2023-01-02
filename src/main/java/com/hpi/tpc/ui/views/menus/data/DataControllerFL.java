@@ -100,7 +100,7 @@ public class DataControllerFL
         super.beforeEnter(bee);
 
         //set navBar for this menu
-        this.mainLayout.doNavBar(this.menuBar, null);
+        super.doNavBar(null);
 
         //send to default view
         bee.forwardTo(DataEquitiesStocksControllerFL.class);

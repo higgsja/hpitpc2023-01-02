@@ -74,13 +74,14 @@ public class DataEquitiesStocksPrefsControllerFL
             .withSelectionGridReordering()
             .withSizeFull()
             .withDragAndDropSupport()
+            .createFirstHeaderRow(false)
             .selectRowOnClick();
 
         this.twinColGrid.addColumn(Attribute::getAttribute)
-            .setComparator(Attribute::getAttribute)
-            .setHeader("Attributes");
+            .setComparator(Attribute::getAttribute);
+//            .setHeader("Attributes");
 
-        this.twinColGrid.setCaption("This is the caption");
+//        this.twinColGrid.setCaption("This is the caption");
 
         this.add(this.prefsVL);
         this.prefsVL.add(this.title);
