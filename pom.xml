@@ -13,7 +13,7 @@
         <!--<vaadin.version>22.0.11</vaadin.version>-->
         <!--<vaadin.version>21.0.7</vaadin.version>-->
         <!--have to do here to override spring parent specification of 9.0.5.3-->
-        <tomcat.version>9.0.53</tomcat.version>
+        <!--<tomcat.version>9.0.53</tomcat.version>-->
         <maven.version>3.8.6</maven.version>
         <!--<maven.version>3.8.2</maven.version>-->
         <maven.enforcer.version>3.0.0</maven.enforcer.version>
@@ -26,16 +26,25 @@
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
         <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
         
+<<<<<<< HEAD
         <!--<spring.boot.version>2.5.14</spring.boot.version>-->
         <!--<spring.boot.version>3.0.1</spring.boot.version>-->
         <!--<spring.boot.version>2.7.7</spring.boot.version>-->
         <spring.boot.version>2.6.14</spring.boot.version>
+=======
+        <spring.boot.version>2.7.7</spring.boot.version>
+        <!--<spring.boot.version>2.5.14</spring.boot.version>-->
+>>>>>>> working8a
     </properties>
 
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
+<<<<<<< HEAD
         <version>2.6.14</version>
+=======
+        <version>2.7.7</version>
+>>>>>>> working8a
         <!--<version>2.5.14</version>-->
         <!--<version>2.0.9.RELEASE</version>-->
     </parent>
