@@ -104,7 +104,7 @@
     "@vaadin/vaadin-virtual-list": "23.2.6",
     "@vaadin/vertical-layout": "23.2.6",
     "@vaadin/virtual-list": "23.2.6",
-    "apexcharts": "3.30.0",
+    "apexcharts": "3.35.0",
     "construct-style-sheets-polyfill": "3.1.0",
     "date-fns": "2.29.3",
     "lit": "2.3.0",
@@ -228,7 +228,7 @@
       "@vaadin/vaadin-virtual-list": "23.2.6",
       "@vaadin/vertical-layout": "23.2.6",
       "@vaadin/virtual-list": "23.2.6",
-      "apexcharts": "3.30.0",
+      "apexcharts": "3.35.0",
       "construct-style-sheets-polyfill": "3.1.0",
       "date-fns": "2.29.3",
       "lit": "2.3.0",
@@ -249,6 +249,6 @@
       "workbox-core": "6.5.0",
       "workbox-precaching": "6.5.0"
     },
-    "hash": "9ed9a379160bfa46b6a9eaeb0c34383a40c584fcc7eba63e7c7cf72d35848612"
+    "hash": "2f5659d5345dff9285cf068ea86733890cf63ccca0639ab841758d352d132003"
   }
 }
