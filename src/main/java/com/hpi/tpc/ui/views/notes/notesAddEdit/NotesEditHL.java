@@ -1,4 +1,4 @@
-package com.hpi.tpc.ui.views.notes;
+package com.hpi.tpc.ui.views.notes.notesAddEdit;
 
 import com.hpi.tpc.ui.views.main.MainLayout;
 import com.github.appreciated.apexcharts.config.*;
@@ -6,6 +6,7 @@ import com.github.appreciated.apexcharts.config.annotations.*;
 import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
+import com.hpi.tpc.ui.views.notes.NotesModel;
 import static com.hpi.tpc.ui.views.notes.NotesConst.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
@@ -31,9 +32,9 @@ import org.springframework.stereotype.Component;
  */
 @UIScope
 @VaadinSessionScope
-@Route(value = ROUTE_NOTES_VIEW_EDIT, layout = MainLayout.class)
+////@Route(value = ROUTE_NOTES_VIEW_EDIT, layout = MainLayout.class)
 @PermitAll
-@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_EDIT)
+//@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_EDIT)
 @Component
 public class NotesEditHL
     extends HorizontalLayout
@@ -117,6 +118,7 @@ public class NotesEditHL
         this.topRow.add(this.topLeft, this.topRight);
         this.topRow.setFlexGrow(1, topRight);
         this.topRow.setFlexWrap(FlexLayout.FlexWrap.WRAP);
+        
         this.topLeft.setMaxWidth("100vw");
         this.topLeft.setMaxHeight("100vh");
         this.topRight.setMaxWidth("100vw");

@@ -5,7 +5,7 @@ import lombok.*;
 
 @Getter @Setter
 public class TitleBaseVL
-    extends ViewBaseVL
+    extends ViewBaseHL
 {
     private String title = "";
 
@@ -16,6 +16,11 @@ public class TitleBaseVL
         this.setHeight("14px");
         
         this.getElement().getStyle().set("padding", "0");
+    }
+    
+    public TitleBaseVL(String title){
+        this();
+        this.setTitle(title);
     }
     
     public final void setTitle(String title){

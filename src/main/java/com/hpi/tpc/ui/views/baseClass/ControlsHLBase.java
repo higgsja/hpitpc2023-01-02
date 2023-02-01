@@ -11,7 +11,7 @@ public abstract class ControlsHLBase
 
     public ControlsHLBase()
     {
-        this.setClassName("baseMVCViewControlHL");
+        this.setClassName("baseControlHL");
         this.setHeight("55px");
         this.setWidth("100%");
     }

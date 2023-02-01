@@ -6,7 +6,6 @@ import com.github.appreciated.apexcharts.config.annotations.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
-import static com.hpi.tpc.ui.views.notes.NotesConst.*;
 import com.vaadin.flow.component.button.*;
 import com.vaadin.flow.component.combobox.*;
 import com.vaadin.flow.component.orderedlayout.*;
@@ -28,15 +27,15 @@ import org.springframework.stereotype.*;
  * user actions are sent to the controller
  * dumb, just builds the view
  */
-@UIScope
-@VaadinSessionScope
-@Route(value = ROUTE_NOTES_VIEW_ADD, layout = MainLayout.class)
-@PermitAll
-@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_ADD)
+//@UIScope
+//@VaadinSessionScope
+//@Route(value = ROUTE_NOTES_VIEW_ADD, layout = MainLayout.class)
+//@PermitAll
+//@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_ADD)
 //@CssImport("./styles/notesAddEdit.css")
 @Getter
 @Component
-public class NotesAddHL
+public class NotesAddEditChart
     extends HorizontalLayout
     implements BeforeEnterObserver, BeforeLeaveObserver {
 
@@ -68,7 +67,7 @@ public class NotesAddHL
     
     @Getter @Setter private Boolean isTicker;
 
-    public NotesAddHL() {
+    public NotesAddEditChart() {
         this.ticker = new TextField();
         this.ticker.setRequired(true);
         this.ticker.setRequiredIndicatorVisible(true);

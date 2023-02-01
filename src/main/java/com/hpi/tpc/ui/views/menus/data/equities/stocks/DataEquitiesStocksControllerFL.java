@@ -47,7 +47,7 @@ public class DataEquitiesStocksControllerFL
         this.add(this.dataEquitiesStocksVL);
 
         //title in content
-        this.dataEquitiesStocksTitleVL = new DataEquitiesStocksTitleVL();
+        this.dataEquitiesStocksTitleVL = new DataEquitiesStocksTitleVL("Stock Data");
         this.dataEquitiesStocksVL.add(this.dataEquitiesStocksTitleVL);
 
         //grid in content

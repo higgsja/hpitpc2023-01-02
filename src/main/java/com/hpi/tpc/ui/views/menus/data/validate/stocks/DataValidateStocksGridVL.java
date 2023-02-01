@@ -1,5 +1,6 @@
 package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 
+import com.hpi.tpc.ui.views.baseClass.ViewBaseHL;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.checkbox.*;
@@ -8,7 +9,7 @@ import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 
 public class DataValidateStocksGridVL
-    extends ViewBaseVL
+    extends ViewBaseHL
 {
 
     @Autowired private DataValidateStocksControllerFL dataValidateStocksControllerFL;

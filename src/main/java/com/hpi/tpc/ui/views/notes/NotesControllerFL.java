@@ -74,7 +74,7 @@ public class NotesControllerFL
             //give model a starter noteModel
             this.notesModel.setSelectedNoteModel(new NoteModel(SecurityUtils.getUserId().toString(),
                 null, null, null, null, null, null, null, null, null, "1", null));
-            UI.getCurrent().navigate(ROUTE_NOTES_VIEW_ADD);
+            UI.getCurrent().navigate(ROUTE_NOTES_CONTROLLER_ADD);
         });
 
         notesMineItem.addClickListener((ClickEvent<MenuItem> event) ->

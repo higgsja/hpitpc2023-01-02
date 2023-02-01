@@ -1,7 +1,9 @@
 package com.hpi.tpc.ui.views.notes;
 
+import com.hpi.tpc.ui.views.notes.notesAddEdit.NotesEditHL;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.services.*;
+import com.hpi.tpc.ui.views.notes.notesAdd.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import lombok.*;
@@ -136,7 +138,7 @@ public class NotesModel {
      * Save the note to the database
      * need to come in with the NoteModel from the form.
      */
-    void save(NotesAddHL notesAddView, Boolean isTicker, Boolean isArchive) {
+    void save(NotesAddFormVL notesAddFormVL, Boolean isTicker, Boolean isArchive) {
         //not hit
         Integer actionInteger;
         Integer alertInteger;
@@ -152,7 +154,7 @@ public class NotesModel {
             return;
         }
 
-        switch (notesAddView.getActionsCB().getValue()){
+        switch (notesAddFormVL.getActionsCB().getValue()){
             case "Buy":
                 actionInteger = ActionModel.ACTIONS_BUY;
                 break;
@@ -174,7 +176,7 @@ public class NotesModel {
             default:
         }
 
-        switch (notesAddView.getAlertsCB().getValue()){
+        switch (notesAddFormVL.getAlertsCB().getValue()){
             case "Date":
                 alertInteger = AlertTypeModel.ALERTS_DATE;
                 break;
@@ -194,14 +196,15 @@ public class NotesModel {
             //null for add
             this.selectedNoteModel.getTStamp(),
             //uppercase if a ticker
-            isTicker ? notesAddView.getTicker().getValue().toUpperCase() : notesAddView.getTicker().getValue(),
-            Double.valueOf(notesAddView.getIPrice().getValue()),
-            notesAddView.getDescription().getValue(),
-            notesAddView.getNotes().getValue(),
-            Double.valueOf(notesAddView.getUnits().getValue()),
+            isTicker ? notesAddFormVL.getTicker().getValue().toUpperCase() 
+                : notesAddFormVL.getTicker().getValue(),
+            Double.valueOf(notesAddFormVL.getIPrice().getValue()),
+            notesAddFormVL.getDescription().getValue(),
+            notesAddFormVL.getNotes().getValue(),
+            Double.valueOf(notesAddFormVL.getUnits().getValue()),
             actionInteger.toString(),
             alertInteger.toString(),
-            notesAddView.getAlert().getValue(),
+            notesAddFormVL.getAlert().getValue(),
             isArchive ? "0" : this.selectedNoteModel.getActive(),
             //leave date entered without changes
             this.selectedNoteModel.getDateEntered()

@@ -6,8 +6,9 @@ public class DataEquitiesStocksPrefsTitleVL
     extends TitleBaseVL
 {
 
-    public DataEquitiesStocksPrefsTitleVL()
+    public DataEquitiesStocksPrefsTitleVL(String title)
     {
+        super();
         this.addClassName("dataEquitiesStocksPrefsTitleVL");
         
         this.setTitle("Stock Data Attributes");

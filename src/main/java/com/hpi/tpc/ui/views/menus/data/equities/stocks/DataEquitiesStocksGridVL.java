@@ -1,5 +1,6 @@
 package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 
+import com.hpi.tpc.ui.views.baseClass.ViewBaseHL;
 import static com.helger.commons.string.StringHelper.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.baseClass.*;
@@ -10,7 +11,7 @@ import java.util.*;
 import lombok.*;
 
 public class DataEquitiesStocksGridVL
-    extends ViewBaseVL
+    extends ViewBaseHL
 {
     @Getter private Grid<FinVizEquityInfoModel> finVizEquityInfoModelGrid;
     @Getter private FooterRow finVizEquityInfoModelGridFooterRow;
