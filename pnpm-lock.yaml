@@ -103,9 +103,15 @@ specifiers:
   '@vaadin/vaadin-time-picker': 23.3.4
   '@vaadin/vaadin-upload': 23.3.4
   '@vaadin/vaadin-usage-statistics': 2.1.2
+<<<<<<< HEAD
   '@vaadin/vaadin-virtual-list': 23.3.4
   '@vaadin/vertical-layout': 23.3.4
   '@vaadin/virtual-list': 23.3.4
+=======
+  '@vaadin/vaadin-virtual-list': 23.2.6
+  '@vaadin/vertical-layout': 23.2.6
+  '@vaadin/virtual-list': 23.2.6
+>>>>>>> working8a
   apexcharts: 3.35.0
   async: 3.2.2
   construct-style-sheets-polyfill: 3.1.0
@@ -225,9 +231,15 @@ dependencies:
   '@vaadin/vaadin-time-picker': 23.3.4
   '@vaadin/vaadin-upload': 23.3.4
   '@vaadin/vaadin-usage-statistics': 2.1.2
+<<<<<<< HEAD
   '@vaadin/vaadin-virtual-list': 23.3.4
   '@vaadin/vertical-layout': 23.3.4
   '@vaadin/virtual-list': 23.3.4
+=======
+  '@vaadin/vaadin-virtual-list': 23.2.6
+  '@vaadin/vertical-layout': 23.2.6
+  '@vaadin/virtual-list': 23.2.6
+>>>>>>> working8a
   apexcharts: 3.35.0
   construct-style-sheets-polyfill: 3.1.0
   date-fns: 2.29.3
