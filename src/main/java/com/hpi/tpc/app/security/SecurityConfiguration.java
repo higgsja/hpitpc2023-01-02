@@ -22,10 +22,9 @@ import org.springframework.security.crypto.password.*;
 public class SecurityConfiguration extends VaadinWebSecurity
 {
 
-    @Autowired
-    private CustomUserDetailsService userDetailsService;
+//    @Autowired private CustomUserDetailsService userDetailsService;
 
-    @Autowired private PasswordEncoder passwordEncoder;
+//    @Autowired private PasswordEncoder passwordEncoder;
 
     /**
      * Require login to access internal pages and configure login form.
