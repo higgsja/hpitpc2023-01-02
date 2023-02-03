@@ -8,7 +8,7 @@ public class DataEquitiesStocksTitleVL
 
     public DataEquitiesStocksTitleVL(String title)
     {
-        super();
+        super(title);
         this.addClassName("dataEquitiesStocksTitleVL");
     }
 }

@@ -15,7 +15,6 @@ import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import javax.annotation.*;
-import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
@@ -28,7 +27,7 @@ import org.springframework.stereotype.*;
  * dumb, just builds the view
  */
 //@UIScope
-//@VaadinSessionScope
+@VaadinSessionScope
 //@Route(value = ROUTE_NOTES_VIEW_ADD, layout = MainLayout.class)
 //@PermitAll
 //@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_ADD)

@@ -5,12 +5,13 @@ import lombok.*;
 
 @Getter @Setter
 public class TitleBaseVL
-    extends ViewBaseHL
+    extends ViewBaseVL
 {
-    private String title = "";
+    private String title;
 
     public TitleBaseVL()
     {
+        this.title = "";
         this.addClassName("titleBaseVL");
        
         this.setHeight("14px");
@@ -20,6 +21,7 @@ public class TitleBaseVL
     
     public TitleBaseVL(String title){
         this();
+        this.title = "";
         this.setTitle(title);
     }
     

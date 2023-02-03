@@ -1,8 +1,6 @@
 package com.hpi.tpc.ui.views.notes.notesAdd;
 
-import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.baseClass.*;
-import com.hpi.tpc.ui.views.notes.*;
 import com.vaadin.flow.component.combobox.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.component.textfield.*;
@@ -10,7 +8,6 @@ import com.vaadin.flow.data.value.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
 
 /**
  * makes direct request for data from model
@@ -26,8 +23,8 @@ public class NotesAddFormVL
     implements BeforeEnterObserver
 {
 
-    @Autowired private TPCDAOImpl tpcService;
-    @Autowired private NotesModel notesModel;
+//    @Autowired private TPCDAOImpl tpcService;
+//    @Autowired private NotesModel notesModel;
 
     //must be the same as the data model fields
     @Getter private final TextField ticker;
@@ -44,8 +41,8 @@ public class NotesAddFormVL
     public NotesAddFormVL()
     {
         this.setClassName("notesAddFormVL");
-//        this.setMaxWidth("100vw");
-//        this.setMaxHeight("100vh");
+        this.setMaxWidth("100vw");
+        this.setMaxHeight("100vh");
 
         this.ticker = new TextField();
         this.ticker.setRequired(true);
@@ -77,7 +74,7 @@ public class NotesAddFormVL
 
     private void doLayout()
     {
-        HorizontalLayout h1, h2, h3, h4, h5;
+        HorizontalLayout h1, h3, h4, h5;
 
         this.ticker.setPlaceholder("Item/Ticker*");
         this.ticker.setMinLength(1);
@@ -107,6 +104,9 @@ public class NotesAddFormVL
 
         this.iPrice.setPlaceholder("Price");
         this.iPrice.setMaxWidth("140px");
+        
+        //title
+        this.add(new NotesAddFormTitleVL("Add a note ..."));
 
         //first row
         h1 = new HorizontalLayout(this.ticker, this.actionsCB);
@@ -128,29 +128,24 @@ public class NotesAddFormVL
         this.iPrice.setEnabled(true);
     }
 
-    private void setFields()
-    {
-        if (this.notesModel.getSelectedNoteModel() != null)
-        {
-            this.ticker.setValue(this.notesModel.getSelectedNoteModel().getTicker());
-            this.actionsCB.setValue(this.notesModel.getSelectedNoteModel().getAction());
-            this.notes.setValue(this.notesModel.getSelectedNoteModel().getNotes());
-            this.units.setValue(this.notesModel.getSelectedNoteModel().getUnits().toString());
-            this.iPrice.setValue(this.notesModel.getSelectedNoteModel().getIPrice().toString());
-            this.alertsCB.setValue(this.notesModel.getSelectedNoteModel().getTriggerType());
-            this.alert.setValue(this.notesModel.getSelectedNoteModel().getTrigger());
-            this.description.setValue(this.notesModel.getSelectedNoteModel().getDescription());
-        }
-    }
+//    private void setFields()
+//    {
+//        if (this.notesModel.getSelectedNoteModel() != null)
+//        {
+//            this.ticker.setValue(this.notesModel.getSelectedNoteModel().getTicker());
+//            this.actionsCB.setValue(this.notesModel.getSelectedNoteModel().getAction());
+//            this.notes.setValue(this.notesModel.getSelectedNoteModel().getNotes());
+//            this.units.setValue(this.notesModel.getSelectedNoteModel().getUnits().toString());
+//            this.iPrice.setValue(this.notesModel.getSelectedNoteModel().getIPrice().toString());
+//            this.alertsCB.setValue(this.notesModel.getSelectedNoteModel().getTriggerType());
+//            this.alert.setValue(this.notesModel.getSelectedNoteModel().getTrigger());
+//            this.description.setValue(this.notesModel.getSelectedNoteModel().getDescription());
+//        }
+//    }
 
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {
-        this.tpcService.AppTracking("TPC:Notes:AddFormVL");
-
-        //fill form with data
-        this.setFields();
-
         //initial button settings upon entry
         this.controlsHL.getButtonAddSave().setVisible(true);
         this.controlsHL.getButtonAddSave().setEnabled(false);
