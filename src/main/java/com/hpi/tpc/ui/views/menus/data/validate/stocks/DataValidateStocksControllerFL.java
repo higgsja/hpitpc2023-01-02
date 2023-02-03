@@ -55,7 +55,7 @@ public class DataValidateStocksControllerFL
         this.dataValidateStocksVL = new DataValidateStocksVL();
         this.add(this.dataValidateStocksVL);
 
-        this.dataValidateStocksTitleVL = new DataValidateStocksTitleVL();
+        this.dataValidateStocksTitleVL = new DataValidateStocksTitleVL("Data Validate");
         this.dataValidateStocksVL.add(this.dataValidateStocksTitleVL);
 
         this.dataValidateStocksControlsHL = new DataValidateStocksControlsHL();

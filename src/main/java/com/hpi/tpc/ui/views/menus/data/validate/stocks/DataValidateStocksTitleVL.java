@@ -6,10 +6,9 @@ public class DataValidateStocksTitleVL
     extends TitleBaseVL
 {
 
-    public DataValidateStocksTitleVL()
+    public DataValidateStocksTitleVL(String title)
     {
+        super();
         this.addClassName("dataValidateStocksTitleVL");
-        
-        this.setTitle("Validate Stock Transactions");
     }
 }

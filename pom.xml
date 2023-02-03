@@ -8,11 +8,12 @@
     <packaging>jar</packaging>
 
     <properties>
-        <vaadin.version>23.2.6</vaadin.version>
+        <vaadin.version>23.3.4</vaadin.version>
+        <!--<vaadin.version>23.2.6</vaadin.version>-->
         <!--<vaadin.version>22.0.11</vaadin.version>-->
         <!--<vaadin.version>21.0.7</vaadin.version>-->
         <!--have to do here to override spring parent specification of 9.0.5.3-->
-        <tomcat.version>9.0.53</tomcat.version>
+        <!--<tomcat.version>9.0.53</tomcat.version>-->
         <maven.version>3.8.6</maven.version>
         <!--<maven.version>3.8.2</maven.version>-->
         <maven.enforcer.version>3.0.0</maven.enforcer.version>
@@ -25,13 +26,17 @@
         <drivers.dir>${project.basedir}/drivers</drivers.dir>
         <drivers.downloader.phase>pre-integration-test</drivers.downloader.phase>
         
-        <spring.boot.version>2.5.14</spring.boot.version>
-    </properties>
+        <!--<spring.boot.version>2.5.14</spring.boot.version>-->
+        <!--<spring.boot.version>3.0.1</spring.boot.version>-->
+        <!--<spring.boot.version>2.7.7</spring.boot.version>-->
+        <!--<spring.boot.version>2.6.14</spring.boot.version>-->
+        <spring.boot.version>2.7.7</spring.boot.version>
 
+    </properties>
     <parent>
         <groupId>org.springframework.boot</groupId>
         <artifactId>spring-boot-starter-parent</artifactId>
-        <version>2.5.14</version>
+        <version>2.7.7</version>
         <!--<version>2.5.14</version>-->
         <!--<version>2.0.9.RELEASE</version>-->
     </parent>
@@ -108,28 +113,19 @@
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-api</artifactId>
-            <!--<version>5.7.2</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
             <artifactId>junit-jupiter-engine</artifactId>
-            <!--<version>5.7.2</version>-->
             <scope>test</scope>
         </dependency>
         <dependency>
             <groupId>com.flowingcode.vaadin.addons</groupId>
             <artifactId>twincolgrid</artifactId>
             <!--<version>2.8.0</version>-->
-            <version>2.9.2-SNAPSHOT</version>
+            <version>3.0.0a</version>
         </dependency>
-        <!-- -->
-        <!--<dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>4.2.0.Final</version>
-        </dependency>-->
-        <!-- https://mvnrepository.com/artifact/com.squareup.okhttp3/okhttp -->
         <dependency>
             <groupId>org.apache.maven.plugins</groupId>
             <artifactId>maven-enforcer-plugin</artifactId>
@@ -143,17 +139,9 @@
             <version>8.19.0</version>
         </dependency>
         <dependency>
-            <groupId>com.squareup.okhttp3</groupId>
-            <artifactId>okhttp</artifactId>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot</artifactId>
         </dependency>
-        <!--<dependency>
-            <groupId>org.springframework.boot</groupId>
-            <artifactId>spring-boot-starter-thymeleaf</artifactId>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-beans</artifactId>
@@ -165,7 +153,6 @@
         <dependency>
             <groupId>com.mysql</groupId>
             <artifactId>mysql-connector-j</artifactId>
-            <version>8.0.31</version>
         </dependency>
         <dependency>
             <groupId>org.springframework.security</groupId>
@@ -199,7 +186,6 @@
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
-            <version>23.2.6</version>
             <!-- Replace artifactId with vaadin-core to use only free components -->
             <artifactId>vaadin-core</artifactId>
             <exclusions>
@@ -232,7 +218,6 @@
         </dependency>
         <dependency>
             <groupId>com.vaadin</groupId>
-            <version>23.2.6</version>
             <artifactId>vaadin-spring-boot-starter</artifactId>
             <exclusions>
                 <!-- Excluding so that webjars are not included. -->
@@ -248,11 +233,6 @@
             <optional>true</optional>
         </dependency>
         <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-testbench</artifactId>
-            <version>23.2.6</version>
-        </dependency>
-        <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-web</artifactId>
         </dependency>
@@ -260,35 +240,10 @@
             <groupId>org.springframework.security</groupId>
             <artifactId>spring-security-core</artifactId>
         </dependency>
-        <!--        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-html-components</artifactId>
-            <version>21.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-context-menu-flow</artifactId>
-            <version>21.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-ordered-layout-flow</artifactId>
-            <version>21.0.2</version>
-        </dependency>-->
         <dependency>
             <groupId>jakarta.annotation</groupId>
             <artifactId>jakarta.annotation-api</artifactId>
         </dependency>
-        <!--        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-login-flow</artifactId>
-            <version>21.0.2</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-data</artifactId>
-            <version>21.0.2</version>
-        </dependency>-->
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
@@ -296,6 +251,8 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-context</artifactId>
+            <!--<version>5.3.24</version>-->
+            <type>jar</type>
         </dependency>
         <dependency>
             <groupId>org.apache.commons</groupId>
@@ -305,45 +262,19 @@
             <groupId>org.springframework</groupId>
             <artifactId>spring-jdbc</artifactId>
         </dependency>
-        <!--<dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>vaadin-combo-box-flow</artifactId>
-        </dependency>-->
-        <!--<dependency>
-        <groupId>com.vaadin</groupId>
-        <artifactId>vaadin-context-menu</artifactId>
-        <version>${vaadin-context-menu.version}</version>-->
-        <!--<version>21.0.0</version>
-            <type>jar</type>
-        </dependency>-->
         <dependency>
             <groupId>com.github.appreciated</groupId>
             <artifactId>apexcharts</artifactId>
-            <version>23.0.0</version>
+            <version>23.0.1</version>
         </dependency>
         <dependency>
             <groupId>org.apache.logging.log4j</groupId>
             <artifactId>log4j-api</artifactId>
         </dependency>
-        <!-- https://mvnrepository.com/artifact/org.seleniumhq.selenium/selenium-java -->
         <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <!--<version>4.1.1</version>-->
         </dependency>
-
-        <!--<dependency>
-            <groupId>com.vaadin</groupId>
-            <artifactId>flow-server</artifactId>
-            <type>jar</type>
-        </dependency>-->
-        
-        <!-- https://mvnrepository.com/artifact/org.apache.maven.plugins/maven-war-plugin -->
-        <!--<dependency>
-            <groupId>org.apache.maven.plugins</groupId>
-            <artifactId>maven-war-plugin</artifactId>
-            <version>3.3.2</version>
-        </dependency>-->
         <dependency>
             <groupId>org.vaadin.artur</groupId>
             <artifactId>a-vaadin-helper</artifactId>

@@ -3,74 +3,70 @@ package com.hpi.tpc.ui.views.notes;
 import com.hpi.tpc.ui.views.main.MainLayout;
 import com.github.appreciated.apexcharts.config.*;
 import com.github.appreciated.apexcharts.config.annotations.*;
-import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
-import static com.hpi.tpc.ui.views.notes.NotesConst.*;
-import com.vaadin.flow.component.button.Button;
-import com.vaadin.flow.component.combobox.ComboBox;
+import com.hpi.tpc.services.*;
+import com.vaadin.flow.component.button.*;
+import com.vaadin.flow.component.combobox.*;
 import com.vaadin.flow.component.orderedlayout.*;
-import com.vaadin.flow.component.textfield.TextArea;
-import com.vaadin.flow.component.textfield.TextField;
+import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.data.value.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import javax.annotation.*;
-import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.stereotype.Component;
+import org.springframework.stereotype.*;
 
 /**
- * Edit a note.
+ * View for add a note
  * makes direct request for data from model
  * does not change data;
  * user actions are sent to the controller
  * dumb, just builds the view
  */
-@UIScope
+//@UIScope
 @VaadinSessionScope
-@Route(value = ROUTE_NOTES_VIEW_EDIT, layout = MainLayout.class)
-@PermitAll
-@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_EDIT)
+//@Route(value = ROUTE_NOTES_VIEW_ADD, layout = MainLayout.class)
+//@PermitAll
+//@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_ADD)
+//@CssImport("./styles/notesAddEdit.css")
+@Getter
 @Component
-public class NotesEditHL
+public class NotesAddEditChart
     extends HorizontalLayout
-    implements BeforeEnterObserver {
+    implements BeforeEnterObserver, BeforeLeaveObserver {
 
     @Autowired private MainLayout mainLayout;
     @Autowired private TPCDAOImpl noteService;
     @Autowired private PrefsController prefsController;
-    @Autowired private NotesModel notesModel;
 
     private FlexLayout topRow;
     private FlexLayout topLeft;
     private FlexLayout topRight;
 
     //must be the same as the data model fields
-    @Getter private final TextField ticker;
-    @Getter private final TextField iPrice;
-    @Getter private final TextField description;
-    @Getter private final TextField units;
-    @Getter private final ComboBox<String> actionsCB;
-    @Getter private final ComboBox<String> alertsCB;
-    @Getter private final TextField alert;
-    @Getter private final TextArea notes;
+    private final TextField ticker;
+    private final TextField iPrice;
+    private final TextField description;
+    private final TextField units;
+    private final ComboBox<String> actionsCB;
+    private final ComboBox<String> alertsCB;
+    private final TextField alert;
+    private final TextArea notes;
 
-    @Getter private final Button buttonCancel;
-    @Getter private final Button buttonSave;
-    @Getter private final Button buttonArchive;
+    private final Button buttonCancel;
+    private final Button buttonSave;
+    private final Button buttonArchive;
 
     private HorizontalLayout buttons;
 
     private VerticalLayout chartVerticalLayout;
     
-//    @Setter private NoteModel selectedNoteModel;
-    
-    public NotesEditHL() {
-//        this.selectedNoteModel = null;
-        
+    @Getter @Setter private Boolean isTicker;
+
+    public NotesAddEditChart() {
         this.ticker = new TextField();
         this.ticker.setRequired(true);
         this.ticker.setRequiredIndicatorVisible(true);
@@ -83,6 +79,7 @@ public class NotesEditHL
         this.units = new TextField();
         this.units.setRequired(true);
         this.units.setRequiredIndicatorVisible(true);
+        this.units.setValue("100");
 
         this.alert = new TextField();
         this.notes = new TextArea();
@@ -99,8 +96,10 @@ public class NotesEditHL
         this.buttonSave = new Button("Save");
         this.buttonSave.setEnabled(false);
 
+        //archive not available on add
         this.buttonArchive = new Button("Archive");
         this.buttonArchive.setEnabled(false);
+        this.buttonArchive.setVisible(false);
     }
 
     @PostConstruct
@@ -111,11 +110,11 @@ public class NotesEditHL
         this.topRight.addClassName("addEditChart");
 
         this.topRow = new FlexLayout();
-        this.topRow.setAlignItems(Alignment.STRETCH);
+        this.topRow.setAlignItems(FlexComponent.Alignment.STRETCH);
         this.topRow.setWidth("100%");
         this.topRow.setHeight("100%");
         this.topRow.add(this.topLeft, this.topRight);
-        this.topRow.setFlexGrow(1, topRight);
+        this.topRow.setFlexGrow(1, this.topRight);
         this.topRow.setFlexWrap(FlexLayout.FlexWrap.WRAP);
         this.topLeft.setMaxWidth("100vw");
         this.topLeft.setMaxHeight("100vh");
@@ -128,58 +127,62 @@ public class NotesEditHL
 
         this.buttons = new HorizontalLayout(this.buttonSave, this.buttonCancel, this.buttonArchive);
 
-        this.formSetup();
-
         //on edit, all buttons are visible
-        this.buttonArchive.setVisible(true);
+        //on add, not all available
         this.buttonCancel.setVisible(true);
         this.buttonSave.setVisible(true);
+    }
 
-        //save is disabled until a change
-        this.buttonSave.setEnabled(false);
+    @PreDestroy
+    private void destruct() {
+
     }
 
     @Override
     public void beforeEnter(BeforeEnterEvent event) {
-        this.noteService.AppTracking("TPC:Notes:Edit");
+
+        this.noteService.AppTracking("TPC:Notes:Add");
 
         if (this.prefsController.getPref("TPCDrawerClose").
             equalsIgnoreCase("yes")) {
             this.mainLayout.setDrawerOpened(false);
         }
 
-        //fill form with data
-        this.setEditFields();
-
-        //initial button settings upon entry
-        this.buttons.setVisible(true);
-        this.buttonSave.setEnabled(false);
+        this.formSetup();
         
-        this.buttonCancel.setVisible(true);
-        this.buttonCancel.setEnabled(true);
+        //set ticker to empty
+        this.ticker.setValue("");
         
-        this.buttonArchive.setVisible(true);
-        this.buttonArchive.setEnabled(true);
+        //set isTicker
+        this.isTicker = false;
         
         //initial focus
-        this.actionsCB.focus();
+        this.ticker.focus();
+        //initial button settings upon entry
+        this.buttonSave.setVisible(true);
+        this.buttonSave.setEnabled(false);
 
-//        //do the chart for the ticker        
-//        this.addChartSetup(this.notesMVCModel.getSelectedNoteModel().getTicker());
-//        //set focus on the form
-//        this.notes.focus();
+        this.buttonCancel.setVisible(true);
+        this.buttonCancel.setEnabled(true);
+
+        this.buttonArchive.setVisible(false);
+        this.buttonArchive.setEnabled(false);
+
+        //do the chart for the ticker        
+        //this.addChartSetup(this.notesMVCModel.getSelectedNoteModel().getTicker());
+        //no ticker yet, show the spy
+        this.addChartSetup("SPY");
+        
+        //set focus on the form
+        this.ticker.focus();
+        
         //allow archive and save only on 'mine'
-//        if (this.notesMVCModel.getSelectedNoteModel().getJoomlaId().equalsIgnoreCase(
-//            SecurityUtils.getUserId().toString())) {
-//            this.buttonArchive.setVisible(true);
-//            this.buttonArchive.setEnabled(true);
-//            this.buttonSave.setVisible(true);
-//            this.buttonSave.setEnabled(false);
-//        }
-//        else {
-//            this.buttonArchive.setVisible(false);
-//            this.buttonSave.setVisible(false);
-//        }
+        //by definition this is a 'mine' and there is no selected noteModel
+        //cannot archive an add
+    }
+
+    @Override
+    public void beforeLeave(BeforeLeaveEvent ble) {
     }
 
     private void formSetup() {
@@ -192,18 +195,11 @@ public class NotesEditHL
         this.ticker.setMinLength(1);
         this.ticker.setMaxWidth("180px");
         this.ticker.setValueChangeMode(ValueChangeMode.ON_CHANGE);
+        this.ticker.setEnabled(true);
 
         this.actionsCB.setMaxWidth("100px");
         this.actionsCB.setValue("Buy");
-
-        this.alertsCB.setMaxWidth("100px");
-        this.alertsCB.setValue("Price");
-
-        this.alert.setPlaceholder("Alert");
-        this.alert.setMaxWidth("180px");
-
-        this.description.setPlaceholder("Description");
-        this.description.setMinWidth("297px");
+        this.actionsCB.setEnabled(true);
 
         this.notes.setPlaceholder("Enter notes");
         this.notes.setMinHeight("90px");
@@ -213,28 +209,43 @@ public class NotesEditHL
 
         this.units.setPlaceholder("Units");
         this.units.setMaxWidth("140px");
+        this.units.setEnabled(true);
 
-        this.iPrice.setPlaceholder("Price");
+        this.iPrice.setPlaceholder("Initial Price");
         this.iPrice.setMaxWidth("140px");
+        this.iPrice.setEnabled(true);
+
+        this.alertsCB.setMaxWidth("100px");
+        //default to a price alert
+        this.alertsCB.setValue("Price");
+        this.alertsCB.setEnabled(true);
+
+        this.alert.setPlaceholder("Alert attribute");
+        this.alert.setMaxWidth("180px");
+        this.alert.setEnabled(true);
+
+        this.description.setPlaceholder("Description");
+        this.description.setMinWidth("297px");
+        this.description.setEnabled(true);
 
         //first row
         h1 = new HorizontalLayout(this.ticker, this.actionsCB);
+        this.ticker.setEnabled(true);
         //second row
-//        h2 = new HorizontalLayout(this.notes);
         //third row
         h3 = new HorizontalLayout(this.units, this.iPrice);
+        this.iPrice.setEnabled(true);
         //fourth row
         h4 = new HorizontalLayout(this.alertsCB, this.alert);
         //fifth row
         h5 = new HorizontalLayout(this.description);
-
         vertLayout.add(h1, this.notes, h3, h4, h5);
 
         vertLayout.add(this.buttons);
 
-        //disallow edit of ticker, initial price
-        this.ticker.setEnabled(false);
-        this.iPrice.setEnabled(false);
+        //allow edit of ticker, initial price
+        this.ticker.setEnabled(true);
+        this.iPrice.setEnabled(true);
 
         this.topLeft.add(vertLayout);
     }
@@ -249,7 +260,7 @@ public class NotesEditHL
 //        if (this.topRight.getComponentCount() > 0) {
 //            this.topRight.removeAll();
 //        }
-//
+//        
 //        chartVerticalLayout = new VerticalLayout();
 //
 //        //candlestick for ticker
@@ -257,15 +268,15 @@ public class NotesEditHL
 //
 //        //annotations
 //        annotations = new Annotations();
-//
+//        
 //        doAnnotations(annotations, ticker);
-//
+//        
 //        builder = new CandleStickChart(
 //            OHLCVModel.getCoordSeries(ticker, ohlcvModels), annotations)
 //            .withTitle(TitleSubtitleBuilder.get().withText(ticker).build());
-//
+//        
 //        chart = builder.build();
-//
+//        
 //        chartVerticalLayout.add(chart);
 ////        chartVerticalLayout.setMaxHeight("100vw");
 ////        chartVerticalLayout.setMaxWidth("100vw");
@@ -346,18 +357,5 @@ public class NotesEditHL
         }
 
         annotations.setYaxis(yAxisAnnotationsList);
-    }
-
-    private void setEditFields() {
-        if (this.notesModel.getSelectedNoteModel() != null){
-        this.ticker.setValue(this.notesModel.getSelectedNoteModel().getTicker());
-        this.actionsCB.setValue(this.notesModel.getSelectedNoteModel().getAction());
-        this.notes.setValue(this.notesModel.getSelectedNoteModel().getNotes());
-        this.units.setValue(this.notesModel.getSelectedNoteModel().getUnits().toString());
-        this.iPrice.setValue(this.notesModel.getSelectedNoteModel().getIPrice().toString());
-        this.alertsCB.setValue(this.notesModel.getSelectedNoteModel().getTriggerType());
-        this.alert.setValue(this.notesModel.getSelectedNoteModel().getTrigger());
-        this.description.setValue(this.notesModel.getSelectedNoteModel().getDescription());
-        }
     }
 }

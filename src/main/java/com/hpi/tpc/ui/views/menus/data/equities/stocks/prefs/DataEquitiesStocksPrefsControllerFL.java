@@ -53,7 +53,7 @@ public class DataEquitiesStocksPrefsControllerFL
         this.setWidth("380px");
 
         //title vertical layout
-        this.title = new DataEquitiesStocksPrefsTitleVL();
+        this.title = new DataEquitiesStocksPrefsTitleVL("Stock Data Attributes");
 
         //content vertical layout
         this.prefsVL = new DataEquitiesStocksPrefsVL();
