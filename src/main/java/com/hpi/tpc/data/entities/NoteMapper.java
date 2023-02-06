@@ -29,6 +29,7 @@ public class NoteMapper implements RowMapper<NoteModel>
             .trigger(rs.getString("Trigger"))
             .active(((Integer) rs.getInt("Active")).toString())
             .dateEntered(rs.getString("DateEntered"))
+            .notes(rs.getString("Notes"))
             //            .high((((Double) rs.getDouble("High")).toString()))
             .high(rs.getDouble("High"))
             //            .low((((Double) rs.getDouble("Low")).toString()))

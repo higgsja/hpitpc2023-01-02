@@ -1,7 +1,6 @@
 package com.hpi.tpc.ui.views.main;
 
 import com.hpi.tpc.ui.views.notes.NotesModel;
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;

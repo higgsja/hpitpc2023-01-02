@@ -7,7 +7,6 @@ import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.ui.views.notes.NotesModel;
-import static com.hpi.tpc.ui.views.notes.NotesConst.*;
 import com.vaadin.flow.component.button.Button;
 import com.vaadin.flow.component.combobox.ComboBox;
 import com.vaadin.flow.component.orderedlayout.*;
@@ -36,7 +35,7 @@ import org.springframework.stereotype.Component;
 @PermitAll
 //@PageTitle(TITLE_PAGE_NOTES + ": " + TITLE_PAGE_NOTES_EDIT)
 @Component
-public class NotesEditHL
+public class holdNotesEditHL
     extends HorizontalLayout
     implements BeforeEnterObserver {
 
@@ -69,7 +68,7 @@ public class NotesEditHL
     
 //    @Setter private NoteModel selectedNoteModel;
     
-    public NotesEditHL() {
+    public holdNotesEditHL() {
 //        this.selectedNoteModel = null;
         
         this.ticker = new TextField();
