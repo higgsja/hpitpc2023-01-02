@@ -1,9 +1,10 @@
 package com.hpi.tpc.ui.views.notes;
 
-import com.hpi.tpc.ui.views.notes.notesAddEdit.NotesEditHL;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.notes.notesAdd.*;
+import com.studerw.tda.client.*;
+import com.studerw.tda.model.quote.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import lombok.*;
@@ -18,17 +19,39 @@ import org.springframework.stereotype.Component;
  */
 @UIScope
 @VaadinSessionScope
-@NoArgsConstructor
+//@NoArgsConstructor
 @Component
-public class NotesModel {
+public class NotesModel
+{
+
     @Autowired private TPCDAOImpl noteService;
 
     @Setter @Getter private NoteModel selectedNoteModel;
-    
     @Getter private List<NoteModel> dataProvider;
+    private Properties props;
+    private HttpTdaClient httpTdaClient;
 
-    
-    public void getPrefs(String prefPrefix) {
+    public NotesModel()
+    {
+        this.props = new Properties();
+        props.setProperty("tda.client_id", "VYEUORVKFCJSAZG9TBJOGSQZX8PKXWZB");
+        props
+            .setProperty("tda.token.refresh", "ixs1FhJY2f7uhCRjK8a+Brw0XQyAjLV4Q/H5QCDz00M3B3ep0/bBnJNaiFanWnp1f3Kpg9lNUqfHlE1bQm8XhEivX/Kbo2h/lR7uQ28xCEAYBS/xetpQyvT4DL1WtA3wZtNdDiPRwiTHP63pnf+wK46iKal2MlaLLebpUXLNqPWVBqc43/NpukM/8UX2dZiW7Xl/Oh/lJKuxvH8obosWVPdc4Ol0VVQ5ff9JL2o0ZovfDs01P55UJfhv3f8ZAImUxa3zrjlnR9JwrIqq0QK6tITO0ysanVB+dhe+lzb0f9nqc+mqxEB6t55+K0413Pyl5uzEhSh5Owt39sRy/FGEAf+JkwSWgYxJV3u0VcMgW9/FZZy1s27126bYhEtJ35AhwXN4xLY/InT0WgblGAybBsYh5BNksZHy52ZRiFgGvLRszvrshoEQu8hyKby100MQuG4LYrgoVi/JHHvlH/wBtHqoauMnRWdARXR4HRyF7vk3BOX/jvFTmHSXk4nP9Iv79q+t2Wt71/E/kT6ORlOjHVYNRg3Roo4X0SBj9yb5fFzvwm8G/4X+nhM7nScW69tPsCzqDNdDecvnvp47ma9EEW/L2vLWXdVjcLR1CJrS6XHUb2SOZiAKJb8MErUlfHgeL0eNRNW5tSbgh62uywdJigmwB/lmHdG537sMIjyX1yIYmkF0L6Gtx0qjS7/nB+5U9ZFyeSfwSEk5maHJOXalCTWyCecEqMpEDAUhVYmkXfMsUbWbslXlfXI9gS7n/QyZzR6Tz8jbKCVAd9S8f2BP/kJhGGSl702Y9OlXIlxZk5pDIcZElX2TjGAbmr6eqwN+UIKfYxzI2lzWo/EdA9L8Yks6Iag7FDDTFvhNYnQ01N0AsKFWoBzz2buHkDOnegsshbhM5vxZ5Wg=212FD3x19z9sWBHDJACbC00B75E");
+        props.setProperty("tda.account.id", "865-837053");
+//        props.setProperty("tda.url", CMOfxDirectModel.getFIMODELS().
+//            get(0).getHttpHost());
+        props.setProperty("tda.debug.bytes.length", "-1");
+
+        this.httpTdaClient = new HttpTdaClient(props);
+    }
+
+    public Quote getTickerInfo(String ticker)
+    {
+        return this.httpTdaClient.fetchQuote(ticker);
+    }
+
+    public void getPrefs(String prefPrefix)
+    {
 //        this.prefsController.setDefaults("PortfolioTrack");
 //        this.prefsController.readPrefsByPrefix("PortfolioTrack");
 //        this.selectedTrackActive = this.prefsController
@@ -37,7 +60,8 @@ public class NotesModel {
 //            .getPref("PortfolioTrackOpen").equals("Yes");
     }
 
-    public void writePrefs() {
+    public void writePrefs()
+    {
 //        //preferences, update the hashmap, then write to database
 //        this.prefsController.setPref("PortfolioTrackActive",
 //            selectedTrackActive ? "Yes" : "No");
@@ -47,7 +71,8 @@ public class NotesModel {
 //        this.prefsController.writePrefsByPrefix("PortfolioTrack");
     }
 
-    void setSelected(NoteModel noteModel) {
+    public void setSelected(NoteModel noteModel)
+    {
         //without the session variable, this could be simple setter
         this.selectedNoteModel = noteModel;
     }
@@ -55,8 +80,12 @@ public class NotesModel {
     /**
      * Save the note to the database
      * need to come in with the NoteModel from the form.
+     *
+     * @param notesAddFormVL
+     * @param isArchive
      */
-    void save(NotesEditHL notesEditHL, Boolean isArchive) {
+    public void saveUpdate(NotesAddFormVL notesAddFormVL, Boolean isArchive)
+    {
         //not hit
         Integer actionInteger;
         Integer alertInteger;
@@ -64,20 +93,16 @@ public class NotesModel {
 
         actionInteger = 1;
         alertInteger = 2;
-        if (isArchive){
-        noteService.AppTracking("TPC:Notes:Edit:Archive");    
-        }else{
-        noteService.AppTracking("TPC:Notes:Edit:Save");    
-        }
-        
-
-        if (this.selectedNoteModel.getTicker().isEmpty()) {
-            //should never happen as save is disabled under these conditions
-            //todo: highlight the problem
-            return;
+        if (isArchive)
+        {
+            noteService.AppTracking("TPC:Notes:Edit:Archive");
+        } else
+        {
+            noteService.AppTracking("TPC:Notes:Edit:Save");
         }
 
-        switch (notesEditHL.getActionsCB().getValue()){
+        switch (notesAddFormVL.getActionsCB().getValue())
+        {
             case "Buy":
                 actionInteger = ActionModel.ACTIONS_BUY;
                 break;
@@ -99,7 +124,8 @@ public class NotesModel {
             default:
         }
 
-        switch (notesEditHL.getAlertsCB().getValue()){
+        switch (notesAddFormVL.getAlertsCB().getValue())
+        {
             case "Date":
                 alertInteger = AlertTypeModel.ALERTS_DATE;
                 break;
@@ -118,27 +144,38 @@ public class NotesModel {
             this.selectedNoteModel.getJoomlaId(),
             this.selectedNoteModel.getTStamp(),
             //these are edits
-            notesEditHL.getTicker().getValue(),
-            Double.valueOf(notesEditHL.getIPrice().getValue()),
-            notesEditHL.getDescription().getValue(),
-            notesEditHL.getNotes().getValue(),
-            Double.valueOf(notesEditHL.getUnits().getValue()),
+            notesAddFormVL.getTicker().getValue().strip(),
+            Double.valueOf(notesAddFormVL.getIPrice().getValue()),
+            notesAddFormVL.getDescription().getValue(),
+            notesAddFormVL.getNotes().getValue(),
+            Double.valueOf(notesAddFormVL.getUnits().getValue()),
             actionInteger.toString(),
             alertInteger.toString(),
-            notesEditHL.getAlert().getValue(),
+            notesAddFormVL.getAlert().getValue(),
             isArchive ? "0" : this.selectedNoteModel.getActive(),
             //leave date entered without changes
             this.selectedNoteModel.getDateEntered()
         );
+        
+        
+        if (notesAddFormVL.getTicker().getValue().isEmpty())
+        {
+            //should never happen as save is disabled under these conditions
+            //todo: highlight the problem
+            return;
+        }
 
         this.noteService.updateNote(tempNoteModel);
     }
-    
+
     /**
      * Save the note to the database
      * need to come in with the NoteModel from the form.
+     *
+     * @param isArchive
      */
-    void save(NotesAddFormVL notesAddFormVL, Boolean isTicker, Boolean isArchive) {
+    public void saveAdd()
+    {
         //not hit
         Integer actionInteger;
         Integer alertInteger;
@@ -148,13 +185,14 @@ public class NotesModel {
         alertInteger = 2;
         noteService.AppTracking("TPC:Notes:Add:Save");
 
-        if (this.selectedNoteModel.getTicker().isEmpty()) {
-            //should never happen as save is disabled under these conditions
+        if (this.selectedNoteModel.getTicker().isEmpty())
+        {
             //todo: highlight the problem
             return;
         }
 
-        switch (notesAddFormVL.getActionsCB().getValue()){
+        switch (this.selectedNoteModel.getAction())
+        {
             case "Buy":
                 actionInteger = ActionModel.ACTIONS_BUY;
                 break;
@@ -176,7 +214,8 @@ public class NotesModel {
             default:
         }
 
-        switch (notesAddFormVL.getAlertsCB().getValue()){
+        switch (this.selectedNoteModel.getTriggerType())
+        {
             case "Date":
                 alertInteger = AlertTypeModel.ALERTS_DATE;
                 break;
@@ -196,32 +235,30 @@ public class NotesModel {
             //null for add
             this.selectedNoteModel.getTStamp(),
             //uppercase if a ticker
-            isTicker ? notesAddFormVL.getTicker().getValue().toUpperCase() 
-                : notesAddFormVL.getTicker().getValue(),
-            Double.valueOf(notesAddFormVL.getIPrice().getValue()),
-            notesAddFormVL.getDescription().getValue(),
-            notesAddFormVL.getNotes().getValue(),
-            Double.valueOf(notesAddFormVL.getUnits().getValue()),
+            this.selectedNoteModel.getTicker(),
+            this.selectedNoteModel.getIPrice(),
+            this.selectedNoteModel.getDescription(),
+            this.selectedNoteModel.getNotes(),
+            this.selectedNoteModel.getUnits(),
             actionInteger.toString(),
             alertInteger.toString(),
-            notesAddFormVL.getAlert().getValue(),
-            isArchive ? "0" : this.selectedNoteModel.getActive(),
-            //leave date entered without changes
+            this.selectedNoteModel.getTrigger(),
+            this.selectedNoteModel.getActive(),
             this.selectedNoteModel.getDateEntered()
         );
 
         this.noteService.saveNote(tempNoteModel);
     }
-    
-    public void getData(String subset){
-         List<NoteModel> aList;
+
+    public void getData(String subset)
+    {
+        List<NoteModel> aList;
 
         aList = this.noteService.getByJId(subset);
-        
+
         this.dataProvider = aList;
 
 //        this.notesGrid.getDataProvider().refreshAll();
-
 //        //this.notesGrid.setItems(aList);
 //        this.getNotesGrid().setItems(aList);
     }
