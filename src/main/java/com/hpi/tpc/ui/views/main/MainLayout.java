@@ -1,7 +1,6 @@
 package com.hpi.tpc.ui.views.main;
 
 import com.hpi.tpc.ui.views.notes.NotesModel;
-import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
@@ -97,9 +96,6 @@ public class MainLayout
         //add listener for new note
         pencilIcon.addClickListener(event ->
         {
-            //give model a starter noteModel
-            this.notesMVCModel.setSelectedNoteModel(new NoteModel(SecurityUtils.getUserId().toString(),
-                null, null, null, null, null, null, null, null, null, "1", null));
             UI.getCurrent().navigate(ROUTE_NOTES_CONTROLLER_ADD);
         });
 

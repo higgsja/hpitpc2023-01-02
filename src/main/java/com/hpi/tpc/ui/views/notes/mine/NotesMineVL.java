@@ -36,7 +36,8 @@ public class NotesMineVL
         
         this.getNotesGrid().addItemClickListener(event ->
             {
-                this.getNotesModel().setSelectedNoteModel(event.getItem());
+//                this.getNotesModel().setSelectedNoteModel(event.getItem());
+                this.getNotesModel().getBinder().setBean(event.getItem());
                 UI.getCurrent().navigate(ROUTE_NOTES_VIEW_EDIT);
             });
     }

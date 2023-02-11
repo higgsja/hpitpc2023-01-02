@@ -5,9 +5,11 @@ import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.notes.notesAdd.*;
 import com.studerw.tda.client.*;
 import com.studerw.tda.model.quote.*;
+import com.vaadin.flow.data.binder.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import lombok.*;
+import lombok.Setter;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Component;
 
@@ -28,11 +30,14 @@ public class NotesModel
 
     @Setter @Getter private NoteModel selectedNoteModel;
     @Getter private List<NoteModel> dataProvider;
-    private Properties props;
-    private HttpTdaClient httpTdaClient;
-
+    @Getter private final Binder<NoteModel> binder;
+    private final Properties props;
+    private final HttpTdaClient httpTdaClient;
+    @Getter private Quote quote;
+    @Getter @Setter private Boolean isSave;
     public NotesModel()
     {
+        this.binder = new Binder<>(NoteModel.class);
         this.props = new Properties();
         props.setProperty("tda.client_id", "VYEUORVKFCJSAZG9TBJOGSQZX8PKXWZB");
         props
@@ -43,11 +48,14 @@ public class NotesModel
         props.setProperty("tda.debug.bytes.length", "-1");
 
         this.httpTdaClient = new HttpTdaClient(props);
+        
+        this.quote = null;
+        this.isSave = false;
     }
 
     public Quote getTickerInfo(String ticker)
     {
-        return this.httpTdaClient.fetchQuote(ticker);
+        return this.quote = this.httpTdaClient.fetchQuote(ticker);
     }
 
     public void getPrefs(String prefPrefix)
@@ -84,7 +92,7 @@ public class NotesModel
      * @param notesAddFormVL
      * @param isArchive
      */
-    public void saveUpdate(NotesAddFormVL notesAddFormVL, Boolean isArchive)
+    public void saveUpdate(NotesAddFormVL1 notesAddFormVL, Boolean isArchive)
     {
         //not hit
         Integer actionInteger;
@@ -101,7 +109,7 @@ public class NotesModel
             noteService.AppTracking("TPC:Notes:Edit:Save");
         }
 
-        switch (notesAddFormVL.getActionsCB().getValue())
+        switch (notesAddFormVL.getAction().getValue())
         {
             case "Buy":
                 actionInteger = ActionModel.ACTIONS_BUY;
@@ -124,7 +132,7 @@ public class NotesModel
             default:
         }
 
-        switch (notesAddFormVL.getAlertsCB().getValue())
+        switch (notesAddFormVL.getTriggerType().getValue())
         {
             case "Date":
                 alertInteger = AlertTypeModel.ALERTS_DATE;
@@ -156,8 +164,7 @@ public class NotesModel
             //leave date entered without changes
             this.selectedNoteModel.getDateEntered()
         );
-        
-        
+
         if (notesAddFormVL.getTicker().getValue().isEmpty())
         {
             //should never happen as save is disabled under these conditions
@@ -171,8 +178,6 @@ public class NotesModel
     /**
      * Save the note to the database
      * need to come in with the NoteModel from the form.
-     *
-     * @param isArchive
      */
     public void saveAdd()
     {
@@ -183,13 +188,7 @@ public class NotesModel
 
         actionInteger = 1;
         alertInteger = 2;
-        noteService.AppTracking("TPC:Notes:Add:Save");
-
-        if (this.selectedNoteModel.getTicker().isEmpty())
-        {
-            //todo: highlight the problem
-            return;
-        }
+        this.noteService.AppTracking("TPC:Notes:Add:Save");
 
         switch (this.selectedNoteModel.getAction())
         {
@@ -229,6 +228,25 @@ public class NotesModel
         }
 
         //get data from the form
+//        tempNoteModel = new NoteModel(
+//            //these are key fields
+//            this.binder.getBean().getJoomlaId(),
+//            //null for add
+//            null,
+//            //this.binder.getBean().getTStamp(),
+//            //uppercase if a ticker
+//            this.binder.getBean().getTicker().toUpperCase(),
+//            this.binder.getBean().getIPrice(),
+//            this.binder.getBean().getDescription(),
+//            this.binder.getBean().getNotes(),
+//            this.binder.getBean().getUnits(),
+//            actionInteger.toString(),
+//            alertInteger.toString(),
+//            this.binder.getBean().getTrigger(),
+//            this.binder.getBean().getActive(),
+//            new java.sql.Date(System.currentTimeMillis()).toString()
+//        );
+
         tempNoteModel = new NoteModel(
             //these are key fields
             this.selectedNoteModel.getJoomlaId(),
@@ -247,6 +265,7 @@ public class NotesModel
             this.selectedNoteModel.getDateEntered()
         );
 
+
         this.noteService.saveNote(tempNoteModel);
     }
 
@@ -257,9 +276,5 @@ public class NotesModel
         aList = this.noteService.getByJId(subset);
 
         this.dataProvider = aList;
-
-//        this.notesGrid.getDataProvider().refreshAll();
-//        //this.notesGrid.setItems(aList);
-//        this.getNotesGrid().setItems(aList);
     }
 }
