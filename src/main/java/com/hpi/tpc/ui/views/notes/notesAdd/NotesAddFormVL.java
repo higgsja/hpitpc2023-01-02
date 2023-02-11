@@ -16,7 +16,7 @@ import org.springframework.beans.factory.annotation.*;
 @VaadinSessionScope
 @org.springframework.stereotype.Component
 public class NotesAddFormVL
-    extends NotesAddEditFormAbstractVL
+    extends NotesAddEditFormAbstractVL1
     implements BeforeEnterObserver
 {
 

@@ -6,7 +6,6 @@ import java.text.*;
 import java.util.*;
 import java.util.Date;
 import lombok.*;
-import org.apache.commons.lang3.math.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
@@ -61,22 +60,22 @@ public class TPCDAOImpl
             switch (nm.getAction())
             {
                 case NoteModel.ACTION_BUY:
-                    nm.setAction(NoteModel.ACTION_BUY_STRING);
+                    nm.setActionInt(NoteModel.ACTION_BUY_STRING);
                     break;
                 case NoteModel.ACTION_SELL:
-                    nm.setAction(NoteModel.ACTION_SELL_STRING);
+                    nm.setActionInt(NoteModel.ACTION_SELL_STRING);
                     break;
                 case NoteModel.ACTION_WATCH:
-                    nm.setAction(NoteModel.ACTION_WATCH_STRING);
+                    nm.setActionInt(NoteModel.ACTION_WATCH_STRING);
                     break;
                 case NoteModel.ACTION_HEDGE:
-                    nm.setAction(NoteModel.ACTION_HEDGE_STRING);
+                    nm.setActionInt(NoteModel.ACTION_HEDGE_STRING);
                     break;
                 case NoteModel.ACTION_OTHER:
-                    nm.setAction(NoteModel.ACTION_OTHER_STRING);
+                    nm.setActionInt(NoteModel.ACTION_OTHER_STRING);
                     break;
                 case NoteModel.ACTION_HOLD:
-                    nm.setAction(NoteModel.ACTION_HOLD_STRING);
+                    nm.setActionInt(NoteModel.ACTION_HOLD_STRING);
                     break;
                 default:
             }
@@ -158,7 +157,7 @@ public class TPCDAOImpl
 
         sql = NoteModel.SQL_INSERT_STRING_1;
         sql += noteModel.getJoomlaId() + "', '";
-        sql += noteModel.getTicker() + "', '";
+        sql += noteModel.getTicker().toUpperCase() + "', '";
         sql += noteModel.getDescription().replace("'", "\\'") + "', '";
         sql += noteModel.getNotes().replace("'", "\\'") + "', '";
         sql += newUnits + "', '";

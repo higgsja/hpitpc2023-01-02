@@ -35,7 +35,8 @@ public abstract class NotesAbstractVL
     private void doListeners(){
         //grid, mine
         this.notesGrid.addItemClickListener(event -> {
-            this.notesModel.setSelectedNoteModel(event.getItem());
+//            this.notesModel.setSelectedNoteModel(event.getItem());
+            this.notesModel.getBinder().setBean(event.getItem());
             
             UI.getCurrent().navigate(ROUTE_NOTES_VIEW_EDIT);
         });
