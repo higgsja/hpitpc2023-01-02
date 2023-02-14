@@ -1,21 +1,20 @@
 package com.hpi.tpc.ui.views.notes;
 
 import com.hpi.tpc.data.entities.*;
-import static com.hpi.tpc.ui.views.notes.NotesConst.*;
-import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.dependency.*;
 import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.component.orderedlayout.*;
-import com.vaadin.flow.router.*;
+import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.Component;
 
+@UIScope
+@VaadinSessionScope
 @Component
 @CssImport(value = "./styles/tpc-grid-theme.css", themeFor = "vaadin-grid")
 public abstract class NotesAbstractVL
     extends VerticalLayout
-    implements BeforeEnterObserver
 {
 
     @Getter @Autowired private NotesModel notesModel;
@@ -28,24 +27,7 @@ public abstract class NotesAbstractVL
         this.notesGrid = new Grid<>();
 
         this.doTableSetup();
-        
-        this.doListeners();
     }
-    
-    private void doListeners(){
-        //grid, mine
-        this.notesGrid.addItemClickListener(event -> {
-//            this.notesModel.setSelectedNoteModel(event.getItem());
-            this.notesModel.getBinder().setBean(event.getItem());
-            
-            UI.getCurrent().navigate(ROUTE_NOTES_VIEW_EDIT);
-        });
-    }
-
-    /*
-     * fill data table with correct data
-     */
-    public abstract void getData();
 
     /*
      * Complete the table layout
@@ -188,12 +170,5 @@ public abstract class NotesAbstractVL
         this.notesGrid.recalculateColumnWidths();
 
         this.add(this.notesGrid);
-    }
-
-    @Override
-    public void beforeEnter(BeforeEnterEvent event)
-    {
-        //change the preferences route; do not do this
-//        this.mainLayout.updatePagePrefsHL(null);
     }
 }

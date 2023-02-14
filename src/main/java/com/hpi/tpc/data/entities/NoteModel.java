@@ -164,11 +164,7 @@ public class NoteModel
         this.dateEntered = dateEntered;
     }
 
-//    public String setAction(String action){
-//        return action;
-//    }
-    
-    public Integer setActionInt(String action)
+    public static Integer setActionInt(String action)
     {
         switch (action)
         {
@@ -188,7 +184,7 @@ public class NoteModel
         return 0;
     }
 
-    public Integer setTriggerInt(String trigger)
+    public static Integer setTriggerInt(String trigger)
     {
         switch(trigger){
             case "Date": return ALERT_DATE_INT;

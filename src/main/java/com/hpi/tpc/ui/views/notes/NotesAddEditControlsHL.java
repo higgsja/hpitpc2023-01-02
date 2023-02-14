@@ -1,10 +1,10 @@
-package com.hpi.tpc.ui.views.notes.notesAdd;
+package com.hpi.tpc.ui.views.notes;
 
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.button.*;
 import lombok.*;
 
-public class NotesAddControlsHL
+public class NotesAddEditControlsHL
     extends ControlsHLBase
 {
 
@@ -12,7 +12,7 @@ public class NotesAddControlsHL
     @Getter private Button buttonAddCancel;
     @Getter private Button buttonAddArchive;
 
-    public NotesAddControlsHL()
+    public NotesAddEditControlsHL()
     {
         this.addClassName("notesAddControlsHL");
         

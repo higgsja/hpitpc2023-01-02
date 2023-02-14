@@ -1,5 +1,6 @@
 package com.hpi.tpc.ui.views.notes.notesAdd;
 
+import com.hpi.tpc.ui.views.notes.notesEdit.NotesEditFormVL;
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.services.*;
@@ -37,9 +38,8 @@ public class NotesAddControllerFL
 
     @Autowired private NotesModel notesModel;
     @Autowired private TPCDAOImpl serviceTPC;
-    @Autowired private NotesAddFormVL1 notesAddFormVL;
+    @Autowired private NotesEditFormVL notesAddFormVL;
 
-//    private final NotesAddFormTitleVL notesAddFormTitleVL;
     public NotesAddControllerFL()
     {
         this.addClassName("notesAddControllerFL");
@@ -67,20 +67,16 @@ public class NotesAddControllerFL
             this.notesAddFormVL.getControlsHL().getButtonAddSave().setEnabled(false);
             this.notesAddFormVL.getTicker().focus();
             this.notesAddFormVL.getTicker().setValue("");
+            this.notesModel.setIsSave(false);
         });
 
         this.notesAddFormVL.getControlsHL().getButtonAddCancel().addClickListener(e ->
         {
+            //todo: return to correct list
             UI.getCurrent().navigate(ROUTE_NOTES_CONTROLLER_MINE);
-        });
-
-        this.notesAddFormVL.getControlsHL().getButtonAddArchive().addClickListener(e ->
-        {
-            this.notesModel.saveUpdate(this.notesAddFormVL, Boolean.TRUE);
         });
     }
 
-    @Override
     public void beforeEnter(BeforeEnterEvent bee)
     {
         super.beforeEnter(bee);
@@ -89,16 +85,15 @@ public class NotesAddControllerFL
         this.serviceTPC.AppTracking("TPC:Notes:Add:Controller");
 
         //starter note template
-        this.notesModel.setSelected(new NoteModel());
-        this.notesModel.getSelectedNoteModel().setJoomlaId(SecurityUtils.getUserId().toString());
-        this.notesModel.getSelectedNoteModel().setAction("Buy");
-        this.notesModel.getSelectedNoteModel().setUnits(100.0);
-        this.notesModel.getSelectedNoteModel().setTriggerType("Price");
-        this.notesModel.getSelectedNoteModel().setTrigger("");
-        this.notesModel.getSelectedNoteModel().setActive("1");
+        this.notesModel.setSelectedNoteModel(NoteModel.builder()
+            .joomlaId(SecurityUtils.getUserId().toString())
+            .action("Buy")
+            .units(100.0)
+            .triggerType("Price")
+            .trigger("")
+            .active("1")
+            .build());
 
-
-//        this.notesModel.getBinder().readBean(this.notesModel.getSelectedNoteModel());
         this.notesModel.getBinder().setBean(this.notesModel.getSelectedNoteModel());
 
         //allow changes for Add

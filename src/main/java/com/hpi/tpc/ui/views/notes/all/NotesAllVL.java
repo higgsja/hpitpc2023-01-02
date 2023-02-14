@@ -35,23 +35,24 @@ public class NotesAllVL
         //this is hit; super is not unless called
         this.addClassName("notesViewAllVL");
         
+        this.doListeners();        
+    }
+    
+     private void doListeners()
+    {
         this.getNotesGrid().addItemClickListener(event ->
-            {
-                this.getNotesModel().setSelectedNoteModel(event.getItem());
-                UI.getCurrent().navigate(ROUTE_NOTES_VIEW_EDIT);
-            });
+        {
+            this.getNotesModel().setSelectedNoteModel(event.getItem());
+            this.getNotesModel().getBinder().setBean(this.getNotesModel().getSelectedNoteModel());
+
+            UI.getCurrent().navigate(ROUTE_NOTES_CONTROLLER_EDIT);
+        });
     }
     
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {
         //there are things needed from the parent
-        super.beforeEnter(event);
-    }
-
-    @Override
-    public void getData()
-    {
-        //not required
+//        super.beforeEnter(event);
     }
 }
