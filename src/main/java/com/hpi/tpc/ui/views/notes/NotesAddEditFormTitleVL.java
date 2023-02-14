@@ -1,12 +1,12 @@
-package com.hpi.tpc.ui.views.notes.notesAdd;
+package com.hpi.tpc.ui.views.notes;
 
 import com.hpi.tpc.ui.views.baseClass.*;
 
-public class NotesAddFormTitleVL
+public class NotesAddEditFormTitleVL
     extends TitleBaseVL
 {
 
-    public NotesAddFormTitleVL(String title)
+    public NotesAddEditFormTitleVL(String title)
     {
         super(title);
         this.addClassName("notesAddFormTitleVL");

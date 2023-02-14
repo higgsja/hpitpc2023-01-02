@@ -1,10 +1,8 @@
-package com.hpi.tpc.ui.views.notes.notesAdd;
+package com.hpi.tpc.ui.views.notes.notesEdit;
 
-import com.hpi.tpc.ui.views.notes.*;
 import com.hpi.tpc.ui.views.notes.notesAddEdit.*;
-import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
-import org.springframework.beans.factory.annotation.*;
+import javax.annotation.*;
 
 /**
  * makes direct request for data from model
@@ -15,20 +13,19 @@ import org.springframework.beans.factory.annotation.*;
 @UIScope
 @VaadinSessionScope
 @org.springframework.stereotype.Component
-public class NotesAddFormVL1
-    extends NotesAddEditFormAbstractVL1
+public class NotesEditFormVL
+    extends NotesAddEditFormAbstractVL
 {
 
 //    @Autowired private NotesModel notesModel;
 
-    public NotesAddFormVL1()
+    public NotesEditFormVL()
     {
         this.addClassName("notesAddFormVL");
     }
-
-    @Override
-    public void doLayout()
-    {
-        super.doLayout();
+    
+    @PostConstruct
+    private void construct(){
+        super.buildForm("Edit a note ...");
     }
 }

@@ -60,22 +60,22 @@ public class TPCDAOImpl
             switch (nm.getAction())
             {
                 case NoteModel.ACTION_BUY:
-                    nm.setActionInt(NoteModel.ACTION_BUY_STRING);
+                    nm.setAction(NoteModel.ACTION_BUY_STRING);
                     break;
                 case NoteModel.ACTION_SELL:
-                    nm.setActionInt(NoteModel.ACTION_SELL_STRING);
+                    nm.setAction(NoteModel.ACTION_SELL_STRING);
                     break;
                 case NoteModel.ACTION_WATCH:
-                    nm.setActionInt(NoteModel.ACTION_WATCH_STRING);
+                    nm.setAction(NoteModel.ACTION_WATCH_STRING);
                     break;
                 case NoteModel.ACTION_HEDGE:
-                    nm.setActionInt(NoteModel.ACTION_HEDGE_STRING);
+                    nm.setAction(NoteModel.ACTION_HEDGE_STRING);
                     break;
                 case NoteModel.ACTION_OTHER:
-                    nm.setActionInt(NoteModel.ACTION_OTHER_STRING);
+                    nm.setAction(NoteModel.ACTION_OTHER_STRING);
                     break;
                 case NoteModel.ACTION_HOLD:
-                    nm.setActionInt(NoteModel.ACTION_HOLD_STRING);
+                    nm.setAction(NoteModel.ACTION_HOLD_STRING);
                     break;
                 default:
             }

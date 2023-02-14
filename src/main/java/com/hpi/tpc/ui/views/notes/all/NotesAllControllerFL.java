@@ -30,24 +30,21 @@ public class NotesAllControllerFL
     implements BeforeEnterObserver
 {
 
+    @Autowired private NotesAllVL notesAllVL;
     @Autowired private TPCDAOImpl serviceTPC;
     @Autowired private NotesModel notesModel;
-
-    private final NotesAllVL notesAllVL;
 
     public NotesAllControllerFL()
     {
         this.addClassName("notesAllControllerFL");
-
-        this.notesAllVL = new NotesAllVL();
-
-        this.add(this.notesAllVL);
     }
 
     @PostConstruct
     public void construct()
     {
         this.notesModel.getPrefs("NotesAll");
+
+        this.add(this.notesAllVL);
     }
 
     @Override
@@ -62,10 +59,9 @@ public class NotesAllControllerFL
         //none for now
         //this.notesMineVL.doLayout(this.notesModel.getStringColumns());
         //set listeners on new layout if necessary
-        
         //data may change; update data on every entry
         this.notesModel.getData("all");
-        
+
         //set data grid to display data provider data
         this.notesAllVL.getNotesGrid().setItems(this.notesModel.getDataProvider());
 

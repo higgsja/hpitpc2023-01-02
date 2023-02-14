@@ -30,6 +30,7 @@ public class NoteMapper implements RowMapper<NoteModel>
             .active(((Integer) rs.getInt("Active")).toString())
             .dateEntered(rs.getString("DateEntered"))
             .notes(rs.getString("Notes"))
+            .units(rs.getDouble("Units"))
             //            .high((((Double) rs.getDouble("High")).toString()))
             .high(rs.getDouble("High"))
             //            .low((((Double) rs.getDouble("Low")).toString()))

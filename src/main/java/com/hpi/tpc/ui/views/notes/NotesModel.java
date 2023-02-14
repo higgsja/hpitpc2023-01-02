@@ -2,7 +2,6 @@ package com.hpi.tpc.ui.views.notes;
 
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.services.*;
-import com.hpi.tpc.ui.views.notes.notesAdd.*;
 import com.studerw.tda.client.*;
 import com.studerw.tda.model.quote.*;
 import com.vaadin.flow.data.binder.*;
@@ -21,7 +20,6 @@ import org.springframework.stereotype.Component;
  */
 @UIScope
 @VaadinSessionScope
-//@NoArgsConstructor
 @Component
 public class NotesModel
 {
@@ -30,14 +28,15 @@ public class NotesModel
 
     @Setter @Getter private NoteModel selectedNoteModel;
     @Getter private List<NoteModel> dataProvider;
-    @Getter private final Binder<NoteModel> binder;
+    @Getter private final BeanValidationBinder<NoteModel> binder;
+    
     private final Properties props;
     private final HttpTdaClient httpTdaClient;
     @Getter private Quote quote;
     @Getter @Setter private Boolean isSave;
     public NotesModel()
     {
-        this.binder = new Binder<>(NoteModel.class);
+        this.binder = new BeanValidationBinder<>(NoteModel.class);
         this.props = new Properties();
         props.setProperty("tda.client_id", "VYEUORVKFCJSAZG9TBJOGSQZX8PKXWZB");
         props
@@ -79,28 +78,23 @@ public class NotesModel
 //        this.prefsController.writePrefsByPrefix("PortfolioTrack");
     }
 
-    public void setSelected(NoteModel noteModel)
-    {
-        //without the session variable, this could be simple setter
-        this.selectedNoteModel = noteModel;
-    }
+//    public void setSelectNoteModel(NoteModel noteModel)
+//    {
+//        //without the session variable, this could be simple setter
+//        this.setSelectedNoteModel(noteModel);
+//    }
 
     /**
      * Save the note to the database
      * need to come in with the NoteModel from the form.
      *
-     * @param notesAddFormVL
-     * @param isArchive
+     * @param isArchive: true if archiving a note
      */
-    public void saveUpdate(NotesAddFormVL1 notesAddFormVL, Boolean isArchive)
+    public void saveUpdate(Boolean isArchive)
     {
         //not hit
-        Integer actionInteger;
-        Integer alertInteger;
         NoteModel tempNoteModel;
 
-        actionInteger = 1;
-        alertInteger = 2;
         if (isArchive)
         {
             noteService.AppTracking("TPC:Notes:Edit:Archive");
@@ -109,68 +103,24 @@ public class NotesModel
             noteService.AppTracking("TPC:Notes:Edit:Save");
         }
 
-        switch (notesAddFormVL.getAction().getValue())
-        {
-            case "Buy":
-                actionInteger = ActionModel.ACTIONS_BUY;
-                break;
-            case "Sell":
-                actionInteger = ActionModel.ACTIONS_SELL;
-                break;
-            case "Watch":
-                actionInteger = ActionModel.ACTIONS_WATCH;
-                break;
-            case "Hedge":
-                actionInteger = ActionModel.ACTIONS_HEDGE;
-                break;
-            case "Other":
-                actionInteger = ActionModel.ACTIONS_OTHER;
-                break;
-            case "Hold":
-                actionInteger = ActionModel.ACTIONS_HOLD;
-                break;
-            default:
-        }
-
-        switch (notesAddFormVL.getTriggerType().getValue())
-        {
-            case "Date":
-                alertInteger = AlertTypeModel.ALERTS_DATE;
-                break;
-            case "Price":
-                alertInteger = AlertTypeModel.ALERTS_PRICE;
-                break;
-            case "Other":
-                alertInteger = AlertTypeModel.ALERTS_OTHER;
-                break;
-            default:
-        }
-
         //get data from the form
         tempNoteModel = new NoteModel(
-            //these are key fields to find the record
+            //these are key fields
             this.selectedNoteModel.getJoomlaId(),
+            //null for add
             this.selectedNoteModel.getTStamp(),
-            //these are edits
-            notesAddFormVL.getTicker().getValue().strip(),
-            Double.valueOf(notesAddFormVL.getIPrice().getValue()),
-            notesAddFormVL.getDescription().getValue(),
-            notesAddFormVL.getNotes().getValue(),
-            Double.valueOf(notesAddFormVL.getUnits().getValue()),
-            actionInteger.toString(),
-            alertInteger.toString(),
-            notesAddFormVL.getAlert().getValue(),
-            isArchive ? "0" : this.selectedNoteModel.getActive(),
-            //leave date entered without changes
+            //uppercase if a ticker
+            this.selectedNoteModel.getTicker(),
+            this.selectedNoteModel.getIPrice(),
+            this.selectedNoteModel.getDescription(),
+            this.selectedNoteModel.getNotes(),
+            this.selectedNoteModel.getUnits(),
+            NoteModel.setActionInt(this.selectedNoteModel.getAction()).toString(),
+            NoteModel.setTriggerInt(this.selectedNoteModel.getTriggerType()).toString(),
+            this.selectedNoteModel.getTrigger(),
+            this.selectedNoteModel.getActive(),
             this.selectedNoteModel.getDateEntered()
         );
-
-        if (notesAddFormVL.getTicker().getValue().isEmpty())
-        {
-            //should never happen as save is disabled under these conditions
-            //todo: highlight the problem
-            return;
-        }
 
         this.noteService.updateNote(tempNoteModel);
     }
@@ -181,71 +131,11 @@ public class NotesModel
      */
     public void saveAdd()
     {
-        //not hit
-        Integer actionInteger;
-        Integer alertInteger;
         NoteModel tempNoteModel;
 
-        actionInteger = 1;
-        alertInteger = 2;
         this.noteService.AppTracking("TPC:Notes:Add:Save");
 
-        switch (this.selectedNoteModel.getAction())
-        {
-            case "Buy":
-                actionInteger = ActionModel.ACTIONS_BUY;
-                break;
-            case "Sell":
-                actionInteger = ActionModel.ACTIONS_SELL;
-                break;
-            case "Watch":
-                actionInteger = ActionModel.ACTIONS_WATCH;
-                break;
-            case "Hedge":
-                actionInteger = ActionModel.ACTIONS_HEDGE;
-                break;
-            case "Other":
-                actionInteger = ActionModel.ACTIONS_OTHER;
-                break;
-            case "Hold":
-                actionInteger = ActionModel.ACTIONS_HOLD;
-                break;
-            default:
-        }
-
-        switch (this.selectedNoteModel.getTriggerType())
-        {
-            case "Date":
-                alertInteger = AlertTypeModel.ALERTS_DATE;
-                break;
-            case "Price":
-                alertInteger = AlertTypeModel.ALERTS_PRICE;
-                break;
-            case "Other":
-                alertInteger = AlertTypeModel.ALERTS_OTHER;
-                break;
-            default:
-        }
-
-        //get data from the form
-//        tempNoteModel = new NoteModel(
-//            //these are key fields
-//            this.binder.getBean().getJoomlaId(),
-//            //null for add
-//            null,
-//            //this.binder.getBean().getTStamp(),
-//            //uppercase if a ticker
-//            this.binder.getBean().getTicker().toUpperCase(),
-//            this.binder.getBean().getIPrice(),
-//            this.binder.getBean().getDescription(),
-//            this.binder.getBean().getNotes(),
-//            this.binder.getBean().getUnits(),
-//            actionInteger.toString(),
-//            alertInteger.toString(),
-//            this.binder.getBean().getTrigger(),
-//            this.binder.getBean().getActive(),
-//            new java.sql.Date(System.currentTimeMillis()).toString()
-//        );
+        
 
         tempNoteModel = new NoteModel(
             //these are key fields
@@ -258,13 +148,12 @@ public class NotesModel
             this.selectedNoteModel.getDescription(),
             this.selectedNoteModel.getNotes(),
             this.selectedNoteModel.getUnits(),
-            actionInteger.toString(),
-            alertInteger.toString(),
+            NoteModel.setActionInt(this.selectedNoteModel.getAction()).toString(),
+            NoteModel.setTriggerInt(this.selectedNoteModel.getTriggerType()).toString(),
             this.selectedNoteModel.getTrigger(),
             this.selectedNoteModel.getActive(),
             this.selectedNoteModel.getDateEntered()
         );
-
 
         this.noteService.saveNote(tempNoteModel);
     }
