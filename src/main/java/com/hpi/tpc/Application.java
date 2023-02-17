@@ -4,7 +4,7 @@ import com.vaadin.flow.component.page.*;
 import com.vaadin.flow.server.*;
 import com.vaadin.flow.shared.communication.*;
 import org.springframework.boot.*;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.boot.autoconfigure.*;
 import org.springframework.boot.builder.*;
 import org.springframework.boot.web.servlet.support.*;
 import org.vaadin.artur.helpers.*;
@@ -14,6 +14,7 @@ import org.vaadin.artur.helpers.*;
  */
 //@SpringBootApplication(scanBasePackages = "com.hpi", exclude = ErrorMvcAutoConfiguration.class)
 @SpringBootApplication
+//@EnableAutoConfiguration(exclude = {ErrorMvcAutoConfiguration.class})
 @Viewport("width=device-width, initial-scale=1")
 //@PageTitle("A cool vaadin app")
 //@BodySize(height = "100vh", width = "100vw")
