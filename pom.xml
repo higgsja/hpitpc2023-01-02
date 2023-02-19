@@ -5,7 +5,7 @@
     <artifactId>hpitpc</artifactId>
     <version>1.0</version>
     <name>TPC</name>
-    <packaging>jar</packaging>
+    <packaging>war</packaging>
 
     <properties>
         <vaadin.version>23.3.4</vaadin.version>
