@@ -72,10 +72,10 @@ public class AppConst
     public static final String ROUTE_ADMIN_DOWNLOAD_VIEW = "AdminDownloadView";
     public static final String ROUTE_ADMIN_PREFERENCES = "AdminPrefs";
     public static final String ROUTE_ADMIN_VIEW = "AdminView";
-    public static final String ROUTE_COACHING = "Coaching";
-    public static final String ROUTE_COACHING_PERFORMANCE_BENCHMARK = "Benchmark";
-    public static final String ROUTE_COACHING_PERFORMANCE_GAINS = "Gains";
-    public static final String ROUTE_COACHING_PREFERENCES = "CoachingPrefs";
+//    public static final String ROUTE_COACHING = "Coaching";
+//    public static final String ROUTE_COACHING_PERFORMANCE_BENCHMARK = "Benchmark";
+//    public static final String ROUTE_COACHING_PERFORMANCE_GAINS = "Gains";
+//    public static final String ROUTE_COACHING_PREFERENCES = "CoachingPrefs";
     public static final String ROUTE_EXIT = "Exit";
     public static final String ROUTE_PORTFOLIO = "Portfolio";
     public static final String ROUTE_PORTFOLIO_PREFERENCES = "PortfolioPrefs";
@@ -89,7 +89,7 @@ public class AppConst
     public static final String ROUTE_TOOLS_PREFERENCES = "ToolsPrefs";
     public static final String SETUP_EQUITIES_VIEW = "SetupEquitiesView";
     public static final String SETUP_SECTORS_VIEW = "SetupSectorsView";
-    public static final String TITLE_COACHING_GAINS = "Gains";
+//    public static final String TITLE_COACHING_GAINS = "Gains";
 
     public static final String TITLE_PAGE_ABOUT = "About";
     public static final String TITLE_PAGE_ABOUT_CREDITS = "Credits";
@@ -99,7 +99,7 @@ public class AppConst
     public static final String TITLE_PAGE_ADMIN_DOWNLOAD_FINVIZ = "FinViz Download";
     public static final String TITLE_PAGE_ADMIN_DOWNLOAD_OFXHOME = "OFX Home Download";
     public static final String TITLE_PAGE_ADMIN_REFRESH_DATA = "Data Refresh";
-    public static final String TITLE_PAGE_COACHING = "Coaching";
+//    public static final String TITLE_PAGE_COACHING = "Coaching";
     public static final String TITLE_PAGE_HEDGE_PORTFOLIO = "Hedging: Portfolio";
     public static final String TITLE_PAGE_LOGON = "Logon";
     public static final String TITLE_PAGE_LOGOUT = "Logout";

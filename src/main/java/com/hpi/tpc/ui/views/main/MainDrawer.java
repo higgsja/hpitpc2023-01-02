@@ -2,6 +2,7 @@ package com.hpi.tpc.ui.views.main;
 
 import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.app.security.*;
+import static com.hpi.tpc.ui.views.coaching.CoachingConst.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
 import static com.hpi.tpc.ui.views.notes.NotesConst.*;
 import com.vaadin.flow.component.html.*;
@@ -45,10 +46,11 @@ public class MainDrawer
         this.data = new MyTab(ROUTE_DATA, myHLayout((Icon) VaadinIcon.DATABASE.create(),
             mySpan(TITLE_PAGE_DATA)));
         
-        this.portfolio = new MyTab(ROUTE_PORTFOLIO, myHLayout((Icon) VaadinIcon.PIE_CHART.create(), mySpan(
-            ROUTE_PORTFOLIO)));
+        this.portfolio = new MyTab(ROUTE_PORTFOLIO, myHLayout((Icon) VaadinIcon.PIE_CHART.create(), 
+            mySpan(ROUTE_PORTFOLIO)));
         
-        this.coaching = new MyTab(ROUTE_COACHING, myHLayout(VaadinIcon.DOCTOR.create(), mySpan(ROUTE_COACHING)));
+        this.coaching = new MyTab(ROUTE_COACHING_CONTROLLER, myHLayout(VaadinIcon.DOCTOR.create(), 
+            mySpan(ROUTE_COACHING_CONTROLLER)));
         
         this.tools = new MyTab(ROUTE_TOOLS, myHLayout((Icon) VaadinIcon.TOOLBOX.create(),
             mySpan(ROUTE_TOOLS)));
@@ -57,7 +59,8 @@ public class MainDrawer
         
         this.setup = new MyTab(ROUTE_SETUP, myHLayout((Icon) VaadinIcon.TOOLS.create(), mySpan(ROUTE_SETUP)));
         
-        this.admin = new MyTab(ROUTE_ADMIN, myHLayout((Icon) VaadinIcon.PUZZLE_PIECE.create(), mySpan(ROUTE_ADMIN)));
+        this.admin = new MyTab(ROUTE_ADMIN, myHLayout((Icon) VaadinIcon.PUZZLE_PIECE.create(), 
+            mySpan(ROUTE_ADMIN)));
         
         this.about = new MyTab(ROUTE_ABOUT, myHLayout((Icon) VaadinIcon.INFO_CIRCLE_O.create(), 
             mySpan(ROUTE_ABOUT)));

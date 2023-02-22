@@ -2,7 +2,6 @@ package com.hpi.tpc.app.security;
 
 import com.hpi.tpc.ui.views.main.*;
 import com.vaadin.flow.spring.security.*;
-import org.springframework.beans.factory.annotation.*;
 import org.springframework.context.annotation.*;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;

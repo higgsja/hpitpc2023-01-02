@@ -1,7 +1,8 @@
 package com.hpi.tpc.ui.views.coaching;
 
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.ui.views.baseClass.*;
+import static com.hpi.tpc.ui.views.coaching.CoachingConst.*;
+import com.hpi.tpc.ui.views.coaching.benchmark.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.vaadin.flow.component.*;
 import com.vaadin.flow.component.contextmenu.*;
@@ -12,24 +13,32 @@ import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
 
+/*
+ * Controller: Interface between Model and View to process business logic and incoming
+ * requests:
+ * manipulate data using the Model
+ * interact with the Views to render output
+ * respond to user input and performance actions on data model objects.
+ * receives input, optionally validates it and passes it to the model
+ * Target for navigation from appDrawer
+ */
 @UIScope
 @VaadinSessionScope
-@Route(value = ROUTE_COACHING, layout = MainLayout.class)
+@Route(value = ROUTE_COACHING_CONTROLLER, layout = MainLayout.class)
 @PageTitle(TITLE_PAGE_COACHING)
 @org.springframework.stereotype.Component
 @NoArgsConstructor
 @PermitAll
-public class CoachingController
+public class CoachingControllerFL
     extends ViewControllerBaseFL
-    implements BeforeEnterObserver, BeforeLeaveObserver
+    implements BeforeEnterObserver
 {
     @Autowired private CoachingModel coachingModel;
 
     @PostConstruct
     private void construct()
     {
-        this.setClassName("coachingMenu");
-        this.menuBar.setId("coachingMenuId");
+        this.addClassName("coachingControllerFL");
 
         //get any preferences
         this.coachingModel.getPrefs();
@@ -43,20 +52,20 @@ public class CoachingController
     @Override
     public void addMenuBarTabs()
     {
-        MenuItem benchmarkItem = this.menuBar.addItem(ROUTE_COACHING_PERFORMANCE_BENCHMARK);
+        MenuItem benchmarkItem = this.menuBar.addItem(ROUTE_COACHING_BENCHMARK_CONTROLLER);
 
         benchmarkItem.addClickListener(
             (ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(ROUTE_COACHING_PERFORMANCE_BENCHMARK);
+            UI.getCurrent().navigate(ROUTE_COACHING_BENCHMARK_CONTROLLER);
         });
 
-        MenuItem gainsItem = this.menuBar.addItem(ROUTE_COACHING_PERFORMANCE_GAINS);
+        MenuItem gainsItem = this.menuBar.addItem(ROUTE_COACHING_GAINS);
 
         gainsItem.addClickListener(
             (ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(ROUTE_COACHING_PERFORMANCE_GAINS);
+            UI.getCurrent().navigate(ROUTE_COACHING_GAINS);
         });
         
 //        MenuItem tacticsItem = this.menuBar.addItem(MENU_COACHING_PERFORMANCE_TACTICS);
@@ -66,27 +75,27 @@ public class CoachingController
 //        {
 //            UI.getCurrent().navigate(MENU_COACHING_PERFORMANCE_TACTICS);
 //        }));
+
+        MenuItem infoItem = this.menuBar.addItem(ROUTE_COACHING_INFO);
+
+        infoItem.addClickListener(
+            (ClickEvent<MenuItem> event) ->
+        {
+            UI.getCurrent().navigate(ROUTE_COACHING_INFO);
+        });
+
     }
 
 
     @Override
     public void beforeEnter(BeforeEnterEvent bee)
     {
-//        if (this.getPrefsController().getPref("TPCDrawerClose").equalsIgnoreCase("yes"))
-//        {
-//            this.getMainLayout().setDrawerOpened(false);
-//        }
         super.beforeEnter(bee);
+        
         //set navBar for this menu
-        super.doNavBar(ROUTE_COACHING_PREFERENCES);
+        super.doNavBar(null);
 
         //send to default view
-
-        bee.forwardTo(CoachingView.class);
-    }
-
-    @Override
-    public void beforeLeave(BeforeLeaveEvent ble)
-    {
+        bee.forwardTo(BenchmarkControllerFL.class);
     }
 }

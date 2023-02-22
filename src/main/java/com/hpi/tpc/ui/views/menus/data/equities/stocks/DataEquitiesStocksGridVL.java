@@ -3,7 +3,6 @@ package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 import com.hpi.tpc.ui.views.baseClass.ViewBaseHL;
 import static com.helger.commons.string.StringHelper.*;
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.component.textfield.*;
 import com.vaadin.flow.data.value.*;

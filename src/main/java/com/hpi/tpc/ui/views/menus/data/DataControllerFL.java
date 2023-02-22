@@ -11,7 +11,6 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
 
 /*
  * Controller: Interface between Model and View to process business logic and incoming
@@ -34,12 +33,12 @@ public class DataControllerFL
     implements BeforeEnterObserver
 {
 
-    @Autowired private MainLayout mainLayout;
+//    @Autowired private MainLayout mainLayout;
     
     @PostConstruct
     private void construct()
     {
-        this.addClassName("dataController");
+        this.addClassName("dataControllerFL");
         
         this.addMenuBarTabs();
     }
