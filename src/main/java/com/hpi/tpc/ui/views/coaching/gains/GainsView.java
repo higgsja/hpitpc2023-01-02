@@ -2,12 +2,12 @@ package com.hpi.tpc.ui.views.coaching.gains;
 
 import com.hpi.tpc.ui.views.baseClass.MVCView2WideBase;
 import com.github.appreciated.apexcharts.*;
-import static com.hpi.tpc.AppConst.*;
 import com.hpi.tpc.charts.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.baseClass.*;
+import static com.hpi.tpc.ui.views.coaching.CoachingConst.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.vaadin.flow.component.dependency.*;
 import com.vaadin.flow.component.html.*;
@@ -25,7 +25,7 @@ import org.springframework.stereotype.*;
 @NoArgsConstructor
 @UIScope
 @VaadinSessionScope
-@Route(value = ROUTE_COACHING_PERFORMANCE_GAINS, layout = MainLayout.class)
+@Route(value = ROUTE_COACHING_GAINS, layout = MainLayout.class)
 @PageTitle(TITLE_PAGE_COACHING + ": " + TITLE_COACHING_GAINS)
 @Component
 @CssImport("./styles/coachingGains.css")

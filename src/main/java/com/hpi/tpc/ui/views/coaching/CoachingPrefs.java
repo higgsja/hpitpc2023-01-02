@@ -1,8 +1,7 @@
 package com.hpi.tpc.ui.views.coaching;
 
-import static com.hpi.tpc.AppConst.ROUTE_COACHING_PREFERENCES;
-import static com.hpi.tpc.AppConst.TITLE_PAGE_COACHING;
 import com.hpi.tpc.ui.views.baseClass.*;
+import static com.hpi.tpc.ui.views.coaching.CoachingConst.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;

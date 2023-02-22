@@ -111,16 +111,16 @@ specifiers:
   construct-style-sheets-polyfill: 3.1.0
   date-fns: 2.29.3
   glob: 7.2.3
-  lit: 2.6.1
+  lit: 2.4.1
   mkdirp: 1.0.4
   onecolor: 3.1.0
   rollup-plugin-brotli: 3.1.0
   strip-css-comments: 5.0.0
   transform-ast: 2.4.4
   typescript: 4.9.3
-  vite: 3.2.5
-  vite-plugin-checker: 0.5.4
-  workbox-build: 6.5.4
+  vite: v3.2.4
+  vite-plugin-checker: 0.5.1
+  workbox-build: 6.5.0
   workbox-core: 6.5.4
   workbox-precaching: 6.5.4
 
@@ -136,12 +136,12 @@ dependencies:
   '@vaadin/app-layout': 23.3.7
   '@vaadin/avatar': 23.3.7
   '@vaadin/avatar-group': 23.3.7
-  '@vaadin/bundles': 23.3.7_ihcmwcscvmlp4no4cjjny7kb4u
+  '@vaadin/bundles': 23.3.7_nmmev42norahjefv22ycriljce
   '@vaadin/button': 23.3.7
   '@vaadin/checkbox': 23.3.7
   '@vaadin/checkbox-group': 23.3.7
   '@vaadin/combo-box': 23.3.7
-  '@vaadin/common-frontend': 0.0.17_lit@2.6.1
+  '@vaadin/common-frontend': 0.0.17_lit@2.4.1
   '@vaadin/component-base': 23.3.7
   '@vaadin/confirm-dialog': 23.3.7
   '@vaadin/context-menu': 23.3.7
@@ -231,7 +231,7 @@ dependencies:
   apexcharts: 3.35.0
   construct-style-sheets-polyfill: 3.1.0
   date-fns: 2.29.3
-  lit: 2.6.1
+  lit: 2.4.1
   onecolor: 3.1.0
 
 devDependencies:
@@ -244,9 +244,9 @@ devDependencies:
   strip-css-comments: 5.0.0
   transform-ast: 2.4.4
   typescript: 4.9.3
-  vite: 3.2.5
-  vite-plugin-checker: 0.5.4_sqshdgy4e5w27wzvykvnubcgki
-  workbox-build: 6.5.4
+  vite: 3.2.4
+  vite-plugin-checker: 0.5.1_vf3nqk3ewnpqc5dulqzhw4xcru
+  workbox-build: 6.5.0
   workbox-core: 6.5.4
   workbox-precaching: 6.5.4
 
@@ -1721,7 +1721,7 @@ packages:
       '@vaadin/vaadin-themable-mixin': 23.3.7
     dev: false
 
-  /@vaadin/bundles/23.3.7_ihcmwcscvmlp4no4cjjny7kb4u:
+  /@vaadin/bundles/23.3.7_nmmev42norahjefv22ycriljce:
     resolution: {integrity: sha512-Cckfyyt5zbaeyjbhTcqrFOy16ChBAniIpST/dmdrwZwp8V8VM4NU1lGPkJwuAhx1QqlfGyCIeCk/dOkVVMo1zA==}
     peerDependencies:
       '@polymer/iron-flex-layout': 3.0.1
@@ -2018,7 +2018,7 @@ packages:
       '@vaadin/vaadin-usage-statistics': 2.1.2
       '@vaadin/vertical-layout': 23.3.7
       '@vaadin/virtual-list': 23.3.7
-      lit: 2.6.1
+      lit: 2.4.1
     dev: false
 
   /@vaadin/button/23.3.7:
@@ -2071,12 +2071,12 @@ packages:
       '@vaadin/vaadin-themable-mixin': 23.3.7
     dev: false
 
-  /@vaadin/common-frontend/0.0.17_lit@2.6.1:
+  /@vaadin/common-frontend/0.0.17_lit@2.4.1:
     resolution: {integrity: sha512-M4tg10cYgdDqQAXfGfXpQ90eHm+xL6ynAFEDgtc2IxXVWXKYU8jGK08SM5yOcZ4wDk0ETyHMtQlKUPDNkz6Qfw==}
     peerDependencies:
       lit: ^2.0.0
     dependencies:
-      lit: 2.6.1
+      lit: 2.4.1
       tslib: 2.5.0
     dev: false
 
@@ -2087,7 +2087,7 @@ packages:
       '@polymer/polymer': 3.5.1
       '@vaadin/vaadin-development-mode-detector': 2.0.5
       '@vaadin/vaadin-usage-statistics': 2.1.2
-      lit: 2.6.1
+      lit: 2.4.1
     dev: false
 
   /@vaadin/confirm-dialog/23.3.7:
@@ -2199,7 +2199,7 @@ packages:
       '@open-wc/dedupe-mixin': 1.3.1
       '@polymer/polymer': 3.5.1
       '@vaadin/component-base': 23.3.7
-      lit: 2.6.1
+      lit: 2.4.1
     dev: false
 
   /@vaadin/field-highlighter/23.3.7:
@@ -2211,7 +2211,7 @@ packages:
       '@vaadin/vaadin-lumo-styles': 23.3.7
       '@vaadin/vaadin-material-styles': 23.3.7
       '@vaadin/vaadin-themable-mixin': 23.3.7
-      lit: 2.6.1
+      lit: 2.4.1
     dev: false
 
   /@vaadin/form-layout/23.3.7:
@@ -2255,7 +2255,7 @@ packages:
       '@vaadin/component-base': 23.3.7
       '@vaadin/vaadin-lumo-styles': 23.3.7
       '@vaadin/vaadin-themable-mixin': 23.3.7
-      lit: 2.6.1
+      lit: 2.4.1
     dev: false
 
   /@vaadin/icons/23.3.7:
@@ -2313,7 +2313,7 @@ packages:
   /@vaadin/lit-renderer/23.3.7:
     resolution: {integrity: sha512-Fs2m0nW+Jd/FRReDdYGNxA4WhxOIVUycCprnFAfiozuynmZQPcvv0pCfPsUwIz9JbySUvmYCaXg1NholSOK7Lw==}
     dependencies:
-      lit: 2.6.1
+      lit: 2.4.1
     dev: false
 
   /@vaadin/login/23.3.7:
@@ -2390,7 +2390,7 @@ packages:
       '@vaadin/vaadin-lumo-styles': 23.3.7
       '@vaadin/vaadin-material-styles': 23.3.7
       '@vaadin/vaadin-themable-mixin': 23.3.7
-      lit: 2.6.1
+      lit: 2.4.1
     dev: false
 
   /@vaadin/number-field/23.3.7:
@@ -2433,7 +2433,7 @@ packages:
     dependencies:
       '@polymer/polymer': 3.5.1
       '@vaadin/vaadin-themable-mixin': 23.3.7
-      lit: 2.6.1
+      lit: 2.4.1
     dev: false
 
   /@vaadin/progress-bar/23.3.7:
@@ -2824,7 +2824,7 @@ packages:
     resolution: {integrity: sha512-xY3/9UhVrFwSkTLU8FPYVCv3JlxLHmvTK+hMVEmGSntnRCz/bz2L4BuQX0Mpj1MYnh6HhPqviciVnF5xrn25ug==}
     dependencies:
       '@open-wc/dedupe-mixin': 1.3.1
-      lit: 2.6.1
+      lit: 2.4.1
     dev: false
 
   /@vaadin/vaadin-time-picker/23.3.7:
@@ -3714,8 +3714,8 @@ packages:
       function-bind: 1.1.1
     dev: true
 
-  /idb/7.1.1:
-    resolution: {integrity: sha512-gchesWBzyvGHRO9W8tzUWFDycow5gwjvFKfyV9FF32Y7F50yZMp7mP+T2mJIWFx49zicqyC4uefHM17o6xKIVQ==}
+  /idb/6.1.5:
+    resolution: {integrity: sha512-IJtugpKkiVXQn5Y+LteyBCNk1N8xpGV3wWZk9EVtZWH8DYkjBn0bX1XnGP9RkyZF0sAcywa6unHqSWKe7q4LGw==}
     dev: true
 
   /inflight/1.0.6:
@@ -3968,8 +3968,8 @@ packages:
       '@types/trusted-types': 2.0.2
     dev: false
 
-  /lit/2.6.1:
-    resolution: {integrity: sha512-DT87LD64f8acR7uVp7kZfhLRrHkfC/N4BVzAtnw9Yg8087mbBJ//qedwdwX0kzDbxgPccWRW6mFwGbRQIxy0pw==}
+  /lit/2.4.1:
+    resolution: {integrity: sha512-qohSgLiyN1cFnJG26dIiY03S4F49857A0AHQfnS0zYtnUVnD2MFvx+UT52rtXsIuNFQrnUupX+zyGSATlk1f/A==}
     dependencies:
       '@lit/reactive-element': 1.6.1
       lit-element: 3.2.2
@@ -4676,35 +4676,23 @@ packages:
       punycode: 2.3.0
     dev: true
 
-  /vite-plugin-checker/0.5.4_sqshdgy4e5w27wzvykvnubcgki:
-    resolution: {integrity: sha512-T6y+OHXqwOjGrCErbhzg5x79NQZV46cgLwYTxuMQnDzAfA6skh2i8PIHcKks8ZlxopzbkvMb5vwc2DpNXiHJdg==}
+  /vite-plugin-checker/0.5.1_vf3nqk3ewnpqc5dulqzhw4xcru:
+    resolution: {integrity: sha512-NFiO1PyK9yGuaeSnJ7Whw9fnxLc1AlELnZoyFURnauBYhbIkx9n+PmIXxSFUuC9iFyACtbJQUAEuQi6yHs2Adg==}
     engines: {node: '>=14.16'}
     peerDependencies:
       eslint: '>=7'
-      meow: ^9.0.0
-      optionator: ^0.9.1
-      stylelint: '>=13'
       typescript: '*'
-      vite: '>=2.0.0'
+      vite: ^2.0.0 || ^3.0.0-0
       vls: '*'
       vti: '*'
-      vue-tsc: '*'
     peerDependenciesMeta:
       eslint:
-        optional: true
-      meow:
-        optional: true
-      optionator:
-        optional: true
-      stylelint:
         optional: true
       typescript:
         optional: true
       vls:
         optional: true
       vti:
-        optional: true
-      vue-tsc:
         optional: true
     dependencies:
       '@babel/code-frame': 7.18.6
@@ -4719,15 +4707,15 @@ packages:
       strip-ansi: 6.0.1
       tiny-invariant: 1.3.1
       typescript: 4.9.3
-      vite: 3.2.5
+      vite: 3.2.4
       vscode-languageclient: 7.0.0
       vscode-languageserver: 7.0.0
       vscode-languageserver-textdocument: 1.0.8
       vscode-uri: 3.0.7
     dev: true
 
-  /vite/3.2.5:
-    resolution: {integrity: sha512-4mVEpXpSOgrssFZAOmGIr85wPHKvaDAcXqxVxVRZhljkJOMZi1ibLibzjLHzJvcok8BMguLc7g1W6W/GqZbLdQ==}
+  /vite/3.2.4:
+    resolution: {integrity: sha512-Z2X6SRAffOUYTa+sLy3NQ7nlHFU100xwanq1WDwqaiFiCe+25zdxP1TfCS5ojPV2oDDcXudHIoPnI1Z/66B7Yw==}
     engines: {node: ^14.18.0 || >=16.0.0}
     hasBin: true
     peerDependencies:
@@ -4833,21 +4821,21 @@ packages:
       is-typed-array: 1.1.10
     dev: true
 
-  /workbox-background-sync/6.5.4:
-    resolution: {integrity: sha512-0r4INQZMyPky/lj4Ou98qxcThrETucOde+7mRGJl13MPJugQNKeZQOdIJe/1AchOP23cTqHcN/YVpD6r8E6I8g==}
+  /workbox-background-sync/6.5.0:
+    resolution: {integrity: sha512-rrekt/gt6qOIZsisj6QZfmAFPAnocq1Z603zAjt+qHmeXY8DLPOklVtvrXSaHoHH3qIjUq3SQY5s2x240iTIKw==}
     dependencies:
-      idb: 7.1.1
+      idb: 6.1.5
       workbox-core: 6.5.4
     dev: true
 
-  /workbox-broadcast-update/6.5.4:
-    resolution: {integrity: sha512-I/lBERoH1u3zyBosnpPEtcAVe5lwykx9Yg1k6f8/BGEPGaMMgZrwVrqL1uA9QZ1NGGFoyE6t9i7lBjOlDhFEEw==}
+  /workbox-broadcast-update/6.5.0:
+    resolution: {integrity: sha512-JC97c7tYqoGWcCfbKO9KHG6lkU+WhXCnDB2j1oFWEiv53nUHy3yjPpzMmAGNLD9oV5lInO15n6V18HfwgkhISw==}
     dependencies:
       workbox-core: 6.5.4
     dev: true
 
-  /workbox-build/6.5.4:
-    resolution: {integrity: sha512-kgRevLXEYvUW9WS4XoziYqZ8Q9j/2ziJYEtTrjdz5/L/cTUa2XfyMP2i7c3p34lgqJ03+mTiz13SdFef2POwbA==}
+  /workbox-build/6.5.0:
+    resolution: {integrity: sha512-da0/1b6//P9+ts7ofcIKcMVPyN6suJvjJASXokF7DsqvUmgRBPcCVV4KCy8QWjgfcz7mzuTpkSbdVHcPFJ/p0A==}
     engines: {node: '>=10.0.0'}
     dependencies:
       '@apideck/better-ajv-errors': 0.3.6_ajv@8.12.0
@@ -4872,28 +4860,28 @@ packages:
       strip-comments: 2.0.1
       tempy: 0.6.0
       upath: 1.2.0
-      workbox-background-sync: 6.5.4
-      workbox-broadcast-update: 6.5.4
-      workbox-cacheable-response: 6.5.4
+      workbox-background-sync: 6.5.0
+      workbox-broadcast-update: 6.5.0
+      workbox-cacheable-response: 6.5.0
       workbox-core: 6.5.4
-      workbox-expiration: 6.5.4
-      workbox-google-analytics: 6.5.4
-      workbox-navigation-preload: 6.5.4
+      workbox-expiration: 6.5.0
+      workbox-google-analytics: 6.5.0
+      workbox-navigation-preload: 6.5.0
       workbox-precaching: 6.5.4
-      workbox-range-requests: 6.5.4
-      workbox-recipes: 6.5.4
-      workbox-routing: 6.5.4
-      workbox-strategies: 6.5.4
-      workbox-streams: 6.5.4
-      workbox-sw: 6.5.4
-      workbox-window: 6.5.4
+      workbox-range-requests: 6.5.0
+      workbox-recipes: 6.5.0
+      workbox-routing: 6.5.0
+      workbox-strategies: 6.5.0
+      workbox-streams: 6.5.0
+      workbox-sw: 6.5.0
+      workbox-window: 6.5.0
     transitivePeerDependencies:
       - '@types/babel__core'
       - supports-color
     dev: true
 
-  /workbox-cacheable-response/6.5.4:
-    resolution: {integrity: sha512-DCR9uD0Fqj8oB2TSWQEm1hbFs/85hXXoayVwFKLVuIuxwJaihBsLsp4y7J9bvZbqtPJ1KlCkmYVGQKrBU4KAug==}
+  /workbox-cacheable-response/6.5.0:
+    resolution: {integrity: sha512-sqAtWAiBwWvI8HG/2Do7BeKPhHuUczt22ORkAjkH9DfTq9LuWRFd6T4HAMqX5G8F1gM9XA2UPlxRrEeSpFIz/A==}
     dependencies:
       workbox-core: 6.5.4
     dev: true
@@ -4902,24 +4890,24 @@ packages:
     resolution: {integrity: sha512-OXYb+m9wZm8GrORlV2vBbE5EC1FKu71GGp0H4rjmxmF4/HLbMCoTFws87M3dFwgpmg0v00K++PImpNQ6J5NQ6Q==}
     dev: true
 
-  /workbox-expiration/6.5.4:
-    resolution: {integrity: sha512-jUP5qPOpH1nXtjGGh1fRBa1wJL2QlIb5mGpct3NzepjGG2uFFBn4iiEBiI9GUmfAFR2ApuRhDydjcRmYXddiEQ==}
+  /workbox-expiration/6.5.0:
+    resolution: {integrity: sha512-y3WRkKRy/gMuZZNkrLFahjY0QZtLoq+QfhTbVAsOGHVg1CCtnNbeFAnEidQs7UisI2BK76VqQPvM7hEOFyZ92A==}
     dependencies:
-      idb: 7.1.1
+      idb: 6.1.5
       workbox-core: 6.5.4
     dev: true
 
-  /workbox-google-analytics/6.5.4:
-    resolution: {integrity: sha512-8AU1WuaXsD49249Wq0B2zn4a/vvFfHkpcFfqAFHNHwln3jK9QUYmzdkKXGIZl9wyKNP+RRX30vcgcyWMcZ9VAg==}
+  /workbox-google-analytics/6.5.0:
+    resolution: {integrity: sha512-CHHh55wMNCc/BV1URrzEM2Zjgf6g2CV6QpAAc1pBRqaLY5755PeQZbp3o8KbJEM7YsC9mIBeQVsOkSKkGS30bg==}
     dependencies:
-      workbox-background-sync: 6.5.4
+      workbox-background-sync: 6.5.0
       workbox-core: 6.5.4
-      workbox-routing: 6.5.4
-      workbox-strategies: 6.5.4
+      workbox-routing: 6.5.0
+      workbox-strategies: 6.5.0
     dev: true
 
-  /workbox-navigation-preload/6.5.4:
-    resolution: {integrity: sha512-IIwf80eO3cr8h6XSQJF+Hxj26rg2RPFVUmJLUlM0+A2GzB4HFbQyKkrgD5y2d84g2IbJzP4B4j5dPBRzamHrng==}
+  /workbox-navigation-preload/6.5.0:
+    resolution: {integrity: sha512-ktrRQzXJ0zFy0puOtCa49wE3BSBGUB8KRMot3tEieikCkSO0wMLmiCb9GwTVvNMJLl0THRlsdFoI93si04nTxA==}
     dependencies:
       workbox-core: 6.5.4
     dev: true
@@ -4932,25 +4920,37 @@ packages:
       workbox-strategies: 6.5.4
     dev: true
 
-  /workbox-range-requests/6.5.4:
-    resolution: {integrity: sha512-Je2qR1NXCFC8xVJ/Lux6saH6IrQGhMpDrPXWZWWS8n/RD+WZfKa6dSZwU+/QksfEadJEr/NfY+aP/CXFFK5JFg==}
+  /workbox-range-requests/6.5.0:
+    resolution: {integrity: sha512-+qTELdGZE5rOjuv+ifFrfRDN8Uvzpbm5Fal7qSUqB1V1DLCMxPwHCj6mWwQBRKBpW7G09kAwewH7zA3Asjkf/Q==}
     dependencies:
       workbox-core: 6.5.4
     dev: true
 
-  /workbox-recipes/6.5.4:
-    resolution: {integrity: sha512-QZNO8Ez708NNwzLNEXTG4QYSKQ1ochzEtRLGaq+mr2PyoEIC1xFW7MrWxrONUxBFOByksds9Z4//lKAX8tHyUA==}
+  /workbox-recipes/6.5.0:
+    resolution: {integrity: sha512-7hWZAIcXmvr31NwYSWaQIrnThCH/Dx9+eYv/YdkpUeWIXRiHRkYvP1FdiHItbLSjL4Y6K7cy2Y9y5lGCkgaE4w==}
     dependencies:
-      workbox-cacheable-response: 6.5.4
+      workbox-cacheable-response: 6.5.0
       workbox-core: 6.5.4
-      workbox-expiration: 6.5.4
+      workbox-expiration: 6.5.0
       workbox-precaching: 6.5.4
-      workbox-routing: 6.5.4
-      workbox-strategies: 6.5.4
+      workbox-routing: 6.5.0
+      workbox-strategies: 6.5.0
+    dev: true
+
+  /workbox-routing/6.5.0:
+    resolution: {integrity: sha512-w1A9OVa/yYStu9ds0Dj+TC6zOAoskKlczf+wZI5mrM9nFCt/KOMQiFp1/41DMFPrrN/8KlZTS3Cel/Ttutw93Q==}
+    dependencies:
+      workbox-core: 6.5.4
     dev: true
 
   /workbox-routing/6.5.4:
     resolution: {integrity: sha512-apQswLsbrrOsBUWtr9Lf80F+P1sHnQdYodRo32SjiByYi36IDyL2r7BH1lJtFX8fwNHDa1QOVY74WKLLS6o5Pg==}
+    dependencies:
+      workbox-core: 6.5.4
+    dev: true
+
+  /workbox-strategies/6.5.0:
+    resolution: {integrity: sha512-Ngnwo+tfGw4uKSlTz3h1fYKb/lCV7SDI/dtTb8VaJzRl0N9XssloDGYERBmF6BN/DV/x3bnRsshfobnKI/3z0g==}
     dependencies:
       workbox-core: 6.5.4
     dev: true
@@ -4961,19 +4961,19 @@ packages:
       workbox-core: 6.5.4
     dev: true
 
-  /workbox-streams/6.5.4:
-    resolution: {integrity: sha512-FXKVh87d2RFXkliAIheBojBELIPnWbQdyDvsH3t74Cwhg0fDheL1T8BqSM86hZvC0ZESLsznSYWw+Va+KVbUzg==}
+  /workbox-streams/6.5.0:
+    resolution: {integrity: sha512-ZbeaZINkju4x45P9DFyRbOYInE+dyNAJIelflz4f9AOAdm+zZUJCooU4MdfsedVhHiTIA6pCD/3jCmW1XbvlbA==}
     dependencies:
       workbox-core: 6.5.4
-      workbox-routing: 6.5.4
+      workbox-routing: 6.5.0
     dev: true
 
-  /workbox-sw/6.5.4:
-    resolution: {integrity: sha512-vo2RQo7DILVRoH5LjGqw3nphavEjK4Qk+FenXeUsknKn14eCNedHOXWbmnvP4ipKhlE35pvJ4yl4YYf6YsJArA==}
+  /workbox-sw/6.5.0:
+    resolution: {integrity: sha512-uPGJ9Yost4yabnCko/IuhouquoQKrWOEqLq7L/xVYtltWe4+J8Hw8iPCVtxvXQ26hffd7MaFWUAN83j2ZWbxRg==}
     dev: true
 
-  /workbox-window/6.5.4:
-    resolution: {integrity: sha512-HnLZJDwYBE+hpG25AQBO8RUWBJRaCsI9ksQJEp3aCOFCaG5kqaToAYXFRAHxzRluM2cQbGzdQF5rjKPWPA1fug==}
+  /workbox-window/6.5.0:
+    resolution: {integrity: sha512-DOrhiTnWup/CsNstO2uvfdKM4kdStgHd31xGGvBcoCE3Are3DRcy5s3zz3PedcAR1AKskQj3BXz0UhzQiOq8nA==}
     dependencies:
       '@types/trusted-types': 2.0.2
       workbox-core: 6.5.4

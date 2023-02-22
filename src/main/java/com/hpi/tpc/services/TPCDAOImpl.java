@@ -297,14 +297,14 @@ public class TPCDAOImpl
         return clientEquityAttributesModels;
     }
 
-    public synchronized List<TimeseriesModel> getTimeseriesModels(String sql)
-    {
-        List<TimeseriesModel> timeseriesModels;
-
-        timeseriesModels = jdbcTemplate.query(sql, new TimeseriesMapper());
-
-        return timeseriesModels;
-    }
+//    public synchronized List<TimeseriesModel> getTimeseriesModels(String sql)
+//    {
+//        List<TimeseriesModel> timeseriesModels;
+//
+//        timeseriesModels = jdbcTemplate.query(sql, new TimeseriesMapper());
+//
+//        return timeseriesModels;
+//    }
 
     public synchronized List<GainModel> getGainsModels(String sql)
     {

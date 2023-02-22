@@ -114,6 +114,5 @@ public class DataEquitiesStocksControllerFL
     public void addMenuBarTabs()
     {
         //none; not changing top tabs
-        //todo: change top menu prefs icon route 
     }
 }
