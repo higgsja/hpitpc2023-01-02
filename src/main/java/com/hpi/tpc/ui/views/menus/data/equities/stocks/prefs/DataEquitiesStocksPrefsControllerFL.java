@@ -2,7 +2,6 @@ package com.hpi.tpc.ui.views.menus.data.equities.stocks.prefs;
 
 import com.flowingcode.vaadin.addons.twincolgrid.*;
 import com.hpi.tpc.ui.views.menus.data.equities.stocks.*;
-import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.hpi.tpc.ui.views.menus.data.*;
@@ -14,6 +13,7 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /*
@@ -36,8 +36,7 @@ public class DataEquitiesStocksPrefsControllerFL
 {
 
     @Autowired private MainLayout mainLayout;
-    @Autowired private TPCDAOImpl serviceTPC;
-    @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
+    @Lazy @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
 
     private final DataEquitiesStocksPrefsVL prefsVL;
     private final DataEquitiesStocksPrefsTitleVL title;
@@ -153,7 +152,7 @@ public class DataEquitiesStocksPrefsControllerFL
     {
         super.beforeEnter(event);
 
-        this.serviceTPC.AppTracking("TPC:Data:Equities:Stocks:Preferences");
+        this.dataEquitiesStocksModel.serviceTPC.AppTracking("TPC:Data:Equities:Stocks:Preferences");
 
         //update the data
         this.updateData();

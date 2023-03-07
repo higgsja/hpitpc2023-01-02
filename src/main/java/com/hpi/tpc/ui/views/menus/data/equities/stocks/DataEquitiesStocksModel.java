@@ -3,13 +3,13 @@ package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 import com.hpi.tpc.ui.views.menus.data.Attribute;
 import com.flowingcode.vaadin.addons.twincolgrid.*;
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.services.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.data.provider.*;
 import java.util.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.jdbc.core.*;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.support.rowset.*;
 import org.springframework.stereotype.*;
 
@@ -19,13 +19,13 @@ import org.springframework.stereotype.*;
  * provides ways to query and change the data
  * responds to requests from View and instructions from Controller
  */
+@Lazy
 @Component
 public class DataEquitiesStocksModel
+    extends MVCModelBase
 {
 
-    @Autowired private JdbcTemplate jdbcTemplate;
     @Autowired private FinVizEquityInfoModelService equityInfoService;
-    @Autowired private PrefsController prefsController;
 
     @Getter private String stringColumns;
     @Getter private final List<Attribute> availableAttributes;
@@ -43,6 +43,7 @@ public class DataEquitiesStocksModel
         this.dataProvider = null;
     }
 
+    @Override
     public void getPrefs(String prefs)
     {
         this.prefsController.readPrefsByPrefix(prefs);
@@ -134,5 +135,11 @@ public class DataEquitiesStocksModel
         this.dataProvider = dp.withConfigurableFilter();
 
         this.dataProvider.setFilter(gridFilter);
+    }
+
+    @Override
+    public void writePrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

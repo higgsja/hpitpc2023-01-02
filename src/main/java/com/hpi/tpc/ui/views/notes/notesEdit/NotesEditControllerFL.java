@@ -93,7 +93,7 @@ public class NotesEditControllerFL
 
         this.notesEditFormVL.getControlsHL().getButtonAddArchive().addClickListener(e ->
         {
-            this.notesModel.getSelectedNoteModel().setActive(NoteModel.ACTIVE_NO);
+            this.notesModel.getNoteModel().setActive(NoteModel.ACTIVE_NO);
 
             this.notesModel.saveUpdate(true);
 
@@ -112,7 +112,7 @@ public class NotesEditControllerFL
         //log feature use
         this.serviceTPC.AppTracking("TPC:Notes:Edit:Controller");
 
-        this.notesModel.getBinder().setBean(this.notesModel.getSelectedNoteModel());
+        this.notesModel.getBinder().setBean(this.notesModel.getNoteModel());
 
         //disallow changes for edit
         this.notesEditFormVL.getTicker().setEnabled(false);

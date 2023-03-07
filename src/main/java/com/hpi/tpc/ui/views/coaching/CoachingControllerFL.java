@@ -12,6 +12,7 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 /*
  * Controller: Interface between Model and View to process business logic and incoming
@@ -33,7 +34,7 @@ public class CoachingControllerFL
     extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
-    @Autowired private CoachingModel coachingModel;
+    @Lazy @Autowired private CoachingModel coachingModel;
 
     @PostConstruct
     private void construct()
@@ -60,12 +61,12 @@ public class CoachingControllerFL
             UI.getCurrent().navigate(ROUTE_COACHING_BENCHMARK_CONTROLLER);
         });
 
-        MenuItem gainsItem = this.menuBar.addItem(ROUTE_COACHING_GAINS);
+        MenuItem gainsItem = this.menuBar.addItem(ROUTE_COACHING_GAINS_CONTROLLER);
 
         gainsItem.addClickListener(
             (ClickEvent<MenuItem> event) ->
         {
-            UI.getCurrent().navigate(ROUTE_COACHING_GAINS);
+            UI.getCurrent().navigate(ROUTE_COACHING_GAINS_CONTROLLER);
         });
         
 //        MenuItem tacticsItem = this.menuBar.addItem(MENU_COACHING_PERFORMANCE_TACTICS);

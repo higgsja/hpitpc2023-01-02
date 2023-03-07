@@ -1,12 +1,11 @@
 package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 
-import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.prefs.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.data.provider.*;
 import java.util.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -15,12 +14,11 @@ import org.springframework.stereotype.*;
  * provides ways to query and change the data
  * responds to requests from View and instructions from Controller
  */
+@Lazy
 @Component
 public class DataValidateStocksModel
+    extends MVCModelBase
 {
-
-    @Autowired private TPCDAOImpl serviceTPC;
-    @Autowired @Getter private PrefsController prefsController;
 
     @Getter private List<EditAccountModel> accountModels;
     @Getter private List<TickerModel> tickerModels;
@@ -237,5 +235,11 @@ public class DataValidateStocksModel
             skip ? 1 : 0, validated ? 1 : 0, acctId, fiTId);
 
         this.serviceTPC.executeSQL(sql);
+    }
+
+    @Override
+    public void writePrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

@@ -12,6 +12,7 @@ import java.util.*;
 
 import javax.annotation.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 /*
  * Interface between Model and View to process business logic and incoming requests:
@@ -27,9 +28,8 @@ import org.springframework.beans.factory.annotation.*;
 public class SetupEquitiesController
     extends VerticalLayout {
     @Autowired private MainLayout mainLayout;
-    @Autowired private TPCDAOImpl serviceTPC;
     @Autowired private SetupEquitiesEditView setupEquitiesEditView;
-    @Autowired private SetupEquitiesModel setupEquitiesMVCModel;
+    @Lazy @Autowired private SetupEquitiesModel setupEquitiesModel;
     @Autowired private SetupEquitiesView setupEquitiesMVCView;
 
     private final ArrayList<Registration> listeners;
@@ -134,7 +134,7 @@ public class SetupEquitiesController
             this.setupEquitiesEditView.getButtonOk().setEnabled(true);
 
             //set the sector
-            sectorId = this.serviceTPC.getClientSectorIdFromTicker(this.setupEquitiesEditView
+            sectorId = this.setupEquitiesModel.serviceTPC.getClientSectorIdFromTicker(this.setupEquitiesEditView
                 .getTicker().getValue());
 
             //set data in model
@@ -195,7 +195,7 @@ public class SetupEquitiesController
             }
             else {
                 //editing; remove
-                bRemove = collection.remove(this.setupEquitiesMVCModel.getEditClientEquityModel());
+                bRemove = collection.remove(this.setupEquitiesModel.getEditClientEquityModel());
 
                 //editing: add
                 collection.add(this.setupEquitiesEditView.getEditingClientEquityModel());
@@ -235,13 +235,13 @@ public class SetupEquitiesController
     private void addNewClickListener() {
         this.listeners.add(this.setupEquitiesMVCView.getNewButton().addClickListener(event -> {
             //create a default new equity and allow edit; hold in setupEquitiesMVCModel
-            this.setupEquitiesMVCModel.createDefaultClientEquityModel();
+            this.setupEquitiesModel.createDefaultClientEquityModel();
 
             //adjust the changed property
-            this.setupEquitiesMVCModel.getEditClientEquityModel().setChanged(ClientEquityModel.CHANGE_NEW);
+            this.setupEquitiesModel.getEditClientEquityModel().setChanged(ClientEquityModel.CHANGE_NEW);
 
             //take it to the dialog for further editing
-            this.setupEquitiesEditView.doDialog(this.setupEquitiesMVCModel.getEditClientEquityModel(), true);
+            this.setupEquitiesEditView.doDialog(this.setupEquitiesModel.getEditClientEquityModel(), true);
 
             //add any listeners
             //edit ticker change
@@ -274,10 +274,10 @@ public class SetupEquitiesController
                 }
 
                 //hold copy of original clientEquityModel in setupEquitiesMVCModel
-                this.setupEquitiesMVCModel.setEditClientEquityModel(new ClientEquityModel(editItem.getItem()));
+                this.setupEquitiesModel.setEditClientEquityModel(new ClientEquityModel(editItem.getItem()));
 
                 //take it to the dialog for editing
-                this.setupEquitiesEditView.doDialog(this.setupEquitiesMVCModel.getEditClientEquityModel(), false);
+                this.setupEquitiesEditView.doDialog(this.setupEquitiesModel.getEditClientEquityModel(), false);
 
                 /*
                  * add any listeners
@@ -319,7 +319,7 @@ public class SetupEquitiesController
     private void addSaveClickListener() {
         this.listeners.add(this.setupEquitiesMVCView.getSaveButton().addClickListener(event -> {
             //save pending changes which are in the dataProvider of the grid
-            this.setupEquitiesMVCModel.doSave(this.setupEquitiesMVCView
+            this.setupEquitiesModel.doSave(this.setupEquitiesMVCView
                 .getSetupEquitiesTableVL().getSetupEquitiesGrid());
 
             //refresh from database after save to ensure sync with real database

@@ -10,6 +10,7 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 /*
  * Controller: Interface between Model and View to process business logic and incoming
@@ -30,26 +31,26 @@ public class BenchmarkControllerFL
     extends ViewControllerBaseFL
     implements BeforeEnterObserver
 {
-    @Autowired private CoachingModel coachingModel;
-        @Autowired private TPCDAOImpl serviceTPC;
-        @Autowired private BenchmarkModel benchMarkModel;
-        
-        private final BenchmarkChartVL benchmarkChartVL;
-        private final BenchmarkVL benchmarkVL;
-        private final BenchmarkTitleVL benchmarkTitleVL;
+
+    @Lazy @Autowired private CoachingModel coachingModel;
+    @Lazy @Autowired private BenchmarkModel benchMarkModel;
+
+    private final BenchmarkChartVL benchmarkChartVL;
+    private final BenchmarkVL benchmarkVL;
+    private final BenchmarkTitleVL benchmarkTitleVL;
 
     public BenchmarkControllerFL()
     {
         this.addClassName("coachingController");
-        
+
         //content
         this.benchmarkVL = new BenchmarkVL();
         this.add(this.benchmarkVL);
-        
+
         //title in content
         this.benchmarkTitleVL = new BenchmarkTitleVL("Performance");
         this.benchmarkVL.add(this.benchmarkTitleVL);
-        
+
         //chart in content
         this.benchmarkChartVL = new BenchmarkChartVL();
         this.benchmarkVL.add(this.benchmarkChartVL);
@@ -60,10 +61,10 @@ public class BenchmarkControllerFL
     {
         //get any preferences
         this.coachingModel.getPrefs();
-        
+
         this.doLayout();
     }
-    
+
     private void doLayout()
     {
         this.setMinWidth("320px");
@@ -75,23 +76,24 @@ public class BenchmarkControllerFL
     }
 
     @Override
-    public void beforeEnter(BeforeEnterEvent event){
+    public void beforeEnter(BeforeEnterEvent event)
+    {
         super.beforeEnter(event);
 
         //log feature use
-        this.serviceTPC.AppTracking("TPC:Coaching:Benchmark");
-        
+        this.benchMarkModel.serviceTPC.AppTracking("TPC:Coaching:Benchmark");
+
         //change the preferences route
         this.updateNavBarGear(null);
-        
+
         //update data
         this.benchmarkChartVL.removeAll();
         this.benchmarkChartVL.add(this.benchMarkModel.doChart());
     }
-    
+
     @Override
     public void addMenuBarTabs()
     {
-                //none; not changing top tabs
-    }    
+        //none; not changing top tabs
+    }
 }

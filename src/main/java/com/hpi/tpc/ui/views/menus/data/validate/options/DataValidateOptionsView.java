@@ -14,7 +14,6 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
 
 /**
  * makes direct request for data from model
@@ -33,7 +32,7 @@ public class DataValidateOptionsView
     extends ViewControllerBaseFL
 {
 
-    @Autowired private DataValidateOptionsModel optionsModel;
+//    @Lazy @Autowired private DataValidateOptionsModel optionsModel;
 
     @Getter private VerticalLayout titleVL;
     private DataValidateOptionsViewGridVL grid;

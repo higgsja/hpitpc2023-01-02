@@ -1,14 +1,14 @@
 package com.hpi.tpc.ui.views.setup.sectors;
 
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.services.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.data.provider.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import javax.annotation.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -19,10 +19,10 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
-public class SetupSectorsModel {
-    @Autowired private TPCDAOImpl serviceTPC;
-
+public class SetupSectorsModel
+extends MVCModelBase{
     @Getter @Setter private ClientSectorModel editClientSectorModel;
 
     public SetupSectorsModel() {
@@ -109,5 +109,17 @@ public class SetupSectorsModel {
 
             this.serviceTPC.executeSQL(sql);
         }
+    }
+
+    @Override
+    public void getPrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void writePrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

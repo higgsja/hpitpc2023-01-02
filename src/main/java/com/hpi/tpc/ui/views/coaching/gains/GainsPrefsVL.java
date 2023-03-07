@@ -1,4 +1,4 @@
-package com.hpi.tpc.ui.views.coaching.benchmark;
+package com.hpi.tpc.ui.views.coaching.gains;
 
 import com.hpi.tpc.ui.views.baseClass.*;
 import static com.hpi.tpc.ui.views.coaching.CoachingConst.*;
@@ -14,11 +14,11 @@ import org.springframework.stereotype.*;
 @NoArgsConstructor
 @UIScope
 @VaadinSessionScope
-@Route(value = ROUTE_COACHING_INFO, layout = MainLayout.class)
+@Route(value = ROUTE_COACHING_GAINS_PREFS, layout = MainLayout.class)
 @PageTitle(TITLE_PAGE_COACHING)
 @Component
 @PermitAll
-public class BenchmarkInfoVL
+public class GainsPrefsVL
     extends PageInfoBase
     implements BeforeEnterObserver
 {

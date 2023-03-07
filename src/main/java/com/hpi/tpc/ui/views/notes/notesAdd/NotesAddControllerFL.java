@@ -85,7 +85,7 @@ public class NotesAddControllerFL
         this.serviceTPC.AppTracking("TPC:Notes:Add:Controller");
 
         //starter note template
-        this.notesModel.setSelectedNoteModel(NoteModel.builder()
+        this.notesModel.setNoteModel(NoteModel.builder()
             .joomlaId(SecurityUtils.getUserId().toString())
             .action("Buy")
             .units(100.0)
@@ -94,7 +94,7 @@ public class NotesAddControllerFL
             .active("1")
             .build());
 
-        this.notesModel.getBinder().setBean(this.notesModel.getSelectedNoteModel());
+        this.notesModel.getBinder().setBean(this.notesModel.getNoteModel());
 
         //allow changes for Add
         this.notesAddFormVL.getTicker().setEnabled(true);

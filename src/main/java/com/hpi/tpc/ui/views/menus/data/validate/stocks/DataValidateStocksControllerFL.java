@@ -1,6 +1,5 @@
 package com.hpi.tpc.ui.views.menus.data.validate.stocks;
 
-import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
@@ -16,6 +15,7 @@ import java.util.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /*
@@ -38,8 +38,7 @@ public class DataValidateStocksControllerFL
 {
 
     //data model singleton as used in multiple places
-    @Autowired private DataValidateStocksModel dataValidateStocksModel;
-    @Autowired private TPCDAOImpl serviceTPC;
+    @Lazy @Autowired private DataValidateStocksModel dataValidateStocksModel;
 
     private final DataValidateStocksVL dataValidateStocksVL;
     private final DataValidateStocksTitleVL dataValidateStocksTitleVL;
@@ -156,7 +155,7 @@ public class DataValidateStocksControllerFL
         super.beforeEnter(event);
 
         //log feature use
-        this.serviceTPC.AppTracking("WTPC:Data:Validate:Stocks");
+        this.dataValidateStocksModel.serviceTPC.AppTracking("WTPC:Data:Validate:Stocks");
 
         //refresh data on every entry
         this.updateDataOnEnter();

@@ -10,6 +10,7 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 @UIScope
 @VaadinSessionScope
@@ -30,7 +31,7 @@ public class AboutController
     implements BeforeEnterObserver
 {
 
-    @Autowired private AboutModel aboutModel;
+    @Lazy @Autowired private AboutModel aboutModel;
 
     @PostConstruct
     private void construct()

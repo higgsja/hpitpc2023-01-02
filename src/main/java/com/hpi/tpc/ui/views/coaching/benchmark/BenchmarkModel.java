@@ -3,12 +3,12 @@ package com.hpi.tpc.ui.views.coaching.benchmark;
 import com.github.appreciated.apexcharts.*;
 import com.hpi.tpc.charts.*;
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.services.TPCDAOImpl;
-import com.hpi.tpc.prefs.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -19,18 +19,21 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
 @NoArgsConstructor
 @Getter
-public class BenchmarkModel {
-    @Autowired private TPCDAOImpl serviceTPC;
+public class BenchmarkModel
+    extends MVCModelBase
+{
+
     @Autowired private BenchmarkService benchmarkService;
-    @Autowired private PrefsController prefsController;
-    
+
     private LinesChart linesChart;
-    
-    public ApexCharts doChart(){
-     TimeseriesModel aTimeseriesModel;
+
+    public ApexCharts doChart()
+    {
+        TimeseriesModel aTimeseriesModel;
         List<TimeseriesModel> timeseriesModelsAcctTotals;
         List<TimeseriesModel> timeseriesModelsSpy;
         List<TimeseriesModel> timeseriesModelsIWM;
@@ -82,10 +85,12 @@ public class BenchmarkModel {
             TimeseriesModel.getCoordSeries("DIA", timeseriesModelsDIA),
             TimeseriesModel.getCoordSeries("QQQ", timeseriesModelsQQQ));
 
-        return linesChart.getChart();   
+        return linesChart.getChart();
     }
-    
-    public void getPrefs() {
+
+    @Override
+    public void getPrefs(String prefix)
+    {
         //hit
         int i = 0;
 //        this.prefsController.setDefaults("PortfolioTrack");
@@ -96,7 +101,9 @@ public class BenchmarkModel {
 //            .getPref("PortfolioTrackOpen").equals("Yes");
     }
 
-    public void writePrefs() {
+    @Override
+    public void writePrefs(String prefix)
+    {
         //hit
         int i = 0;
         //preferences, update the hashmap, then write to database

@@ -1,12 +1,11 @@
 package com.hpi.tpc.ui.views.menus.data.validate.options;
 
-import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.prefs.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.data.provider.*;
 import java.util.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -15,10 +14,11 @@ import org.springframework.stereotype.*;
  * provides ways to query and change the data
  * responds to requests from View and instructions from Controller
  */
+@Lazy
 @Component
-public class DataValidateOptionsModel {
-    @Autowired private TPCDAOImpl serviceTPC;
-    @Autowired @Getter private PrefsController prefsController;
+public class DataValidateOptionsModel
+    extends MVCModelBase
+{
 
     @Getter private List<EditAccountModel> accountModels;
     @Getter private List<TickerModel> tickerModels;
@@ -30,23 +30,25 @@ public class DataValidateOptionsModel {
     @Getter @Setter private TickerModel selectedTickerModel;
     @Getter @Setter private Boolean selectedSkip = false;
     @Getter @Setter private Boolean selectedValidated = false;
-    
-        /**
-     * track when setting a filter. Do not want to enable save if only 
+
+    /**
+     * track when setting a filter. Do not want to enable save if only
      * a filter change on the data provider
      */
-    @Getter private Boolean bInFilterChange = false;
+    @Getter @Setter private Boolean bInFilterChange = false;
 
-
-    public DataValidateOptionsModel() {
+    public DataValidateOptionsModel()
+    {
         this.dbList = new ArrayList<>();
     }
 
-    public void updateAccountModels() {
+    public void updateAccountModels()
+    {
         this.accountModels = this.serviceTPC.getAccountModels();
     }
 
-    public void updateTickerModels() {
+    public void updateTickerModels()
+    {
         this.tickerModels = this.serviceTPC
             .getTickerModels(this.selectedAccountModel);
     }
@@ -54,7 +56,8 @@ public class DataValidateOptionsModel {
     /**
      * retrieves data for the grid
      */
-    public void updateGridData() {
+    public void updateGridData()
+    {
         List<ValidateOptionTransactionModel> aList;
         ValidateOptionTransactionModel tmpVotm;
 
@@ -63,7 +66,8 @@ public class DataValidateOptionsModel {
         //refresh grid data
         aList = serviceTPC.getValidateOptionTransactionModels(
             this.selectedAccountModel, this.selectedTickerModel);
-        for (ValidateOptionTransactionModel model : aList) {
+        for (ValidateOptionTransactionModel model : aList)
+        {
             tmpVotm = ValidateOptionTransactionModel.builder()
                 .joomlaId(model.getJoomlaId())
                 .acctId(model.getAcctId())
@@ -99,33 +103,39 @@ public class DataValidateOptionsModel {
 
     /**
      *
-     * @param skipBoolean:      true to view only Skip records
+     * @param skipBoolean: true to view only Skip records
      * @param validatedBoolean: true to view only Validated records
      */
-    public void filterChange(Boolean skipBoolean, Boolean validatedBoolean) {
-        if (this.gridDataProvider == null) {
+    public void filterChange(Boolean skipBoolean, Boolean validatedBoolean)
+    {
+        if (this.gridDataProvider == null)
+        {
             return;
         }
 
         this.gridDataProvider.clearFilters();
-        this.selectedSkip = skipBoolean != null ?
-                            skipBoolean : this.selectedSkip;
-        this.selectedValidated = validatedBoolean != null ?
-                                 validatedBoolean : this.selectedValidated;
+        this.selectedSkip = skipBoolean != null
+            ? skipBoolean : this.selectedSkip;
+        this.selectedValidated = validatedBoolean != null
+            ? validatedBoolean : this.selectedValidated;
 
-        if (this.selectedSkip) {
-            this.gridDataProvider.addFilter(transaction ->
-                Objects.equals(transaction.getBSkip(), this.selectedSkip));
+        if (this.selectedSkip)
+        {
+            this.gridDataProvider.addFilter(transaction
+                -> Objects.equals(transaction.getBSkip(), this.selectedSkip));
         }
 
-        if (this.selectedValidated) {
-            this.gridDataProvider.addFilter(transaction ->
-                Objects.equals(transaction.getBValidated(),
+        if (this.selectedValidated)
+        {
+            this.gridDataProvider.addFilter(transaction
+                -> Objects.equals(transaction.getBValidated(),
                     this.selectedValidated));
         }
     }
 
-    public void getPrefs(String key) {
+    @Override
+    public void getPrefs(String key)
+    {
         this.prefsController.readPrefsByPrefix(key);
         this.selectedSkip = this.prefsController
             .getPref("OptionValidateSkip").equals("Yes");
@@ -133,14 +143,16 @@ public class DataValidateOptionsModel {
             .getPref("OptionValidateValidated").equals("Yes");
     }
 
-    public void writePrefs(String skip, String validated) {
+    public void writePrefs(String skip, String validated)
+    {
         //preferences, update the hashmap, then write to database
         this.prefsController.setPref("OptionValidateSkip", skip);
         this.prefsController.setPref("OptionValidateValidated", validated);
         this.prefsController.writePrefsByPrefix("OptionValidate");
     }
 
-    void doSave() {
+    void doSave()
+    {
         Integer i;
         Iterator dataProviderIterator;
         ValidateOptionTransactionModel tmpModel;
@@ -159,13 +171,15 @@ public class DataValidateOptionsModel {
 
         dataProviderIterator = this.gridDataProvider.getItems().iterator();
 
-        while (dataProviderIterator.hasNext()) {
+        while (dataProviderIterator.hasNext())
+        {
             tmpModel = (ValidateOptionTransactionModel) dataProviderIterator.
                 next();
-            if (tmpModel.getBSkip().equals(this.dbList.get(i).getBSkip())) {
+            if (tmpModel.getBSkip().equals(this.dbList.get(i).getBSkip()))
+            {
                 //no change
-            }
-            else {
+            } else
+            {
                 //new skip
                 //write to database
                 this.writeTransaction(
@@ -176,10 +190,11 @@ public class DataValidateOptionsModel {
             }
 
             if (tmpModel.getBValidated().equals(this.dbList
-                .get(i).getBValidated())) {
+                .get(i).getBValidated()))
+            {
                 //no change
-            }
-            else {
+            } else
+            {
                 //new validated
                 //write to database
                 this.writeTransaction(
@@ -193,12 +208,19 @@ public class DataValidateOptionsModel {
     }
 
     private void writeTransaction(Boolean skip, Boolean validated,
-        Integer acctId, String fiTId) {
+        Integer acctId, String fiTId)
+    {
         String sql;
 
         sql = String.format(ValidateOptionTransactionModel.SQL_UPDATE_INVTRAN,
             skip ? 1 : 0, validated ? 1 : 0, acctId, fiTId);
 
         this.serviceTPC.executeSQL(sql);
+    }
+
+    @Override
+    public void writePrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
