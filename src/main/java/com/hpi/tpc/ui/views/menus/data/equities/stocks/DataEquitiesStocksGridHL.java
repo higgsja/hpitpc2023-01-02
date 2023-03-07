@@ -9,7 +9,7 @@ import com.vaadin.flow.data.value.*;
 import java.util.*;
 import lombok.*;
 
-public class DataEquitiesStocksGridVL
+public class DataEquitiesStocksGridHL
     extends ViewBaseHL
 {
     @Getter private Grid<FinVizEquityInfoModel> finVizEquityInfoModelGrid;
@@ -21,7 +21,7 @@ public class DataEquitiesStocksGridVL
     @Getter private final TextField filterSector;
     @Getter private final TextField filterIndustry;
 
-    public DataEquitiesStocksGridVL()
+    public DataEquitiesStocksGridHL()
     {
         this.addClassName("dataEquitiesStocksGridVL");
 

@@ -1,10 +1,9 @@
 package com.hpi.tpc.ui.views.portfolio;
 
-import com.hpi.tpc.services.TPCDAOImpl;
-import com.hpi.tpc.prefs.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -15,33 +14,22 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
-
 @NoArgsConstructor
-public class PortfolioModel {
-    @Autowired private TPCDAOImpl serviceTPC;
-    @Autowired private PrefsController prefsController;
+public class PortfolioModel
+extends MVCModelBase
+{
 
-    public void getPrefs() {
-        //hit
-        int i = 0;
-//        this.prefsController.setDefaults("PortfolioTrack");
-//        this.prefsController.readPrefsByPrefix("PortfolioTrack");
-//        this.selectedTrackActive = this.prefsController
-//            .getPref("PortfolioTrackActive").equals("Yes");
-//        this.selectedTrackOpen = this.prefsController
-//            .getPref("PortfolioTrackOpen").equals("Yes");
+    @Override
+    public void getPrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    public void writePrefs() {
-        //hit
-        int i = 0;
-        //preferences, update the hashmap, then write to database
-//        this.prefsController.setPref("PortfolioTrackActive",
-//            selectedTrackActive ? "Yes" : "No");
-//        this.prefsController.setPref("PortfolioTrackOpen",
-//            selectedTrackOpen ? "Yes" : "No");
-//        
-//        this.prefsController.writePrefsByPrefix("PortfolioTrack");
+    @Override
+    public void writePrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

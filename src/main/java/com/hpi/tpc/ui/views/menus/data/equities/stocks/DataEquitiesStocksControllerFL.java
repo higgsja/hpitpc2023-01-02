@@ -10,6 +10,7 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /*
@@ -31,12 +32,11 @@ public class DataEquitiesStocksControllerFL
     implements BeforeEnterObserver
 {
 
-    @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
-    @Autowired private TPCDAOImpl serviceTPC;
+    @Lazy @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
 
     private final DataEquitiesStocksVL dataEquitiesStocksVL;
     private final DataEquitiesStocksTitleVL dataEquitiesStocksTitleVL;
-    @Getter private final DataEquitiesStocksGridVL dataEquitiesStocksGridVL;
+    @Getter private final DataEquitiesStocksGridHL dataEquitiesStocksGridVL;
 
     public DataEquitiesStocksControllerFL()
     {
@@ -51,7 +51,7 @@ public class DataEquitiesStocksControllerFL
         this.dataEquitiesStocksVL.add(this.dataEquitiesStocksTitleVL);
 
         //grid in content
-        this.dataEquitiesStocksGridVL = new DataEquitiesStocksGridVL();
+        this.dataEquitiesStocksGridVL = new DataEquitiesStocksGridHL();
         this.dataEquitiesStocksVL.add(this.dataEquitiesStocksGridVL);
     }
 
@@ -67,7 +67,7 @@ public class DataEquitiesStocksControllerFL
         super.beforeEnter(event);
 
         //log feature use
-        this.serviceTPC.AppTracking("TPC:Data:Equities:Stocks");
+        this.dataEquitiesStocksModel.serviceTPC.AppTracking("TPC:Data:Equities:Stocks");
 
         //grid layout may change based on preferences change; refresh on every entry
         this.dataEquitiesStocksGridVL.doLayout(this.dataEquitiesStocksModel.getStringColumns());

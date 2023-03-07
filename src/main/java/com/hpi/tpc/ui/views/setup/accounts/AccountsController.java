@@ -10,6 +10,7 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 /*
  * Controller: Interface between Model and View to process business logic and incoming
@@ -31,7 +32,7 @@ public class AccountsController
     implements BeforeEnterObserver
 {
 
-    @Autowired private AccountsModel accountsModel;
+    @Lazy @Autowired private AccountsModel accountsModel;
     @Autowired private AccountsView accountsView;
     @Autowired @Getter private AccountsEditView accountsEditView;
 
@@ -41,7 +42,7 @@ public class AccountsController
         this.setClassName("setupAccountsController");
 
         //get any preferences
-        this.accountsModel.getPrefs();
+        this.accountsModel.getPrefs("Accounts");
 
         //set comboBox placeholders
         this.accountsView.getClientFICombobox().setPlaceholder("Financial Institution");

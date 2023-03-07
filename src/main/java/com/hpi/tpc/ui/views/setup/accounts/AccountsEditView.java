@@ -12,6 +12,7 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /*
@@ -26,8 +27,7 @@ import org.springframework.stereotype.Component;
 public class AccountsEditView
     extends Dialog {
 
-    @Autowired
-    private AccountsModel accountsModel;
+    @Lazy @Autowired private AccountsModel accountsModel;
 
 //    @Getter private Dialog dlg;
     @Getter private Boolean bAdd;

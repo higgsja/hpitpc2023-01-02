@@ -1,10 +1,8 @@
 package com.hpi.tpc.ui.views.coaching;
 
-import com.hpi.tpc.services.TPCDAOImpl;
-import com.hpi.tpc.prefs.*;
 import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -15,12 +13,10 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
-
 @NoArgsConstructor
 public class CoachingModel {
-    @Autowired private TPCDAOImpl serviceTPC;
-    @Autowired private PrefsController prefsController;
 
     public void getPrefs() {
         //hit

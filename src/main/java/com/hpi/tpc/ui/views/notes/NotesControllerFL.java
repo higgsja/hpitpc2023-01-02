@@ -17,6 +17,7 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 /*
  * Controller: Interface between Model and View to process business logic and incoming
@@ -40,8 +41,8 @@ public class NotesControllerFL
     implements BeforeEnterObserver
 {
 
-    @Autowired private NotesModel notesModel;
-    @Autowired private TPCDAOImpl noteService;
+    @Lazy @Autowired private NotesModel notesModel;
+//    @Autowired private TPCDAOImpl noteService;
     
     @PostConstruct
     private void construct()
@@ -103,7 +104,7 @@ public class NotesControllerFL
         super.beforeEnter(bee);
         
         //log feature use
-        this.noteService.AppTracking("TPC:Notes:Mine:Controller");
+        this.notesModel.serviceTPC.AppTracking("TPC:Notes:Mine:Controller");
 
         //set navBar for this menu
         super.doNavBar(null);

@@ -350,15 +350,15 @@ public class holdNotesEditHL
     }
 
     private void setEditFields() {
-        if (this.notesModel.getSelectedNoteModel() != null){
-        this.ticker.setValue(this.notesModel.getSelectedNoteModel().getTicker());
-        this.actionsCB.setValue(this.notesModel.getSelectedNoteModel().getAction());
-        this.notes.setValue(this.notesModel.getSelectedNoteModel().getNotes());
-        this.units.setValue(this.notesModel.getSelectedNoteModel().getUnits().toString());
-        this.iPrice.setValue(this.notesModel.getSelectedNoteModel().getIPrice().toString());
-        this.alertsCB.setValue(this.notesModel.getSelectedNoteModel().getTriggerType());
-        this.alert.setValue(this.notesModel.getSelectedNoteModel().getTrigger());
-        this.description.setValue(this.notesModel.getSelectedNoteModel().getDescription());
+        if (this.notesModel.getNoteModel() != null){
+        this.ticker.setValue(this.notesModel.getNoteModel().getTicker());
+        this.actionsCB.setValue(this.notesModel.getNoteModel().getAction());
+        this.notes.setValue(this.notesModel.getNoteModel().getNotes());
+        this.units.setValue(this.notesModel.getNoteModel().getUnits().toString());
+        this.iPrice.setValue(this.notesModel.getNoteModel().getIPrice().toString());
+        this.alertsCB.setValue(this.notesModel.getNoteModel().getTriggerType());
+        this.alert.setValue(this.notesModel.getNoteModel().getTrigger());
+        this.description.setValue(this.notesModel.getNoteModel().getDescription());
         }
     }
 }

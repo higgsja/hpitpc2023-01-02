@@ -8,15 +8,14 @@ import com.hpi.tpc.data.ofx.entities.DbBroker2Mapper;
 import com.hpi.tpc.data.ofx.entities.DbBroker2Model;
 import com.hpi.tpc.data.ofx.entities.DbAccount2Mapper;
 import com.hpi.tpc.data.ofx.entities.DbAccount2Model;
-import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.data.provider.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.jdbc.core.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -27,14 +26,12 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
 @NoArgsConstructor
 public class AccountsModel
+    extends MVCModelBase
 {
-
-    @Autowired private TPCDAOImpl serviceTPC;
-    @Autowired private JdbcTemplate jdbcTemplate;
-
     /**
      * all institutions in the OFX database
      */
@@ -74,27 +71,6 @@ public class AccountsModel
      * selected account model in GUI
      */
     @Getter @Setter private EditAccountModel selectedAccountModel = null;
-
-    public void getPrefs()
-    {
-//        this.prefsController.setDefaults("PortfolioTrack");
-//        this.prefsController.readPrefsByPrefix("PortfolioTrack");
-//        this.selectedTrackActive = this.prefsController
-//            .getPref("PortfolioTrackActive").equals("Yes");
-//        this.selectedTrackOpen = this.prefsController
-//            .getPref("PortfolioTrackOpen").equals("Yes");
-    }
-
-    public void writePrefs()
-    {
-        //preferences, update the hashmap, then write to database
-//        this.prefsController.setPref("PortfolioTrackActive",
-//            selectedTrackActive ? "Yes" : "No");
-//        this.prefsController.setPref("PortfolioTrackOpen",
-//            selectedTrackOpen ? "Yes" : "No");
-//        
-//        this.prefsController.writePrefsByPrefix("PortfolioTrack");
-    }
 
     /**
      * Called from add/edit dialog. For institutions, add to dbOfx.
@@ -532,5 +508,17 @@ public class AccountsModel
         //client accounts for all client financial institutions
         //will filter when a financial institution is selected to reduce database calls
         this.allClientAccountsDataProvider = DataProvider.ofCollection(this.serviceTPC.getAccountModels());
+    }
+
+    @Override
+    public void getPrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void writePrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

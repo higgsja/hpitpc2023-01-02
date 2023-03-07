@@ -3,12 +3,12 @@ package com.hpi.tpc.ui.views.coaching.gains;
 import com.github.appreciated.apexcharts.*;
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import javax.annotation.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
-import org.springframework.jdbc.core.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -19,13 +19,12 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
 @Getter @Setter
-public class GainsModel
+public class GainsVLModel
+    extends MVCModelBase
 {
-
-    @Autowired private JdbcTemplate jdbcTemplate;
-//    @Autowired private PrefsController prefsController;
 
     private PositionModel selectedPositionModel;
     private TradeTacticModel selectedTradeTacticModel;
@@ -50,7 +49,7 @@ public class GainsModel
 
     private ApexCharts chart;
 
-    public GainsModel()
+    public GainsVLModel()
     {
         this.gainsTotal = 0.0;
         this.chartPctMin = 0.0;
@@ -102,37 +101,39 @@ public class GainsModel
         }
     }
 
-    protected void getChartData(String dataTable)
+    public void getChartData(String dataTable)
     {
         //special case: all positions, all tactics, any timeframe, all equityTypes, make category position
         if (this.selectedPositionModel.toString().equalsIgnoreCase("--All--")
-            && this.selectedTradeTacticModel.getTacticName().equalsIgnoreCase("--All--")){
-        this.gainsModels = jdbcTemplate.query(String.format(GainModel.SQL_GAINS_BY_POSITION,
-            dataTable,
-            this.selectedPositionModel.getTicker(),
-            this.selectedPositionModel.getTicker(),
-            this.selectedTradeTacticModel.getTacticId(),
-            this.selectedTradeTacticModel.getTacticId(),
-            this.sqlTimeframe,
-            this.selectedEquityTypeModel,
-            this.selectedEquityTypeModel,
-            SecurityUtils.getUserId(),
-            this.selectedChartType),
-            new GainMapper());            
-        }else{
-        
-        this.gainsModels = jdbcTemplate.query(String.format(GainModel.SQL_GAINS_BY_TACTIC,
-            dataTable,
-            this.selectedPositionModel.getTicker(),
-            this.selectedPositionModel.getTicker(),
-            this.selectedTradeTacticModel.getTacticId(),
-            this.selectedTradeTacticModel.getTacticId(),
-            this.sqlTimeframe,
-            this.selectedEquityTypeModel,
-            this.selectedEquityTypeModel,
-            SecurityUtils.getUserId(),
-            this.selectedChartType),
-            new GainMapper());
+            && this.selectedTradeTacticModel.getTacticName().equalsIgnoreCase("--All--"))
+        {
+            this.gainsModels = jdbcTemplate.query(String.format(GainModel.SQL_GAINS_BY_POSITION,
+                dataTable,
+                this.selectedPositionModel.getTicker(),
+                this.selectedPositionModel.getTicker(),
+                this.selectedTradeTacticModel.getTacticId(),
+                this.selectedTradeTacticModel.getTacticId(),
+                this.sqlTimeframe,
+                this.selectedEquityTypeModel,
+                this.selectedEquityTypeModel,
+                SecurityUtils.getUserId(),
+                this.selectedChartType),
+                new GainMapper());
+        } else
+        {
+
+            this.gainsModels = jdbcTemplate.query(String.format(GainModel.SQL_GAINS_BY_TACTIC,
+                dataTable,
+                this.selectedPositionModel.getTicker(),
+                this.selectedPositionModel.getTicker(),
+                this.selectedTradeTacticModel.getTacticId(),
+                this.selectedTradeTacticModel.getTacticId(),
+                this.sqlTimeframe,
+                this.selectedEquityTypeModel,
+                this.selectedEquityTypeModel,
+                SecurityUtils.getUserId(),
+                this.selectedChartType),
+                new GainMapper());
         }
 
         if (!gainsModels.isEmpty())
@@ -160,7 +161,8 @@ public class GainsModel
         }
     }
 
-    public void getPrefs()
+    @Override
+    public void getPrefs(String prefix)
     {
 //        this.prefsController.readPrefsByPrefix("CoachingGains");
 //        this.selectedTrackActive = this.prefsController
@@ -169,7 +171,8 @@ public class GainsModel
 //            .getPref("PortfolioTrackOpen").equals("Yes");
     }
 
-    public void writePrefs()
+    @Override
+    public void writePrefs(String prefix)
     {
         //preferences, update the hashmap, then write to database
 //        this.prefsController.setPref("PortfolioTrackActive",
@@ -178,6 +181,5 @@ public class GainsModel
 //            selectedTrackOpen ? "Yes" : "No");
 //        
 //        this.prefsController.writePrefsByPrefix("PortfolioTrack");
-
     }
 }

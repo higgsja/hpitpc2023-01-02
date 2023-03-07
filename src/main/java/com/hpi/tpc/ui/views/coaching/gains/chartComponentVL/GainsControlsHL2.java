@@ -1,29 +1,29 @@
-package com.hpi.tpc.ui.views.coaching.gains;
+package com.hpi.tpc.ui.views.coaching.gains.chartComponentVL;
 
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.baseClass.*;
+import com.hpi.tpc.ui.views.coaching.gains.GainsVLModel;
 import com.vaadin.flow.component.combobox.*;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.component.radiobutton.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
-import javax.annotation.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.*;
 
 @UIScope
 @VaadinSessionScope
 @Component
-@NoArgsConstructor
 public class GainsControlsHL2
     extends ControlsHLBase
 {
 
-    @Autowired private GainsModel gainsMVCModel;
+    @Lazy @Autowired private GainsVLModel gainsModel;
     @Autowired private JdbcTemplate jdbcTemplate;
 
     @Getter private final ComboBox<EquityTypeModel> cbEquityType = new ComboBox<>();
@@ -33,10 +33,8 @@ public class GainsControlsHL2
     private final HorizontalLayout radioGroupHL = new HorizontalLayout();
     private final HorizontalLayout totalHL = new HorizontalLayout();
 
-    @PostConstruct
-    public void construct_b()
+    public GainsControlsHL2()
     {
-        //hit as is the super
         this.addClassName("gainsControlsHL2");
     }
 
@@ -57,7 +55,7 @@ public class GainsControlsHL2
     {
         this.radioButtonGroup.setItems("%", "$");
         this.radioButtonGroup.setClassName("radioGroup");
-        this.radioButtonGroup.setValue(this.gainsMVCModel.getSelectedChartType());
+        this.radioButtonGroup.setValue(this.gainsModel.getSelectedChartType());
 
         this.radioGroupHL.add(this.radioButtonGroup);
     }
@@ -74,7 +72,7 @@ public class GainsControlsHL2
     {
         this.cbEquityType.setWidth("110px");
 
-        this.setEquityTypes((this.gainsMVCModel.getSelectedTimeframeModel().getTimeframe().equalsIgnoreCase("Open")
+        this.setEquityTypes((this.gainsModel.getSelectedTimeframeModel().getTimeframe().equalsIgnoreCase("Open")
             ? "PositionsOpen" : "PositionsClosed"), true);
     }
 
@@ -88,15 +86,15 @@ public class GainsControlsHL2
         equityTypes.add(EquityTypeModel.builder()
             .equityType("--All--")
             .build());
-        
+
         tmpEquityTypes = jdbcTemplate.query(
             String.format(EquityTypeModel.SQL_DISTINCT_EQUITY_TYPES,
                 dataTable,
-                this.gainsMVCModel.getSelectedPositionModel().getTicker(),
-                this.gainsMVCModel.getSelectedPositionModel().getTicker(),
-                this.gainsMVCModel.getSelectedTradeTacticModel().getTacticId(),
-                this.gainsMVCModel.getSelectedTradeTacticModel().getTacticId(),
-                this.gainsMVCModel.getSqlTimeframe(),
+                this.gainsModel.getSelectedPositionModel().getTicker(),
+                this.gainsModel.getSelectedPositionModel().getTicker(),
+                this.gainsModel.getSelectedTradeTacticModel().getTacticId(),
+                this.gainsModel.getSelectedTradeTacticModel().getTacticId(),
+                this.gainsModel.getSqlTimeframe(),
                 SecurityUtils.getUserId()), //all equityType
             new EquityTypeMapper());
 
@@ -111,25 +109,25 @@ public class GainsControlsHL2
 
         if (bInit)
         {
-            this.gainsMVCModel.setEquityTypeModels(equityTypes);
+            this.gainsModel.setEquityTypeModels(equityTypes);
 
-            this.cbEquityType.setItems(this.gainsMVCModel.getEquityTypeModels());
-            if (this.gainsMVCModel.getEquityTypeModels().size() > 0)
+            this.cbEquityType.setItems(this.gainsModel.getEquityTypeModels());
+            if (!this.gainsModel.getEquityTypeModels().isEmpty())
             {
-                this.cbEquityType.setValue(this.gainsMVCModel.getEquityTypeModels().get(0));
+                this.cbEquityType.setValue(this.gainsModel.getEquityTypeModels().get(0));
             }
         } else
         {
             //odd behavior in combobox if we switch to a new list that is the same as the old list
             //  do not do that (Doc, it hurts when I do that ...)
             EquityTypeModel[] array1 = equityTypes.toArray(new EquityTypeModel[0]);
-            EquityTypeModel[] array2 = this.gainsMVCModel.getEquityTypeModels().toArray(new EquityTypeModel[0]);
+            EquityTypeModel[] array2 = this.gainsModel.getEquityTypeModels().toArray(new EquityTypeModel[0]);
             if (!Arrays.equals(array1, array2))
             {
-                this.gainsMVCModel.setEquityTypeModels(equityTypes);
+                this.gainsModel.setEquityTypeModels(equityTypes);
                 //change pick list
-                this.cbEquityType.setItems(this.gainsMVCModel.getEquityTypeModels());
-                this.cbEquityType.setValue(this.gainsMVCModel.getSelectedEquityTypeModel());
+                this.cbEquityType.setItems(this.gainsModel.getEquityTypeModels());
+                this.cbEquityType.setValue(this.gainsModel.getSelectedEquityTypeModel());
             }
         }
     }

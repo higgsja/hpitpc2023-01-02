@@ -15,6 +15,7 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 /**
  * makes direct request for data from model
@@ -34,9 +35,7 @@ public class AccountsView
 {
 
     @Autowired private MainLayout appController;
-    @Autowired private TPCDAOImpl serviceTPC;
-    @Autowired private PrefsController prefsController;
-    @Autowired private AccountsModel accountsModel;
+    @Lazy @Autowired private AccountsModel accountsModel;
     @Autowired @Getter private TopLeftVL topLeftVL;
 
     private Label title;
@@ -47,7 +46,7 @@ public class AccountsView
         this.setClassName("setupAccountsView");
 //        this.setWidth("320px");
 
-        this.accountsModel.getPrefs();
+        this.accountsModel.getPrefs("Accounts");
         
         this.add(topLeftVL);
         
@@ -57,9 +56,9 @@ public class AccountsView
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {
-        this.serviceTPC.AppTracking("TPC:Setup:Accounts");
+        this.accountsModel.serviceTPC.AppTracking("TPC:Setup:Accounts");
 
-        if (this.prefsController.getPref("TPCDrawerClose").equalsIgnoreCase("yes"))
+        if (this.accountsModel.prefsController.getPref("TPCDrawerClose").equalsIgnoreCase("yes"))
         {
             this.appController.setDrawerOpened(false);
         }

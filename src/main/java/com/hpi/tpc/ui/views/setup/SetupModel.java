@@ -3,6 +3,7 @@ package com.hpi.tpc.ui.views.setup;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -13,13 +14,11 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
-
 @NoArgsConstructor
 public class SetupModel 
     extends MVCModelBase{
-//    @Autowired private TPCDAOImpl serviceTPC;
-//    @Autowired private PrefsController prefsController;
 
     @Getter @Setter private boolean selectedTrackActive;
     @Getter @Setter private boolean selectedTrackOpen;

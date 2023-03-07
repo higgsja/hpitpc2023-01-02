@@ -5,6 +5,8 @@ import com.hpi.tpc.services.*;
 import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
+import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -15,12 +17,15 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
-
 @NoArgsConstructor
-abstract public class MVCModelBase {
+abstract public class MVCModelBase
+{
+
     @Autowired public TPCDAOImpl serviceTPC;
     @Autowired public PrefsController prefsController;
+    @Autowired public JdbcTemplate jdbcTemplate;
 
     abstract public void getPrefs(String prefix);
 

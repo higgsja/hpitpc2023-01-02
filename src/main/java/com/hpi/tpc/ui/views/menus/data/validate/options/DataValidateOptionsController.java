@@ -1,6 +1,5 @@
 package com.hpi.tpc.ui.views.menus.data.validate.options;
 
-import com.hpi.tpc.services.TPCDAOImpl;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
@@ -17,6 +16,7 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 /**
  * translates user requests to actions, selects the appropriate view
@@ -33,9 +33,8 @@ public class DataValidateOptionsController
     extends ViewControllerBaseFL //flexlayout
     implements BeforeEnterObserver
 {
-    @Autowired private DataValidateOptionsModel dataValidateOptionsModel;
+    @Lazy @Autowired private DataValidateOptionsModel dataValidateOptionsModel;
     @Autowired private DataValidateOptionsView dataValidateOptionsView;
-    @Autowired private TPCDAOImpl serviceTPC;
 
     private Registration dataProviderListener;
 
@@ -121,7 +120,7 @@ private ComboBox<EditAccountModel> getComboAccounts(){
     @Override
     public void beforeEnter(BeforeEnterEvent event)
     {
-        this.serviceTPC.AppTracking("WTPC:Data:Validate:Options");
+        this.dataValidateOptionsModel.serviceTPC.AppTracking("WTPC:Data:Validate:Options");
 
         this.updateViewOnEnter();
 

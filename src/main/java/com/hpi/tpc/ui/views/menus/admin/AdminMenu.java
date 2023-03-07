@@ -11,6 +11,7 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 @UIScope
 @VaadinSessionScope
@@ -33,17 +34,16 @@ public class AdminMenu
     implements BeforeEnterObserver
 {
 
-    @Autowired private AdminModel adminModel;
+    @Lazy @Autowired private AdminModel adminModel;
 
     @PostConstruct
     private void construct()
     {
         //hit
         this.setClassName("adminMenu");
-        this.menuBar.setId("adminMenuId");
 
         //get any preferences associated with this feature
-        this.adminModel.getPrefs();
+        this.adminModel.getPrefs("Admin");
 
         this.addMenuBarTabs();
     }

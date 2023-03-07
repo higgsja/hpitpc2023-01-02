@@ -2,14 +2,14 @@ package com.hpi.tpc.ui.views.setup.equities;
 
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.services.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.data.provider.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import javax.annotation.*;
 import lombok.*;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -20,23 +20,28 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
-public class SetupEquitiesModel {
-    @Autowired private TPCDAOImpl serviceTPC;
+public class SetupEquitiesModel
+    extends MVCModelBase
+{
 
     //holds the original model before going to add/edit
     @Getter @Setter private ClientEquityModel editClientEquityModel;
 
-    public SetupEquitiesModel() {
+    public SetupEquitiesModel()
+    {
         int i = 0;
     }
 
     @PostConstruct
-    private void construct() {
+    private void construct()
+    {
         int i = 0;
     }
 
-    public void createDefaultClientEquityModel() {
+    public void createDefaultClientEquityModel()
+    {
         this.editClientEquityModel = new ClientEquityModel();
     }
 
@@ -46,7 +51,8 @@ public class SetupEquitiesModel {
      *
      * @param equityGrid
      */
-    public void doSave(Grid<ClientEquityModel> equityGrid) {
+    public void doSave(Grid<ClientEquityModel> equityGrid)
+    {
         //dataProvider has edited data
         String sql;
         Iterator itemsIterator;
@@ -54,10 +60,12 @@ public class SetupEquitiesModel {
 
         itemsIterator = ((ListDataProvider) equityGrid.getDataProvider()).getItems().iterator();
 
-        while (itemsIterator.hasNext()) {
+        while (itemsIterator.hasNext())
+        {
             cem = (ClientEquityModel) itemsIterator.next();
 
-            switch (cem.getChanged()) {
+            switch (cem.getChanged())
+            {
                 case ClientEquityModel.CHANGE_NONE:
                     //do nothing
                     continue;
@@ -65,10 +73,10 @@ public class SetupEquitiesModel {
                     //update
                     sql = ClientEquityModel.SQL_UPDATE;
                     sql += "Comment = '" + cem.getComment() + "', ";
-                    sql += "ClientSectorId = '" + cem.getClientSectorId()+ "'";
+                    sql += "ClientSectorId = '" + cem.getClientSectorId() + "'";
                     sql += " where JoomlaId = '" + SecurityUtils.getUserId() + "'";
                     sql += " and Ticker = '" + cem.getTicker() + "';";
-                    
+
                     this.serviceTPC.executeSQL(sql);
                     break;
                 case ClientEquityModel.CHANGE_NEW:
@@ -84,12 +92,24 @@ public class SetupEquitiesModel {
                     sql += "'" + cem.getStkPrice() + "', ";
                     sql += "'" + cem.getComment() + "', ";
                     sql += "'" + cem.getTgtLocked() + "', ";
-                    sql += "'" + cem.getActPct()+ "');";
-                    
+                    sql += "'" + cem.getActPct() + "');";
+
                     this.serviceTPC.executeSQL(sql);
                     break;
                 default:
             }
         }
+    }
+
+    @Override
+    public void getPrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+    @Override
+    public void writePrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

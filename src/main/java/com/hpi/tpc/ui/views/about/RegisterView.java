@@ -12,6 +12,7 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.*;
 import org.springframework.jdbc.support.rowset.*;
 
@@ -32,7 +33,7 @@ public class RegisterView
     extends VerticalLayout
     implements BeforeEnterObserver, BeforeLeaveObserver {
     @Autowired private TPCDAOImpl tpcService;
-    @Autowired private AboutModel aboutModel;
+    @Lazy @Autowired private AboutModel aboutModel;
     @Autowired private JdbcTemplate jdbcTemplate;
     @Autowired private MainLayout appController;
     @Autowired private PrefsController prefsController;

@@ -1,7 +1,7 @@
 package com.hpi.tpc.ui.views.notes;
 
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.services.*;
+import com.hpi.tpc.ui.views.baseClass.*;
 import com.studerw.tda.client.*;
 import com.studerw.tda.model.quote.*;
 import com.vaadin.flow.data.binder.*;
@@ -9,7 +9,7 @@ import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import lombok.*;
 import lombok.Setter;
-import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,20 +20,21 @@ import org.springframework.stereotype.Component;
  */
 @UIScope
 @VaadinSessionScope
+@Lazy
 @Component
 public class NotesModel
+    extends MVCModelBase
 {
 
-    @Autowired private TPCDAOImpl noteService;
-
-    @Setter @Getter private NoteModel selectedNoteModel;
+    @Setter @Getter private NoteModel noteModel;
     @Getter private List<NoteModel> dataProvider;
     @Getter private final BeanValidationBinder<NoteModel> binder;
-    
+
     private final Properties props;
     private final HttpTdaClient httpTdaClient;
     @Getter private Quote quote;
     @Getter @Setter private Boolean isSave;
+
     public NotesModel()
     {
         this.binder = new BeanValidationBinder<>(NoteModel.class);
@@ -47,7 +48,7 @@ public class NotesModel
         props.setProperty("tda.debug.bytes.length", "-1");
 
         this.httpTdaClient = new HttpTdaClient(props);
-        
+
         this.quote = null;
         this.isSave = false;
     }
@@ -83,7 +84,6 @@ public class NotesModel
 //        //without the session variable, this could be simple setter
 //        this.setSelectedNoteModel(noteModel);
 //    }
-
     /**
      * Save the note to the database
      * need to come in with the NoteModel from the form.
@@ -97,32 +97,32 @@ public class NotesModel
 
         if (isArchive)
         {
-            noteService.AppTracking("TPC:Notes:Edit:Archive");
+            this.serviceTPC.AppTracking("TPC:Notes:Edit:Archive");
         } else
         {
-            noteService.AppTracking("TPC:Notes:Edit:Save");
+            this.serviceTPC.AppTracking("TPC:Notes:Edit:Save");
         }
 
         //get data from the form
         tempNoteModel = new NoteModel(
             //these are key fields
-            this.selectedNoteModel.getJoomlaId(),
+            this.noteModel.getJoomlaId(),
             //null for add
-            this.selectedNoteModel.getTStamp(),
+            this.noteModel.getTStamp(),
             //uppercase if a ticker
-            this.selectedNoteModel.getTicker(),
-            this.selectedNoteModel.getIPrice(),
-            this.selectedNoteModel.getDescription(),
-            this.selectedNoteModel.getNotes(),
-            this.selectedNoteModel.getUnits(),
-            NoteModel.setActionInt(this.selectedNoteModel.getAction()).toString(),
-            NoteModel.setTriggerInt(this.selectedNoteModel.getTriggerType()).toString(),
-            this.selectedNoteModel.getTrigger(),
-            this.selectedNoteModel.getActive(),
-            this.selectedNoteModel.getDateEntered()
+            this.noteModel.getTicker(),
+            this.noteModel.getIPrice(),
+            this.noteModel.getDescription(),
+            this.noteModel.getNotes(),
+            this.noteModel.getUnits(),
+            NoteModel.setActionInt(this.noteModel.getAction()).toString(),
+            NoteModel.setTriggerInt(this.noteModel.getTriggerType()).toString(),
+            this.noteModel.getTrigger(),
+            this.noteModel.getActive(),
+            this.noteModel.getDateEntered()
         );
 
-        this.noteService.updateNote(tempNoteModel);
+        this.serviceTPC.updateNote(tempNoteModel);
     }
 
     /**
@@ -133,37 +133,41 @@ public class NotesModel
     {
         NoteModel tempNoteModel;
 
-        this.noteService.AppTracking("TPC:Notes:Add:Save");
-
-        
+        this.serviceTPC.AppTracking("TPC:Notes:Add:Save");
 
         tempNoteModel = new NoteModel(
             //these are key fields
-            this.selectedNoteModel.getJoomlaId(),
+            this.noteModel.getJoomlaId(),
             //null for add
-            this.selectedNoteModel.getTStamp(),
+            this.noteModel.getTStamp(),
             //uppercase if a ticker
-            this.selectedNoteModel.getTicker(),
-            this.selectedNoteModel.getIPrice(),
-            this.selectedNoteModel.getDescription(),
-            this.selectedNoteModel.getNotes(),
-            this.selectedNoteModel.getUnits(),
-            NoteModel.setActionInt(this.selectedNoteModel.getAction()).toString(),
-            NoteModel.setTriggerInt(this.selectedNoteModel.getTriggerType()).toString(),
-            this.selectedNoteModel.getTrigger(),
-            this.selectedNoteModel.getActive(),
-            this.selectedNoteModel.getDateEntered()
+            this.noteModel.getTicker(),
+            this.noteModel.getIPrice(),
+            this.noteModel.getDescription(),
+            this.noteModel.getNotes(),
+            this.noteModel.getUnits(),
+            NoteModel.setActionInt(this.noteModel.getAction()).toString(),
+            NoteModel.setTriggerInt(this.noteModel.getTriggerType()).toString(),
+            this.noteModel.getTrigger(),
+            this.noteModel.getActive(),
+            this.noteModel.getDateEntered()
         );
 
-        this.noteService.saveNote(tempNoteModel);
+        this.serviceTPC.saveNote(tempNoteModel);
     }
 
     public void getData(String subset)
     {
         List<NoteModel> aList;
 
-        aList = this.noteService.getByJId(subset);
+        aList = this.serviceTPC.getByJId(subset);
 
         this.dataProvider = aList;
+    }
+
+    @Override
+    public void writePrefs(String prefix)
+    {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }

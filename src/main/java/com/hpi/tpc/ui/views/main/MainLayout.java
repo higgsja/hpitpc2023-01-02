@@ -33,7 +33,7 @@ public class MainLayout
     @Autowired private TPCDAOImpl serviceTPC;
     @Autowired private MainDrawer mainDrawer;
     @Autowired private PrefsController prefsController;
-    @Autowired private NotesModel notesMVCModel;
+//    @Lazy @Autowired private NotesModel notesMVCModel;
 
     //globals
     @Getter private List<ClientSectorModel> clientAllSectorListModels;

@@ -1,4 +1,4 @@
-package com.hpi.tpc.ui.views.coaching.gains;
+package com.hpi.tpc.ui.views.coaching.gains.positions;
 
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.baseClass.*;

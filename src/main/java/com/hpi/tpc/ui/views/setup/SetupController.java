@@ -11,6 +11,7 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
+import org.springframework.context.annotation.*;
 
 @UIScope
 @VaadinSessionScope
@@ -31,7 +32,7 @@ public class SetupController
     implements BeforeEnterObserver
 {
 
-    @Autowired private SetupModel setupModel;
+    @Lazy @Autowired private SetupModel setupModel;
 
     @PostConstruct
     private void construct()
