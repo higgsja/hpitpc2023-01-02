@@ -12,7 +12,6 @@ import org.springframework.stereotype.Component;
 import com.vaadin.flow.component.checkbox.*;
 import com.vaadin.flow.component.html.Label;
 import com.vaadin.flow.spring.annotation.*;
-import org.springframework.context.annotation.*;
 
 /**
  * Accounts management form
@@ -25,7 +24,7 @@ public class TopLeftVL
     extends VerticalLayout
 {
 
-    @Lazy @Autowired private AccountsModel accountsModel;
+    @Autowired private AccountsModel accountsModel;
 
     @Getter private final ComboBox<OfxInstitutionModel> clientFICombobox = new ComboBox<>();
     @Getter private final Checkbox clientFIActiveCheckbox = new Checkbox("Active", false);

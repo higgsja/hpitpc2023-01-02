@@ -8,7 +8,6 @@ import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import javax.annotation.*;
 import lombok.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -19,7 +18,6 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
-@Lazy
 @Component
 @Getter @Setter
 public class GainsVLModel
@@ -56,6 +54,8 @@ public class GainsVLModel
         this.chartMin = 0.0;
         this.chartPctMax = 0.0;
         this.chartMax = 0.0;
+        
+        this.doInitSelections();
     }
 
     @PostConstruct
@@ -99,6 +99,28 @@ public class GainsVLModel
             default:
                 sqlTimeframe = PositionModel.SQL_YTD;
         }
+    }
+    
+    /**
+     * establish data elements for controls
+     */
+    private void doInitSelections()
+    {
+        this.setSelectedPositionModel(PositionModel.builder()
+            .ticker("--All--")
+            .build());
+        this.setSelectedTradeTacticModel(TradeTacticModel.builder()
+            .tacticId(-1)
+            .tacticName("--All--")
+            .build());
+        this.setSelectedTimeframeModel(TimeframeModel.builder()
+            .timeframe(TimeframeModel.YTD)
+            .build());
+        this.setSqlTimeframe(PositionModel.SQL_YTD);
+        this.setSelectedEquityTypeModel(EquityTypeModel.builder()
+            .equityType("--All--")
+            .build());
+        this.setSelectedChartType("$");
     }
 
     public void getChartData(String dataTable)

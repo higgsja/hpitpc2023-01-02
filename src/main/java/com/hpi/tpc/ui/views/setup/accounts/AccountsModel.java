@@ -15,7 +15,6 @@ import com.vaadin.flow.data.provider.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import lombok.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -26,7 +25,6 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
-@Lazy
 @Component
 @NoArgsConstructor
 public class AccountsModel

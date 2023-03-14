@@ -6,14 +6,13 @@ import com.vaadin.flow.component.checkbox.*;
 import com.vaadin.flow.component.grid.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 
 public class DataValidateStocksGridVL
     extends ViewBaseHL
 {
 
     @Autowired private DataValidateStocksControllerFL dataValidateStocksControllerFL;
-    @Lazy @Autowired private DataValidateStocksModel dataValidateStocksModel;
+    @Autowired private DataValidateStocksModel dataValidateStocksModel;
 
     @Getter private final Grid<ValidateStockTransactionModel> validateStocksGrid;
     @Getter private final FooterRow validateStocksGridFooterRow;

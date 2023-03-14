@@ -1,8 +1,6 @@
 package com.hpi.tpc.ui.views.setup.accounts;
 
 import static com.hpi.tpc.AppConst.*;
-import com.hpi.tpc.services.TPCDAOImpl;
-import com.hpi.tpc.prefs.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.vaadin.flow.component.button.*;
@@ -15,7 +13,6 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 
 /**
  * makes direct request for data from model
@@ -35,7 +32,7 @@ public class AccountsView
 {
 
     @Autowired private MainLayout appController;
-    @Lazy @Autowired private AccountsModel accountsModel;
+    @Autowired private AccountsModel accountsModel;
     @Autowired @Getter private TopLeftVL topLeftVL;
 
     private Label title;

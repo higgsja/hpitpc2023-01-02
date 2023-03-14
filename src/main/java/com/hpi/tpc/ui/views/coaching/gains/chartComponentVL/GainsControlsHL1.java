@@ -10,7 +10,6 @@ import java.util.*;
 import javax.annotation.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.*;
 
@@ -20,19 +19,18 @@ import org.springframework.stereotype.*;
 public class GainsControlsHL1
     extends ControlsHLBase
 {
-
-    public GainsControlsHL1()
-    {
-        this.addClassName("gainsControlsHL1");
-    }
-
-    @Lazy @Autowired public GainsVLModel gainsVLModel;
+    @Autowired public GainsVLModel gainsVLModel;
     @Autowired public JdbcTemplate jdbcTemplate;
 
     //private GainsMVCView gainsMVCView = null;
     @Getter private final ComboBox<PositionModel> cbPositions = new ComboBox();
     @Getter private final ComboBox<TradeTacticModel> cbTactics = new ComboBox();
     @Getter private final ComboBox<TimeframeModel> cbTimeframe = new ComboBox();
+
+    public GainsControlsHL1()
+    {
+        this.addClassName("gainsControlsHL1");
+    }
 
     @PostConstruct
     public void construct_a()

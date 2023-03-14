@@ -5,7 +5,6 @@ import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.data.provider.*;
 import java.util.*;
 import lombok.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -14,7 +13,6 @@ import org.springframework.stereotype.*;
  * provides ways to query and change the data
  * responds to requests from View and instructions from Controller
  */
-@Lazy
 @Component
 public class DataValidateStocksModel
     extends MVCModelBase

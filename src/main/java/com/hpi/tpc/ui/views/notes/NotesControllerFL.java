@@ -1,9 +1,6 @@
 package com.hpi.tpc.ui.views.notes;
 
 import static com.hpi.tpc.AppConst.*;
-import com.hpi.tpc.app.security.*;
-import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
 import static com.hpi.tpc.ui.views.notes.NotesConst.*;
@@ -17,7 +14,6 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 
 /*
  * Controller: Interface between Model and View to process business logic and incoming
@@ -41,7 +37,7 @@ public class NotesControllerFL
     implements BeforeEnterObserver
 {
 
-    @Lazy @Autowired private NotesModel notesModel;
+    @Autowired private NotesModel notesModel;
 //    @Autowired private TPCDAOImpl noteService;
     
     @PostConstruct

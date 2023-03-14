@@ -8,7 +8,6 @@ import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /*
@@ -30,33 +29,33 @@ public class GainsControllerVL
     implements BeforeEnterObserver
 {
 
-    //@Lazy must be on both the component and the @Autowired
-    @Lazy @Autowired private GainsVLModel gainsVLModel;
-    private final GainsTitleVL gainsTitleVL;
-    private final GainsControlsHL1 gainsControlsHL1;
-    private final GainsControlsHL2 gainsControlsHL2;
-    private final GainsChartVL gainsChartVL;
+    @Autowired private GainsVLModel gainsVLModel;
+    @Autowired private GainsControlsHL1 gainsControlsHL1;
+    @Autowired private GainsControlsHL2 gainsControlsHL2;
+    @Autowired GainsChartVL gainsChartVL;
+    private GainsTitleVL gainsTitleVL;
 
     public GainsControllerVL()
     {
-
         this.addClassName("gainsControllerVL");
+    }
+
+    @PostConstruct
+    private void construct()
+    {
 
         //title
         this.gainsTitleVL = new GainsTitleVL("Gains");
         this.add(this.gainsTitleVL);
 
         //controls
-        this.gainsControlsHL1 = new GainsControlsHL1();
         this.gainsControlsHL1.doLayout();
         this.add(this.gainsControlsHL1);
 
-        this.gainsControlsHL2 = new GainsControlsHL2();
         this.gainsControlsHL2.doLayout();
         this.add(this.gainsControlsHL2);
 
         //chart
-        this.gainsChartVL = new GainsChartVL();
         this.gainsChartVL.setMinWidth("320px");
         this.gainsChartVL.setMaxWidth("600px");
         this.gainsChartVL.setWidth("600px");
@@ -65,10 +64,7 @@ public class GainsControllerVL
         this.gainsChartVL.setMaxHeight("600px");
         this.gainsChartVL.setHeight("600px");
         this.add(this.gainsChartVL);
-    }
-    
-    @PostConstruct
-    private void construct(){
+
         this.doSelectionListenersAdd();
     }
 
@@ -80,8 +76,6 @@ public class GainsControllerVL
         //change the preferences route
         super.updateNavBarGear(null);
     }
-    
-    
 
     private void doSelectionListenersAdd()
     {
@@ -166,7 +160,7 @@ public class GainsControllerVL
             }
         });
     }
-    
+
     /**
      * triggered on change to any selection; only one change processed at a time
      * all others will be null
@@ -262,7 +256,6 @@ public class GainsControllerVL
 //        {
 //            this.chartVL.add(aCharts);
 //        }
-
 //        //reset the data selections
 //        this.coachingPositionGrid
 //            .filterPositions(
@@ -270,7 +263,6 @@ public class GainsControllerVL
 //                this.gainsModel.getSelectedTradeTacticModel().getTacticId(),
 //                this.gainsModel.getSelectedTimeframeModel().getTimeframe(),
 //                this.gainsModel.getSelectedEquityTypeModel().getEquityType());
-
         //reset recursion control
         this.gainsVLModel.setBInSelections(false);
     }
@@ -281,4 +273,3 @@ public class GainsControllerVL
         //none; not changing top tabs
     }
 }
-

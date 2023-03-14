@@ -18,7 +18,7 @@ public class GainsChartVL
     extends ViewBaseVL
 {
     @Autowired private GainsVLModel gainsVLModel;
-    @Autowired private GainsControlsHL1 gainsControlsHL1;   //get rid of
+//    @Autowired private GainsControlsHL1 gainsControlsHL1;   //get rid of
     @Autowired private GainsControlsHL2 gainsControlsHL2;   //get rid of
     
 

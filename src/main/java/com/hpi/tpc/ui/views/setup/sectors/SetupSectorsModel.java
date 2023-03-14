@@ -8,7 +8,6 @@ import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import javax.annotation.*;
 import lombok.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -19,7 +18,6 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
-@Lazy
 @Component
 public class SetupSectorsModel
 extends MVCModelBase{

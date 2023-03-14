@@ -35,7 +35,7 @@ public class PortfolioController
     implements BeforeEnterObserver, BeforeLeaveObserver
 {
 
-    @Lazy @Autowired private PortfolioModel portfolioModel;
+    @Autowired private PortfolioModel portfolioModel;
 
     @PostConstruct
     private void construct()

@@ -19,7 +19,6 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
-@Lazy
 @Component
 @NoArgsConstructor
 @Getter

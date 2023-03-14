@@ -1,6 +1,5 @@
 package com.hpi.tpc.ui.views.menus.data.equities.stocks;
 
-import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.main.*;
 import static com.hpi.tpc.ui.views.menus.data.DataConst.*;
@@ -10,7 +9,6 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /*
@@ -32,7 +30,7 @@ public class DataEquitiesStocksControllerFL
     implements BeforeEnterObserver
 {
 
-    @Lazy @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
+    @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
 
     private final DataEquitiesStocksVL dataEquitiesStocksVL;
     private final DataEquitiesStocksTitleVL dataEquitiesStocksTitleVL;
