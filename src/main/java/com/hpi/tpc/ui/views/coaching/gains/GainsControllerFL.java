@@ -14,7 +14,6 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 @UIScope
@@ -29,70 +28,68 @@ public class GainsControllerFL
     implements BeforeEnterObserver
 {
 
-    @Lazy @Autowired private GainsVLModel gainsModel;
-
+    @Autowired private GainsVLModel gainsVLModel;
     @Autowired private GainsControllerVL gainsControllerVL;
+    @Autowired private GainsPositionsVL gainsPositionsVL;
 
-    @Autowired private GainsPositionGrid coachingPositionGrid;
-
-    private final GainsHL gainsHL;
-
-    private final GainsPositionsVL gainsPositionsVL;
-
-    private VerticalLayout chartVL;
+//    private GainsHL gainsHL;
+//    private VerticalLayout chartVL;
 
     public GainsControllerFL()
     {
         this.addClassName("gainsControllerFL");
-
-        //this is 2 panels, need an HL
-        this.gainsHL = new GainsHL();
-        this.gainsHL.setSizeFull();
-        this.add(gainsHL);
-
-        this.gainsControllerVL.setWidth("550px");
-        this.gainsHL.add(this.gainsControllerVL);
-
-        //positions
-        this.gainsPositionsVL = new GainsPositionsVL();
-        this.gainsPositionsVL.setWidth("850px");
-        this.add(this.gainsPositionsVL);
-
     }
 
     @PostConstruct
     protected void construct()
     {
-        this.gainsModel.getPrefs("Gains");
+        this.gainsVLModel.getPrefs("Gains");
+        
+//        //this is 2 panels, need an HL
+//        this.gainsHL = new GainsHL();
+//        this.gainsHL.setSizeFull();
+//        this.add(gainsHL);
 
-        this.doInitSelections();
+        this.gainsControllerVL.setWidth("550px");
+//        this.gainsHL.add(this.gainsControllerVL);
+        this.add(this.gainsControllerVL);
+
+        //positions
+        this.gainsPositionsVL = new GainsPositionsVL();
+        this.gainsPositionsVL.setWidth("850px");
+        this.add(this.gainsPositionsVL);
+        
+//        this.doInitSelections();
+
 
 //        this.setupGainsVL("Gains");
 //        this.setupPositionsVL("Positions");
 //        this.doSelectionListenersAdd();
     }
+    
+//    /**
+//     * establish data elements for controls
+//     */
+//    private void doInitSelections()
+//    {
+//        this.gainsVLModel.setSelectedPositionModel(PositionModel.builder()
+//            .ticker("--All--")
+//            .build());
+//        this.gainsVLModel.setSelectedTradeTacticModel(TradeTacticModel.builder()
+//            .tacticId(-1)
+//            .tacticName("--All--")
+//            .build());
+//        this.gainsVLModel.setSelectedTimeframeModel(TimeframeModel.builder()
+//            .timeframe(TimeframeModel.YTD)
+//            .build());
+//        this.gainsVLModel.setSqlTimeframe(PositionModel.SQL_YTD);
+//        this.gainsVLModel.setSelectedEquityTypeModel(EquityTypeModel.builder()
+//            .equityType("--All--")
+//            .build());
+//        this.gainsVLModel.setSelectedChartType("$");
+//    }
 
-    /**
-     * establish data elements for controls
-     */
-    private void doInitSelections()
-    {
-        this.gainsModel.setSelectedPositionModel(PositionModel.builder()
-            .ticker("--All--")
-            .build());
-        this.gainsModel.setSelectedTradeTacticModel(TradeTacticModel.builder()
-            .tacticId(-1)
-            .tacticName("--All--")
-            .build());
-        this.gainsModel.setSelectedTimeframeModel(TimeframeModel.builder()
-            .timeframe(TimeframeModel.YTD)
-            .build());
-        this.gainsModel.setSqlTimeframe(PositionModel.SQL_YTD);
-        this.gainsModel.setSelectedEquityTypeModel(EquityTypeModel.builder()
-            .equityType("--All--")
-            .build());
-        this.gainsModel.setSelectedChartType("$");
-    }
+    
 
 //    public void setupGainsVL(String gainsVLTitle)
 //    {
@@ -139,7 +136,7 @@ public class GainsControllerFL
     {
         super.beforeEnter(event);
 
-        this.gainsModel.serviceTPC.AppTracking("TPC:Coaching:Gains");
+        this.gainsVLModel.serviceTPC.AppTracking("TPC:Coaching:Gains");
 
         //change the preferences route
         super.updateNavBarGear(null);

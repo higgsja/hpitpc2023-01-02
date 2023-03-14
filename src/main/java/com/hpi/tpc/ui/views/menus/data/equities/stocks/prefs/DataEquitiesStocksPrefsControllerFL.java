@@ -13,7 +13,6 @@ import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /*
@@ -36,7 +35,7 @@ public class DataEquitiesStocksPrefsControllerFL
 {
 
     @Autowired private MainLayout mainLayout;
-    @Lazy @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
+    @Autowired private DataEquitiesStocksModel dataEquitiesStocksModel;
 
     private final DataEquitiesStocksPrefsVL prefsVL;
     private final DataEquitiesStocksPrefsTitleVL title;

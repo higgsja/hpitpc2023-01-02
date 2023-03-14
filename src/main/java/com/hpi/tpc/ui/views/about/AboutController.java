@@ -31,7 +31,7 @@ public class AboutController
     implements BeforeEnterObserver
 {
 
-    @Lazy @Autowired private AboutModel aboutModel;
+    @Autowired private AboutModel aboutModel;
 
     @PostConstruct
     private void construct()

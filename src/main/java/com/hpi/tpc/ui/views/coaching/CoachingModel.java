@@ -13,7 +13,6 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
-@Lazy
 @Component
 @NoArgsConstructor
 public class CoachingModel {

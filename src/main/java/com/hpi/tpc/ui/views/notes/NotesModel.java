@@ -9,7 +9,6 @@ import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import lombok.*;
 import lombok.Setter;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /**
@@ -20,7 +19,6 @@ import org.springframework.stereotype.Component;
  */
 @UIScope
 @VaadinSessionScope
-@Lazy
 @Component
 public class NotesModel
     extends MVCModelBase

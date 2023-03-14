@@ -33,7 +33,7 @@ public class AboutView
     extends VerticalLayout
     implements BeforeEnterObserver, BeforeLeaveObserver {
     @Autowired private TPCDAOImpl tpcService;
-    @Lazy @Autowired private AboutModel aboutModel;
+    //@Autowired private AboutModel aboutModel;
     @Autowired private JdbcTemplate jdbcTemplate;
     @Autowired private MainLayout appController;
     @Autowired private PrefsController prefsController;

@@ -3,7 +3,6 @@ package com.hpi.tpc.ui.views.menus.admin;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -14,7 +13,6 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
-@Lazy
 @Component
 @NoArgsConstructor
 public class AdminModel

@@ -15,7 +15,6 @@ import java.util.*;
 import javax.annotation.*;
 import javax.annotation.security.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 /*
@@ -38,7 +37,7 @@ public class DataValidateStocksControllerFL
 {
 
     //data model singleton as used in multiple places
-    @Lazy @Autowired private DataValidateStocksModel dataValidateStocksModel;
+    @Autowired private DataValidateStocksModel dataValidateStocksModel;
 
     private final DataValidateStocksVL dataValidateStocksVL;
     private final DataValidateStocksTitleVL dataValidateStocksTitleVL;

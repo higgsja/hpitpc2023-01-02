@@ -6,14 +6,13 @@ import com.vaadin.flow.component.grid.*;
 import com.vaadin.flow.component.orderedlayout.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 @Component
 public class DataValidateOptionsViewGridVL
 {
 
-    @Lazy @Autowired private DataValidateOptionsModel dataValidateOptionsModel;
+    @Autowired private DataValidateOptionsModel dataValidateOptionsModel;
 
     @Getter private final VerticalLayout gridVL;
     @Getter private final Grid<ValidateOptionTransactionModel> grid;

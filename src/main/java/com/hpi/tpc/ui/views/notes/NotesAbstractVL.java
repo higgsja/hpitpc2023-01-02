@@ -7,7 +7,6 @@ import com.vaadin.flow.component.orderedlayout.*;
 import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.Component;
 
 @UIScope
@@ -18,7 +17,7 @@ public abstract class NotesAbstractVL
     extends VerticalLayout
 {
 
-    @Getter @Lazy @Autowired public NotesModel notesModel;
+    @Getter @Autowired public NotesModel notesModel;
 
     @Getter private final Grid<NoteModel> notesGrid;
 

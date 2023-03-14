@@ -34,7 +34,7 @@ public class AdminMenu
     implements BeforeEnterObserver
 {
 
-    @Lazy @Autowired private AdminModel adminModel;
+    @Autowired private AdminModel adminModel;
 
     @PostConstruct
     private void construct()

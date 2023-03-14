@@ -12,7 +12,6 @@ import com.vaadin.flow.spring.annotation.*;
 import java.util.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.*;
 
@@ -23,7 +22,7 @@ public class GainsControlsHL2
     extends ControlsHLBase
 {
 
-    @Lazy @Autowired private GainsVLModel gainsModel;
+    @Autowired private GainsVLModel gainsModel;
     @Autowired private JdbcTemplate jdbcTemplate;
 
     @Getter private final ComboBox<EquityTypeModel> cbEquityType = new ComboBox<>();

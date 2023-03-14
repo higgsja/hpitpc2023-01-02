@@ -32,8 +32,8 @@ public class BenchmarkControllerFL
     implements BeforeEnterObserver
 {
 
-    @Lazy @Autowired private CoachingModel coachingModel;
-    @Lazy @Autowired private BenchmarkModel benchMarkModel;
+    @Autowired private CoachingModel coachingModel;
+    @Autowired private BenchmarkModel benchMarkModel;
 
     private final BenchmarkChartVL benchmarkChartVL;
     private final BenchmarkVL benchmarkVL;

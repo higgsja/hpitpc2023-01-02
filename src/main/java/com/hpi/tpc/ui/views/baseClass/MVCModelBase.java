@@ -17,7 +17,6 @@ import org.springframework.stereotype.*;
  */
 @UIScope
 @VaadinSessionScope
-@Lazy
 @Component
 @NoArgsConstructor
 abstract public class MVCModelBase

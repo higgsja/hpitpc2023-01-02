@@ -32,8 +32,6 @@ public class DataValidateOptionsView
     extends ViewControllerBaseFL
 {
 
-//    @Lazy @Autowired private DataValidateOptionsModel optionsModel;
-
     @Getter private VerticalLayout titleVL;
     private DataValidateOptionsViewGridVL grid;
 

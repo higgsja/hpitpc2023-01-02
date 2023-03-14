@@ -16,7 +16,6 @@ import javax.annotation.*;
 import javax.annotation.security.*;
 import lombok.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 
 /**
  * translates user requests to actions, selects the appropriate view
@@ -33,7 +32,7 @@ public class DataValidateOptionsController
     extends ViewControllerBaseFL //flexlayout
     implements BeforeEnterObserver
 {
-    @Lazy @Autowired private DataValidateOptionsModel dataValidateOptionsModel;
+    @Autowired private DataValidateOptionsModel dataValidateOptionsModel;
     @Autowired private DataValidateOptionsView dataValidateOptionsView;
 
     private Registration dataProviderListener;

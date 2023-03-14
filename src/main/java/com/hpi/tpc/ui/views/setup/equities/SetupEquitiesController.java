@@ -1,7 +1,6 @@
 package com.hpi.tpc.ui.views.setup.equities;
 
 import com.hpi.tpc.data.entities.*;
-import com.hpi.tpc.services.*;
 import com.hpi.tpc.ui.views.main.*;
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.*;
@@ -12,7 +11,6 @@ import java.util.*;
 
 import javax.annotation.*;
 import org.springframework.beans.factory.annotation.*;
-import org.springframework.context.annotation.*;
 
 /*
  * Interface between Model and View to process business logic and incoming requests:
@@ -29,7 +27,7 @@ public class SetupEquitiesController
     extends VerticalLayout {
     @Autowired private MainLayout mainLayout;
     @Autowired private SetupEquitiesEditView setupEquitiesEditView;
-    @Lazy @Autowired private SetupEquitiesModel setupEquitiesModel;
+    @Autowired private SetupEquitiesModel setupEquitiesModel;
     @Autowired private SetupEquitiesView setupEquitiesMVCView;
 
     private final ArrayList<Registration> listeners;

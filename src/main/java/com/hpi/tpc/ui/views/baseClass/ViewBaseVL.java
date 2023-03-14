@@ -2,13 +2,12 @@ package com.hpi.tpc.ui.views.baseClass;
 
 import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.component.orderedlayout.*;
-import com.vaadin.flow.spring.annotation.*;
 
 /**
  * Abstract class for content element on each page
  */
-@UIScope
-@VaadinSessionScope
+//@UIScope
+//@VaadinSessionScope
 public abstract class ViewBaseVL
     extends VerticalLayout
 {
