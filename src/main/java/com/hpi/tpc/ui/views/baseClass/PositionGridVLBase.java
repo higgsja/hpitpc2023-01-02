@@ -18,7 +18,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 @UIScope
 @VaadinSessionScope
 @org.springframework.stereotype.Component
-@NoArgsConstructor
 @Getter @Setter
 //@CssImport(value = "./styles/tpc-grid-theme.css", id = "position-grid", themeFor = "vaadin-grid")
 public class PositionGridVLBase
@@ -31,6 +30,11 @@ public class PositionGridVLBase
     private final ArrayList<Registration> listeners = new ArrayList<>();
     private final Grid<PositionModel> positionGrid = new Grid<>();
     private ListDataProvider<PositionModel> dataProvider;
+
+    public PositionGridVLBase()
+    {
+        this.setClassName("positionGridVLBase");
+    }
 
     @PostConstruct
     private void init()

@@ -1,4 +1,4 @@
-package com.hpi.tpc.ui.views.coaching.gains.chartComponentVL;
+package com.hpi.tpc.ui.views.coaching.gains.chart;
 
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;

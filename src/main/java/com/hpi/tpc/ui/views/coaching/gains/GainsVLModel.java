@@ -54,7 +54,7 @@ public class GainsVLModel
         this.chartMin = 0.0;
         this.chartPctMax = 0.0;
         this.chartMax = 0.0;
-        
+
         this.doInitSelections();
     }
 
@@ -100,7 +100,7 @@ public class GainsVLModel
                 sqlTimeframe = PositionModel.SQL_YTD;
         }
     }
-    
+
     /**
      * establish data elements for controls
      */
@@ -143,7 +143,6 @@ public class GainsVLModel
                 new GainMapper());
         } else
         {
-
             this.gainsModels = jdbcTemplate.query(String.format(GainModel.SQL_GAINS_BY_TACTIC,
                 dataTable,
                 this.selectedPositionModel.getTicker(),
