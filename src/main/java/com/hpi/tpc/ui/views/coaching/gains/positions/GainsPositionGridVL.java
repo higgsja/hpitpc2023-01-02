@@ -12,16 +12,22 @@ import javax.annotation.*;
 @UIScope
 @VaadinSessionScope
 @org.springframework.stereotype.Component
-public class GainsPositionGrid
+public class GainsPositionGridVL
     extends PositionGridVLBase
 {
+
+    public GainsPositionGridVL()
+    {
+        this.addClassName("coachingPositionsGridVL");
+        this.setWidth("100%");
+        this.setHeight("100%");
+        this.getStyle().set("padding", "0px 0px 16px 0px");
+    }
 
     @PostConstruct
     private void init()
     {
-        this.setClassName("coachingPositionsGridVL");
-        this.setWidth("100%");
-        this.setHeight("100%");
+        
     }
 
     //filter positions grid based on client selections

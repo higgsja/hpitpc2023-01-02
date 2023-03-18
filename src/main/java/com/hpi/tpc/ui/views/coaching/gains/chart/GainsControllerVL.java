@@ -1,9 +1,11 @@
-package com.hpi.tpc.ui.views.coaching.gains.chartComponentVL;
+package com.hpi.tpc.ui.views.coaching.gains.chart;
 
 import com.github.appreciated.apexcharts.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.coaching.gains.*;
+import com.hpi.tpc.ui.views.coaching.gains.positions.*;
+import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.router.*;
 import com.vaadin.flow.spring.annotation.*;
 import javax.annotation.*;
@@ -32,12 +34,17 @@ public class GainsControllerVL
     @Autowired private GainsVLModel gainsVLModel;
     @Autowired private GainsControlsHL1 gainsControlsHL1;
     @Autowired private GainsControlsHL2 gainsControlsHL2;
-    @Autowired GainsChartVL gainsChartVL;
+    @Autowired private GainsChartVL gainsChartVL;
+    @Autowired private PositionsControllerVL positionsControllerVL;
+        @Autowired private GainsPositionGridVL gainsPositionsGridVL;
+
     private GainsTitleVL gainsTitleVL;
 
     public GainsControllerVL()
     {
         this.addClassName("gainsControllerVL");
+        
+        this.getStyle().set("padding", "0px 0px 16px 5px");
     }
 
     @PostConstruct
@@ -57,12 +64,12 @@ public class GainsControllerVL
 
         //chart
         this.gainsChartVL.setMinWidth("320px");
-        this.gainsChartVL.setMaxWidth("600px");
-        this.gainsChartVL.setWidth("600px");
+        this.gainsChartVL.setMaxWidth("550px");
+        this.gainsChartVL.setWidth("550px");
 
         this.gainsChartVL.setMinHeight("320px");
-        this.gainsChartVL.setMaxHeight("600px");
-        this.gainsChartVL.setHeight("600px");
+//        this.gainsChartVL.setMaxHeight("600px");
+//        this.gainsChartVL.setHeight("600px");
         this.add(this.gainsChartVL);
 
         this.doSelectionListenersAdd();
@@ -251,20 +258,30 @@ public class GainsControllerVL
             //adjust timeFrame
             this.gainsControlsHL1.setTimeframe(false);
         }
+        
+        //remove old chart
+        this.gainsChartVL.removeAll();
 
-//        if ((aCharts = this.addChart(dataTable)) != null)
-//        {
-//            this.chartVL.add(aCharts);
-//        }
-//        //reset the data selections
-//        this.coachingPositionGrid
-//            .filterPositions(
-//                this.gainsModel.getSelectedPositionModel().getTicker(),
-//                this.gainsModel.getSelectedTradeTacticModel().getTacticId(),
-//                this.gainsModel.getSelectedTimeframeModel().getTimeframe(),
-//                this.gainsModel.getSelectedEquityTypeModel().getEquityType());
+        if ((aCharts = this.gainsChartVL.addChart(dataTable)) != null)
+        {
+            this.gainsChartVL.add(aCharts);
+        }
+        else{
+            this.gainsChartVL.add(new Label("*** No Data Available ***"));
+        }
+        
+        //reset the data selections
+        this.gainsPositionsGridVL
+            .filterPositions(
+                this.gainsVLModel.getSelectedPositionModel().getTicker(),
+                this.gainsVLModel.getSelectedTradeTacticModel().getTacticId(),
+                this.gainsVLModel.getSelectedTimeframeModel().getTimeframe(),
+                this.gainsVLModel.getSelectedEquityTypeModel().getEquityType());
         //reset recursion control
         this.gainsVLModel.setBInSelections(false);
+        
+        //all set to change chart
+//        this.gainsChartVL.add(this.gainsChartVL.addChart(dataTable));
     }
 
     @Override

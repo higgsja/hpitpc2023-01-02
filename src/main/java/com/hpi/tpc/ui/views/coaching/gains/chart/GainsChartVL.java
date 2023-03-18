@@ -1,13 +1,13 @@
-package com.hpi.tpc.ui.views.coaching.gains.chartComponentVL;
+package com.hpi.tpc.ui.views.coaching.gains.chart;
 
 import com.github.appreciated.apexcharts.*;
 import com.hpi.tpc.charts.*;
 import com.hpi.tpc.data.entities.*;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.hpi.tpc.ui.views.coaching.gains.*;
-import com.vaadin.flow.component.html.*;
 import com.vaadin.flow.spring.annotation.*;
 import java.text.*;
+import javax.annotation.*;
 import org.springframework.beans.factory.annotation.*;
 import org.springframework.stereotype.*;
 
@@ -17,28 +17,35 @@ import org.springframework.stereotype.*;
 public class GainsChartVL
     extends ViewBaseVL
 {
+
     @Autowired private GainsVLModel gainsVLModel;
-//    @Autowired private GainsControlsHL1 gainsControlsHL1;   //get rid of
-    @Autowired private GainsControlsHL2 gainsControlsHL2;   //get rid of
-    
+    @Autowired private GainsControlsHL2 gainsControlsHL2;
 
     public GainsChartVL()
     {
         this.addClassName("coachingGainsChartVL");
     }
-    
-     private ApexCharts addChart(String dataTable)
+
+    @PostConstruct
+    private void construct()
     {
-                ApexChartsBuilder builder;
-                
+        this.getStyle().set("padding", "0px 0px 16px 5px");
+        
+        this.add(this.addChart("PositionsClosed"));
+    }
+
+    public ApexCharts addChart(String dataTable)
+    {
+        ApexChartsBuilder builder;
+
         this.gainsVLModel.getChartData(dataTable);
 
         this.gainsControlsHL2.getTotal().setText("Total: "
-            + NumberFormat.getCurrencyInstance().format(gainsVLModel.getGainsTotal()));
+            + NumberFormat.getCurrencyInstance().format(this.gainsVLModel.getGainsTotal()));
 
         if (!this.gainsVLModel.getGainsModels().isEmpty())
         {
-            if (gainsVLModel.getSelectedChartType().equalsIgnoreCase("%"))
+            if (this.gainsVLModel.getSelectedChartType().equalsIgnoreCase("%"))
             {
                 builder = new TornadoChart(this.gainsVLModel.getChartPctMin(),
                     this.gainsVLModel.getChartPctMax(),
@@ -57,16 +64,14 @@ public class GainsChartVL
             this.gainsVLModel.getChart().setHeight("100%");
 
             //remove the old chart
-            this.removeAll();
-
+//            this.removeAll();
             return this.gainsVLModel.getChart();
         } else
         {
             //remove the old chart
             this.removeAll();
 
-            this.add(new Label("*** No Data Available ***"));
-
+//            this.add(new Label("*** No Data Available ***"));
             return null;
         }
     }

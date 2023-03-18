@@ -1,4 +1,4 @@
-package com.hpi.tpc.ui.views.coaching.gains.chartComponentVL;
+package com.hpi.tpc.ui.views.coaching.gains.chart;
 
 import com.hpi.tpc.app.security.*;
 import com.hpi.tpc.data.entities.*;
@@ -61,8 +61,11 @@ public class GainsControlsHL2
 
     private void doTotalHL()
     {
-        this.total.setText("Total: $999,999.99");
+//        this.total.setText("Total: $999,999.99");
         this.total.setClassName("coachingGainsTotal");
+        
+        this.total.getStyle().set("margin", "0px");
+        this.total.getStyle().set("padding-top", "6px");
 
         this.totalHL.add(this.total);
     }

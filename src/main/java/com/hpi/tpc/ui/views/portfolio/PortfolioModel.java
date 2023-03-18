@@ -3,7 +3,6 @@ package com.hpi.tpc.ui.views.portfolio;
 import com.hpi.tpc.ui.views.baseClass.*;
 import com.vaadin.flow.spring.annotation.*;
 import lombok.*;
-import org.springframework.context.annotation.*;
 import org.springframework.stereotype.*;
 
 /**
@@ -23,12 +22,12 @@ extends MVCModelBase
     @Override
     public void getPrefs(String prefix)
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
     public void writePrefs(String prefix)
     {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+//        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 }
